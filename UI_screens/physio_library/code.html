@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RightPosture — Exercise Library</title>
+<!-- Fonts: Plus Jakarta Sans & JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 with plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Theme Configuration -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-error": "#ffffff",
+            "secondary-fixed-dim": "#ffb691",
+            "tag-hold-wash": "#E3EEF6",
+            "tertiary-fixed-dim": "#95d69a",
+            "status-warning-ink": "#D97706",
+            "on-tertiary-fixed": "#002108",
+            "secondary": "#8e4d2a",
+            "primary-fixed-dim": "#a5d0b9",
+            "tertiary": "#002d0e",
+            "tag-exercise-wash": "#E7F0E8",
+            "surface": "#f6fbf5",
+            "tag-exercise-ink": "#2E6B3A",
+            "on-surface": "#181d1a",
+            "on-tertiary": "#ffffff",
+            "on-surface-variant": "#414844",
+            "primary-fixed": "#c1ecd4",
+            "surface-variant": "#dfe4df",
+            "surface-container-lowest": "#ffffff",
+            "surface-dim": "#d7dbd6",
+            "on-primary-container": "#86af99",
+            "surface-card-warm": "#EFEAE2",
+            "on-tertiary-fixed-variant": "#115224",
+            "on-background": "#181d1a",
+            "background": "#f6fbf5",
+            "text-secondary": "#6E726E",
+            "secondary-fixed": "#ffdbcb",
+            "on-error-container": "#93000a",
+            "text-muted": "#8C8F8C",
+            "status-success-wash": "#E8F5E9",
+            "on-primary-fixed": "#002114",
+            "canvas-bg": "#FBF9F4",
+            "error-container": "#ffdad6",
+            "on-secondary-fixed-variant": "#713714",
+            "inverse-primary": "#a5d0b9",
+            "status-absent-ink": "#9E9E9E",
+            "surface-container-low": "#f0f5f0",
+            "text-primary": "#1F2421",
+            "canvas-subtle": "#F4EFEB",
+            "surface-container-highest": "#dfe4df",
+            "surface-card": "#FFFFFF",
+            "error": "#ba1a1a",
+            "tag-hold-ink": "#1B4F72",
+            "on-primary": "#ffffff",
+            "on-primary-fixed-variant": "#274e3d",
+            "status-success-ink": "#2E7D32",
+            "inverse-surface": "#2c322e",
+            "status-danger-ink": "#C62828",
+            "outline": "#717973",
+            "on-secondary-container": "#783d1a",
+            "data-chart-trace": "#1565C0",
+            "inverse-on-surface": "#edf2ed",
+            "on-tertiary-container": "#75b47c",
+            "on-secondary-fixed": "#341100",
+            "outline-variant": "#c1c8c2",
+            "tertiary-container": "#00461a",
+            "surface-tint": "#3f6653",
+            "secondary-container": "#feaa7f",
+            "on-secondary": "#ffffff",
+            "status-absent-wash": "#F3F4F6",
+            "surface-container-high": "#e5e9e4",
+            "data-chart-ground": "rgba(31, 36, 33, 0.05)",
+            "primary": "#012d1d",
+            "surface-container": "#ebefea",
+            "status-danger-wash": "#FEE2E2",
+            "surface-tint-sand": "#F8F5EE",
+            "primary-container": "#1b4332",
+            "surface-bright": "#f6fbf5",
+            "tertiary-fixed": "#b0f2b4",
+            "status-warning-wash": "#FEF3C7"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "inset-lg": "1.25rem",
+            "gap-card-internal": "0.75rem",
+            "gap-screen-stack": "1rem",
+            "gutter-mobile": "1.25rem",
+            "inset-2xl": "2rem",
+            "inset-md": "1rem",
+            "inset-xs": "0.5rem",
+            "nav-bottom-height": "4.5rem",
+            "keepout-active-hud": "2rem",
+            "inset-xl": "1.5rem",
+            "height-chart-canvas": "10rem",
+            "inset-2xs": "0.25rem",
+            "inset-sm": "0.75rem",
+            "height-quality-bar": "1.5rem"
+          },
+          "fontFamily": {
+            "display-hero-farfield": ["Plus Jakarta Sans"],
+            "title-md": ["Plus Jakarta Sans"],
+            "body-lg": ["Plus Jakarta Sans"],
+            "display-code-spaced": ["JetBrains Mono"],
+            "display-timer-farfield": ["JetBrains Mono"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "title-sm": ["Plus Jakarta Sans"],
+            "body-md": ["Plus Jakarta Sans"],
+            "label-mono-sm": ["JetBrains Mono"],
+            "label-mono-hud": ["JetBrains Mono"],
+            "headline-sm": ["Plus Jakarta Sans"],
+            "body-sm": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "display-hero-farfield": ["64px", { "lineHeight": "68px", "letterSpacing": "-0.03em", "fontWeight": "800" }],
+            "title-md": ["16px", { "lineHeight": "22px", "fontWeight": "600" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "display-code-spaced": ["32px", { "lineHeight": "40px", "letterSpacing": "0.35em", "fontWeight": "700" }],
+            "display-timer-farfield": ["56px", { "lineHeight": "60px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "headline-md": ["22px", { "lineHeight": "30px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "title-sm": ["14px", { "lineHeight": "20px", "fontWeight": "600" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "label-mono-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+            "label-mono-hud": ["10px", { "lineHeight": "12px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+            "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .material-symbols-outlined.fill {
+      font-variation-settings: 'FILL' 1;
+    }
+    /* Ambient warm clinical card diffusion */
+    .soft-card-shadow {
+      box-shadow: 0 4px 20px -2px rgba(31, 36, 33, 0.04), 0 2px 6px -1px rgba(31, 36, 33, 0.02);
+    }
+    /* Safe hide scrollbars for clean chip strip */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-canvas-bg text-text-primary antialiased min-h-screen flex justify-center selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- Mobile Viewport Container (Android standard 412dp max width) -->
+<div class="w-full max-w-md bg-canvas-bg min-h-screen flex flex-col relative pb-28">
+<!-- TopAppBar (Shared Component Implementation) -->
+<header class="bg-canvas-bg flex justify-between items-center w-full px-inset-lg py-inset-sm sticky top-0 z-40">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-surface-card-warm border border-outline-variant/30 flex items-center justify-center text-primary font-headline-sm text-headline-sm overflow-hidden shadow-sm">
+<!-- Leading Clinician Avatar Placeholder with required 50-100 word prompt -->
+<img class="w-full h-full object-cover" data-alt="A dignified clinical physical therapist wearing a tailored neutral medical smock in a modern Scandinavian clinic. The scene is bathed in natural morning light through sheer linen curtains, casting soft warm shadows over natural stone and ivory walls. The atmosphere is calm, reassuring, highly professional, with deep evergreen potted botanicals in the soft-focus background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA79Qd22DfKut5sPAN6U6WwAmLok4a7ohlmYg1t3ls_BagY5ebHq1E7NlzupGsM42BI2nhfRb5TaiCqw7V_F5of4nTwtQNcN9__-o2ZzFbNA-lE-850hf5RKOmy3DRR6Rv0Buvwdy11kabXpkhl1JnIfZ0DZS2s91Hilr5NVGdpNOcEWO8DNyaCBfd0Iy6kFqnn08zVhxKcuX94sD-WHNWSL3Nm-5FDLzQbgaVsr37wOo_eSB7gu1pzjg"/>
+</div>
+<div class="flex flex-col">
+<span class="text-headline-sm font-headline-sm text-primary tracking-tight">RightPosture</span>
+<span class="text-label-mono-sm font-label-mono-sm text-text-secondary">Dr. S. Chen · Clinical</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button aria-label="Search exercise catalog" class="w-10 h-10 rounded-full flex items-center justify-center text-text-secondary hover:bg-canvas-subtle active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+<button aria-label="Notifications" class="w-10 h-10 rounded-full flex items-center justify-center text-text-secondary hover:bg-canvas-subtle active:scale-95 transition-all relative" type="button">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-secondary"></span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 px-inset-lg flex flex-col gap-5 pt-1">
+<!-- Screen Title & Metadata Hierarchy -->
+<section class="flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<h1 class="text-headline-lg font-headline-lg text-text-primary tracking-tight">Exercise Library</h1>
+<span class="px-2.5 py-1 rounded-full bg-surface-card-warm text-text-secondary text-label-mono-sm font-label-mono-sm border border-outline-variant/40">
+            v2.4 Core
+          </span>
+</div>
+<p class="text-body-sm font-body-sm text-text-secondary">
+          Clinical Reference Standards · 4 Active References
+        </p>
+</section>
+<!-- Kinematic ±3σ Explanatory Context Banner -->
+<section class="bg-surface-card-warm rounded-[20px] p-4 flex items-start gap-3 border border-outline-variant/25 soft-card-shadow">
+<div class="w-8 h-8 rounded-full bg-primary-container/10 flex items-center justify-center text-primary-container flex-shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[20px]" data-icon="tune">tune</span>
+</div>
+<div class="flex flex-col gap-1 text-left">
+<span class="text-title-sm font-title-sm text-text-primary">Normative Reference Model</span>
+<p class="text-body-sm font-body-sm text-text-secondary leading-snug">
+            Reference recordings define the kinematic ±3σ tolerance band every patient set is evaluated against on-device.
+          </p>
+</div>
+</section>
+<!-- Primary Authoring CTA (Hero Action Card) -->
+<section>
+<button class="w-full bg-primary-container text-on-primary rounded-[24px] p-5 flex items-center justify-between group active:scale-[0.99] transition-transform duration-150 soft-card-shadow text-left" type="button">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-on-primary group-hover:bg-white/15 transition-colors">
+<span class="material-symbols-outlined text-[26px]" data-icon="videocam">videocam</span>
+</div>
+<div class="flex flex-col">
+<span class="text-title-md font-title-md text-on-primary">Record a New Exercise</span>
+<span class="text-body-sm font-body-sm text-on-primary-container text-opacity-90">
+                5-step wizard · Author cyclic or hold
+              </span>
+</div>
+</div>
+<div class="w-9 h-9 rounded-full bg-white text-primary flex items-center justify-center shadow-sm flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]" data-icon="arrow_forward">arrow_forward</span>
+</div>
+</button>
+</section>
+<!-- Interactive Filter Segment / Chips -->
+<section aria-label="Movement category filters" class="flex items-center gap-2 overflow-x-auto no-scrollbar py-0.5" role="tablist">
+<button aria-selected="true" class="px-4 py-2 rounded-full bg-primary-container text-on-primary text-label-mono-sm font-label-mono-sm flex items-center gap-1.5 shadow-sm active:scale-95 transition-transform" role="tab" type="button">
+<span>All Exercises</span>
+<span class="opacity-70 text-[10px] bg-white/20 px-1.5 py-0.5 rounded-full">4</span>
+</button>
+<button aria-selected="false" class="px-4 py-2 rounded-full bg-canvas-subtle text-text-secondary hover:text-text-primary text-label-mono-sm font-label-mono-sm flex items-center gap-1.5 border border-outline-variant/30 active:scale-95 transition-transform" role="tab" type="button">
+<span class="material-symbols-outlined text-[16px] text-tag-exercise-ink" data-icon="sync">sync</span>
+<span>Cyclic Movements</span>
+<span class="opacity-70 text-[10px]">3</span>
+</button>
+<button aria-selected="false" class="px-4 py-2 rounded-full bg-canvas-subtle text-text-secondary hover:text-text-primary text-label-mono-sm font-label-mono-sm flex items-center gap-1.5 border border-outline-variant/30 active:scale-95 transition-transform" role="tab" type="button">
+<span class="material-symbols-outlined text-[16px] text-tag-hold-ink" data-icon="timer">timer</span>
+<span>Holds &amp; Isometrics</span>
+<span class="opacity-70 text-[10px]">1</span>
+</button>
+</section>
+<!-- Exercise Reference Cards Stack -->
+<section aria-label="Reference Catalog List" class="flex flex-col gap-3.5">
+<!-- Card 1: Seated knee extension (Cyclic) -->
+<article class="bg-surface-card rounded-[24px] p-5 border border-outline-variant/20 soft-card-shadow flex flex-col gap-4 relative">
+<!-- Header info row -->
+<div class="flex items-start justify-between gap-3">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center gap-1 bg-tag-exercise-wash text-tag-exercise-ink px-2.5 py-1 rounded-full font-label-mono-sm text-label-mono-sm font-medium">
+<span class="material-symbols-outlined text-[14px]" data-icon="autorenew">autorenew</span>
+                  Exercise
+                </span>
+<span class="font-label-mono-sm text-label-mono-sm text-text-muted">ID: REF-KNEE-01</span>
+</div>
+<h2 class="text-headline-sm font-headline-sm text-text-primary pt-0.5">Seated knee extension</h2>
+</div>
+<button aria-label="Inspect tolerance band" class="w-9 h-9 rounded-full bg-canvas-subtle flex items-center justify-center text-text-secondary hover:text-primary transition-colors active:scale-95" title="Kinematic Band Inspection" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="ssid_chart">ssid_chart</span>
+</button>
+</div>
+<!-- Version & Attribution Subtitle -->
+<div class="flex items-center gap-1.5 text-body-sm font-body-sm text-text-secondary bg-surface-card-warm/50 px-3 py-1.5 rounded-lg border border-outline-variant/15">
+<span class="material-symbols-outlined text-[16px] text-text-muted" data-icon="verified_user">verified_user</span>
+<span>v2 · Recorded Oct 12, 2024 · By Dr. S. Chen</span>
+</div>
+<!-- Specs Bento Grid -->
+<div class="grid grid-cols-2 gap-2.5">
+<div class="bg-canvas-bg rounded-xl p-2.5 border border-outline-variant/15 flex flex-col">
+<span class="text-label-mono-sm font-label-mono-sm text-text-muted">PRESCRIBED DEFAULT</span>
+<span class="text-title-sm font-title-sm text-text-primary mt-0.5">3 × 12 reps · 60s rest</span>
+</div>
+<div class="bg-canvas-bg rounded-xl p-2.5 border border-outline-variant/15 flex flex-col">
+<span class="text-label-mono-sm font-label-mono-sm text-text-muted">TOLERANCE MODEL</span>
+<span class="text-title-sm font-title-sm text-text-primary mt-0.5">Gaussian ±3σ (Normal)</span>
+</div>
+</div>
+<!-- Monitored Joint Features Chips -->
+<div class="flex flex-col gap-1.5">
+<span class="text-label-mono-sm font-label-mono-sm text-text-secondary flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-status-success-ink"></span>
+              3 Monitored Joint Features
+            </span>
+<div class="flex flex-wrap gap-1.5">
+<span class="px-2.5 py-1 rounded-md bg-canvas-subtle text-text-primary text-body-sm font-body-sm">Knee angle</span>
+<span class="px-2.5 py-1 rounded-md bg-canvas-subtle text-text-primary text-body-sm font-body-sm">Tibial drift</span>
+<span class="px-2.5 py-1 rounded-md bg-canvas-subtle text-text-primary text-body-sm font-body-sm">Torso compensation</span>
+</div>
+</div>
+<!-- Card Bottom Actions -->
+<div class="flex items-center gap-2 pt-1 border-t border-canvas-subtle">
+<button class="flex-1 py-2.5 px-4 rounded-full border border-canvas-subtle bg-transparent text-text-primary hover:bg-canvas-subtle text-title-sm font-title-sm flex items-center justify-center gap-1.5 active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="play_circle">play_circle</span>
+              Test Reference
+            </button>
+<button class="py-2.5 px-4 rounded-full bg-canvas-subtle text-text-secondary hover:text-text-primary text-body-sm font-body-sm flex items-center gap-1 active:scale-95 transition-all" type="button">
+<span>Audit Band</span>
+<span class="material-symbols-outlined text-[16px]" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</article>
+<!-- Card 2: Wall sit (Hold / Isometric) -->
+<article class="bg-surface-card rounded-[24px] p-5 border border-outline-variant/20 soft-card-shadow flex flex-col gap-4 relative">
+<!-- Header info row -->
+<div class="flex items-start justify-between gap-3">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center gap-1 bg-tag-hold-wash text-tag-hold-ink px-2.5 py-1 rounded-full font-label-mono-sm text-label-mono-sm font-medium">
+<span class="material-symbols-outlined text-[14px]" data-icon="timer">timer</span>
+                  Hold
+                </span>
+<span class="font-label-mono-sm text-label-mono-sm text-text-muted">ID: REF-WALL-02</span>
+</div>
+<h2 class="text-headline-sm font-headline-sm text-text-primary pt-0.5">Wall sit</h2>
+</div>
+<button aria-label="Inspect tolerance band" class="w-9 h-9 rounded-full bg-canvas-subtle flex items-center justify-center text-text-secondary hover:text-primary transition-colors active:scale-95" title="Kinematic Band Inspection" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="ssid_chart">ssid_chart</span>
+</button>
+</div>
+<!-- Version & Attribution Subtitle -->
+<div class="flex items-center gap-1.5 text-body-sm font-body-sm text-text-secondary bg-surface-card-warm/50 px-3 py-1.5 rounded-lg border border-outline-variant/15">
+<span class="material-symbols-outlined text-[16px] text-text-muted" data-icon="verified_user">verified_user</span>
+<span>v1 · Recorded Sep 28, 2024 · By Dr. S. Chen</span>
+</div>
+<!-- Specs Bento Grid -->
+<div class="grid grid-cols-2 gap-2.5">
+<div class="bg-canvas-bg rounded-xl p-2.5 border border-outline-variant/15 flex flex-col">
+<span class="text-label-mono-sm font-label-mono-sm text-text-muted">PRESCRIBED DEFAULT</span>
+<span class="text-title-sm font-title-sm text-text-primary mt-0.5">3 × 30s hold · 60s rest</span>
+</div>
+<div class="bg-canvas-bg rounded-xl p-2.5 border border-outline-variant/15 flex flex-col">
+<span class="text-label-mono-sm font-label-mono-sm text-text-muted">STEADY-STATE DRIFT</span>
+<span class="text-title-sm font-title-sm text-text-primary mt-0.5">Max &lt; 4° / 10s</span>
+</div>
+</div>
+<!-- Monitored Joint Features Chips -->
+<div class="flex flex-col gap-1.5">
+<span class="text-label-mono-sm font-label-mono-sm text-text-secondary flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tag-hold-ink"></span>
+              3 Monitored Joint Features
+            </span>
+<div class="flex flex-wrap gap-1.5">
+<span class="px-2.5 py-1 rounded-md bg-canvas-subtle text-text-primary text-body-sm font-body-sm">Knee flexion (90°)</span>
+<span class="px-2.5 py-1 rounded-md bg-canvas-subtle text-text-primary text-body-sm font-body-sm">Lumbar wall contact</span>
+<span class="px-2.5 py-1 rounded-md bg-canvas-subtle text-text-primary text-body-sm font-body-sm">Pelvic tilt</span>
+</div>
+</div>
+<!-- Card Bottom Actions -->
+<div class="flex items-center gap-2 pt-1 border-t border-canvas-subtle">
+<button class="flex-1 py-2.5 px-4 rounded-full border border-canvas-subtle bg-transparent text-text-primary hover:bg-canvas-subtle text-title-sm font-title-sm flex items-center justify-center gap-1.5 active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="play_circle">play_circle</span>
+              Test Reference
+            </button>
+<button class="py-2.5 px-4 rounded-full bg-canvas-subtle text-text-secondary hover:text-text-primary text-body-sm font-body-sm flex items-center gap-1 active:scale-95 transition-all" type="button">
+<span>Audit Band</span>
+<span class="material-symbols-outlined text-[16px]" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</article>
+<!-- Card 3: Sit to stand (Cyclic) -->
+<article class="bg-surface-card rounded-[24px] p-5 border border-outline-variant/20 soft-card-shadow flex flex-col gap-4 relative">
+<!-- Header info row -->
+<div class="flex items-start justify-between gap-3">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center gap-1 bg-tag-exercise-wash text-tag-exercise-ink px-2.5 py-1 rounded-full font-label-mono-sm text-label-mono-sm font-medium">
+<span class="material-symbols-outlined text-[14px]" data-icon="autorenew">autorenew</span>
+                  Exercise
+                </span>
+<span class="font-label-mono-sm text-label-mono-sm text-text-muted">ID: REF-CHAIR-03</span>
+</div>
+<h2 class="text-headline-sm font-headline-sm text-text-primary pt-0.5">Sit to stand</h2>
+</div>
+<button aria-label="Inspect tolerance band" class="w-9 h-9 rounded-full bg-canvas-subtle flex items-center justify-center text-text-secondary hover:text-primary transition-colors active:scale-95" title="Kinematic Band Inspection" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="ssid_chart">ssid_chart</span>
+</button>
+</div>
+<!-- Version & Attribution Subtitle -->
+<div class="flex items-center gap-1.5 text-body-sm font-body-sm text-text-secondary bg-surface-card-warm/50 px-3 py-1.5 rounded-lg border border-outline-variant/15">
+<span class="material-symbols-outlined text-[16px] text-text-muted" data-icon="verified_user">verified_user</span>
+<span>v1 · Recorded Aug 15, 2024 · Clinical Core</span>
+</div>
+<!-- Specs Bento Grid -->
+<div class="grid grid-cols-2 gap-2.5">
+<div class="bg-canvas-bg rounded-xl p-2.5 border border-outline-variant/15 flex flex-col">
+<span class="text-label-mono-sm font-label-mono-sm text-text-muted">PRESCRIBED DEFAULT</span>
+<span class="text-title-sm font-title-sm text-text-primary mt-0.5">3 × 10 reps · 90s rest</span>
+</div>
+<div class="bg-canvas-bg rounded-xl p-2.5 border border-outline-variant/15 flex flex-col">
+<span class="text-label-mono-sm font-label-mono-sm text-text-muted">VELOCITY THRESHOLD</span>
+<span class="text-title-sm font-title-sm text-text-primary mt-0.5">&gt; 0.35 m/s Ascending</span>
+</div>
+</div>
+<!-- Monitored Joint Features Chips -->
+<div class="flex flex-col gap-1.5">
+<span class="text-label-mono-sm font-label-mono-sm text-text-secondary flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-status-success-ink"></span>
+              3 Monitored Joint Features
+            </span>
+<div class="flex flex-wrap gap-1.5">
+<span class="px-2.5 py-1 rounded-md bg-canvas-subtle text-text-primary text-body-sm font-body-sm">Trunk lean</span>
+<span class="px-2.5 py-1 rounded-md bg-canvas-subtle text-text-primary text-body-sm font-body-sm">Hip extension velocity</span>
+<span class="px-2.5 py-1 rounded-md bg-canvas-subtle text-text-primary text-body-sm font-body-sm">Foot grounding</span>
+</div>
+</div>
+<!-- Card Bottom Actions -->
+<div class="flex items-center gap-2 pt-1 border-t border-canvas-subtle">
+<button class="flex-1 py-2.5 px-4 rounded-full border border-canvas-subtle bg-transparent text-text-primary hover:bg-canvas-subtle text-title-sm font-title-sm flex items-center justify-center gap-1.5 active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="play_circle">play_circle</span>
+              Test Reference
+            </button>
+<button class="py-2.5 px-4 rounded-full bg-canvas-subtle text-text-secondary hover:text-text-primary text-body-sm font-body-sm flex items-center gap-1 active:scale-95 transition-all" type="button">
+<span>Audit Band</span>
+<span class="material-symbols-outlined text-[16px]" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</article>
+<!-- Card 4: Standing hip abduction (Cyclic) -->
+<article class="bg-surface-card rounded-[24px] p-5 border border-outline-variant/20 soft-card-shadow flex flex-col gap-4 relative">
+<!-- Header info row -->
+<div class="flex items-start justify-between gap-3">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center gap-1 bg-tag-exercise-wash text-tag-exercise-ink px-2.5 py-1 rounded-full font-label-mono-sm text-label-mono-sm font-medium">
+<span class="material-symbols-outlined text-[14px]" data-icon="autorenew">autorenew</span>
+                  Exercise
+                </span>
+<span class="font-label-mono-sm text-label-mono-sm text-text-muted">ID: REF-HIP-04</span>
+</div>
+<h2 class="text-headline-sm font-headline-sm text-text-primary pt-0.5">Standing hip abduction</h2>
+</div>
+<button aria-label="Inspect tolerance band" class="w-9 h-9 rounded-full bg-canvas-subtle flex items-center justify-center text-text-secondary hover:text-primary transition-colors active:scale-95" title="Kinematic Band Inspection" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="ssid_chart">ssid_chart</span>
+</button>
+</div>
+<!-- Version & Attribution Subtitle -->
+<div class="flex items-center gap-1.5 text-body-sm font-body-sm text-text-secondary bg-surface-card-warm/50 px-3 py-1.5 rounded-lg border border-outline-variant/15">
+<span class="material-symbols-outlined text-[16px] text-text-muted" data-icon="verified_user">verified_user</span>
+<span>v2 · Recorded Oct 04, 2024 · Calibration Set</span>
+</div>
+<!-- Specs Bento Grid -->
+<div class="grid grid-cols-2 gap-2.5">
+<div class="bg-canvas-bg rounded-xl p-2.5 border border-outline-variant/15 flex flex-col">
+<span class="text-label-mono-sm font-label-mono-sm text-text-muted">PRESCRIBED DEFAULT</span>
+<span class="text-title-sm font-title-sm text-text-primary mt-0.5">3 × 12 reps · 60s rest</span>
+</div>
+<div class="bg-canvas-bg rounded-xl p-2.5 border border-outline-variant/15 flex flex-col">
+<span class="text-label-mono-sm font-label-mono-sm text-text-muted">TARGET ROM</span>
+<span class="text-title-sm font-title-sm text-text-primary mt-0.5">40° Abduction Min</span>
+</div>
+</div>
+<!-- Monitored Joint Features Chips -->
+<div class="flex flex-col gap-1.5">
+<span class="text-label-mono-sm font-label-mono-sm text-text-secondary flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-status-success-ink"></span>
+              3 Monitored Joint Features
+            </span>
+<div class="flex flex-wrap gap-1.5">
+<span class="px-2.5 py-1 rounded-md bg-canvas-subtle text-text-primary text-body-sm font-body-sm">Abduction range</span>
+<span class="px-2.5 py-1 rounded-md bg-canvas-subtle text-text-primary text-body-sm font-body-sm">Pelvic stability</span>
+<span class="px-2.5 py-1 rounded-md bg-canvas-subtle text-text-primary text-body-sm font-body-sm">Torso lean</span>
+</div>
+</div>
+<!-- Card Bottom Actions -->
+<div class="flex items-center gap-2 pt-1 border-t border-canvas-subtle">
+<button class="flex-1 py-2.5 px-4 rounded-full border border-canvas-subtle bg-transparent text-text-primary hover:bg-canvas-subtle text-title-sm font-title-sm flex items-center justify-center gap-1.5 active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="play_circle">play_circle</span>
+              Test Reference
+            </button>
+<button class="py-2.5 px-4 rounded-full bg-canvas-subtle text-text-secondary hover:text-text-primary text-body-sm font-body-sm flex items-center gap-1 active:scale-95 transition-all" type="button">
+<span>Audit Band</span>
+<span class="material-symbols-outlined text-[16px]" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</article>
+</section>
+<!-- Clinician Note & Goal Threshold Helper Banner -->
+<footer class="mt-2 mb-4 p-4 rounded-2xl bg-canvas-subtle/80 border border-outline-variant/30 flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary text-[20px] flex-shrink-0 mt-0.5" data-icon="info">info</span>
+<p class="text-body-sm font-body-sm text-text-secondary">
+          Need to set range progression targets? Configure specific degree thresholds in <strong class="text-text-primary font-medium">Patient Detail &gt; Programme</strong>.
+        </p>
+</footer>
+</main>
+<!-- BottomNavBar (Shared Component JSON Implementation) -->
+<!-- Destination count: 4, Labels: ["Activity", "Patients", "Library", "Me"] -->
+<!-- Current active intent: "Library" (Exact index 2 highlighted via style_active_navigation) -->
+<nav aria-label="Physio Navigation" class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-inset-xs h-nav-bottom-height max-w-md mx-auto bg-surface-card shadow-sm">
+<!-- Tab 1: Activity -->
+<button class="flex flex-col items-center justify-center text-text-secondary px-inset-md py-inset-xs hover:bg-canvas-subtle transition-colors duration-150 active:scale-95" type="button">
+<span class="material-symbols-outlined" data-icon="trending_up">trending_up</span>
+<span class="text-body-sm font-body-sm mt-0.5">Activity</span>
+</button>
+<!-- Tab 2: Patients -->
+<button class="flex flex-col items-center justify-center text-text-secondary px-inset-md py-inset-xs hover:bg-canvas-subtle transition-colors duration-150 active:scale-95" type="button">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="text-body-sm font-body-sm mt-0.5">Patients</span>
+</button>
+<!-- Tab 3: Library (Active) -->
+<button aria-current="page" class="flex flex-col items-center justify-center bg-primary-container text-on-primary rounded-full px-inset-md py-inset-xs shadow-sm active:scale-95 transition-transform duration-150" type="button">
+<span class="material-symbols-outlined fill" data-icon="local_library">local_library</span>
+<span class="text-body-sm font-body-sm mt-0.5 font-medium">Library</span>
+</button>
+<!-- Tab 4: Me -->
+<button class="flex flex-col items-center justify-center text-text-secondary px-inset-md py-inset-xs hover:bg-canvas-subtle transition-colors duration-150 active:scale-95" type="button">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="text-body-sm font-body-sm mt-0.5">Me</span>
+</button>
+</nav>
+</div>
+<script>
+    // Lightweight UI interactive feedback for chips
+    document.querySelectorAll('[role="tab"]').forEach((chip) => {
+      chip.addEventListener('click', function() {
+        document.querySelectorAll('[role="tab"]').forEach(c => {
+          c.classList.remove('bg-primary-container', 'text-on-primary', 'shadow-sm');
+          c.classList.add('bg-canvas-subtle', 'text-text-secondary', 'border', 'border-outline-variant/30');
+          c.setAttribute('aria-selected', 'false');
+        });
+        this.classList.add('bg-primary-container', 'text-on-primary', 'shadow-sm');
+        this.classList.remove('bg-canvas-subtle', 'text-text-secondary', 'border', 'border-outline-variant/30');
+        this.setAttribute('aria-selected', 'true');
+      });
+    });
+  </script>
+</body></html>

@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RightPosture - Technical Review</title>
+<!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=Plus Jakarta Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration verbatim as requested -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "text-muted": "#8C8F8C",
+            "on-primary-container": "#86af99",
+            "primary-fixed": "#c1ecd4",
+            "tertiary-fixed": "#b0f2b4",
+            "surface-container-highest": "#dfe4df",
+            "on-secondary": "#ffffff",
+            "on-secondary-fixed-variant": "#713714",
+            "tertiary-fixed-dim": "#95d69a",
+            "tag-exercise-ink": "#2E6B3A",
+            "on-surface": "#181d1a",
+            "secondary-fixed": "#ffdbcb",
+            "surface-tint": "#3f6653",
+            "inverse-primary": "#a5d0b9",
+            "status-absent-ink": "#9E9E9E",
+            "primary": "#012d1d",
+            "surface-dim": "#d7dbd6",
+            "tag-hold-ink": "#1B4F72",
+            "canvas-bg": "#FBF9F4",
+            "tag-hold-wash": "#E3EEF6",
+            "primary-fixed-dim": "#a5d0b9",
+            "data-chart-ground": "rgba(31, 36, 33, 0.05)",
+            "outline": "#717973",
+            "status-absent-wash": "#F3F4F6",
+            "on-primary-fixed-variant": "#274e3d",
+            "on-primary": "#ffffff",
+            "tertiary-container": "#00461a",
+            "surface-card": "#FFFFFF",
+            "outline-variant": "#c1c8c2",
+            "status-warning-ink": "#D97706",
+            "inverse-on-surface": "#edf2ed",
+            "on-tertiary": "#ffffff",
+            "surface-card-warm": "#EFEAE2",
+            "surface-tint-sand": "#F8F5EE",
+            "tag-exercise-wash": "#E7F0E8",
+            "on-secondary-container": "#783d1a",
+            "tertiary": "#002d0e",
+            "surface-bright": "#f6fbf5",
+            "inverse-surface": "#2c322e",
+            "status-danger-ink": "#C62828",
+            "secondary-container": "#feaa7f",
+            "surface-container-low": "#f0f5f0",
+            "error-container": "#ffdad6",
+            "on-error": "#ffffff",
+            "secondary": "#8e4d2a",
+            "surface-container": "#ebefea",
+            "background": "#f6fbf5",
+            "surface": "#f6fbf5",
+            "status-danger-wash": "#FEE2E2",
+            "surface-variant": "#dfe4df",
+            "canvas-subtle": "#F4EFEB",
+            "status-success-wash": "#E8F5E9",
+            "status-warning-wash": "#FEF3C7",
+            "text-primary": "#1F2421",
+            "status-success-ink": "#2E7D32",
+            "error": "#ba1a1a",
+            "on-tertiary-fixed-variant": "#115224",
+            "on-background": "#181d1a",
+            "on-tertiary-fixed": "#002108",
+            "text-secondary": "#6E726E",
+            "data-chart-trace": "#1565C0",
+            "primary-container": "#1b4332",
+            "on-error-container": "#93000a",
+            "secondary-fixed-dim": "#ffb691",
+            "on-secondary-fixed": "#341100",
+            "surface-container-lowest": "#ffffff",
+            "on-primary-fixed": "#002114",
+            "on-surface-variant": "#414844",
+            "surface-container-high": "#e5e9e4",
+            "on-tertiary-container": "#75b47c"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "height-quality-bar": "1.5rem",
+            "gutter-mobile": "1.25rem",
+            "inset-xl": "1.5rem",
+            "inset-sm": "0.75rem",
+            "gap-screen-stack": "1rem",
+            "height-chart-canvas": "10rem",
+            "inset-2xs": "0.25rem",
+            "inset-2xl": "2rem",
+            "gap-card-internal": "0.75rem",
+            "inset-xs": "0.5rem",
+            "keepout-active-hud": "2rem",
+            "inset-md": "1rem",
+            "inset-lg": "1.25rem",
+            "nav-bottom-height": "4.5rem"
+          },
+          "fontFamily": {
+            "display-hero-farfield": [
+              "Plus Jakarta Sans"
+            ],
+            "title-sm": [
+              "Plus Jakarta Sans"
+            ],
+            "title-md": [
+              "Plus Jakarta Sans"
+            ],
+            "body-sm": [
+              "Plus Jakarta Sans"
+            ],
+            "label-mono-sm": [
+              "JetBrains Mono"
+            ],
+            "display-code-spaced": [
+              "JetBrains Mono"
+            ],
+            "body-lg": [
+              "Plus Jakarta Sans"
+            ],
+            "headline-md": [
+              "Plus Jakarta Sans"
+            ],
+            "headline-lg": [
+              "Plus Jakarta Sans"
+            ],
+            "display-timer-farfield": [
+              "JetBrains Mono"
+            ],
+            "label-mono-hud": [
+              "JetBrains Mono"
+            ],
+            "headline-sm": [
+              "Plus Jakarta Sans"
+            ],
+            "body-md": [
+              "Plus Jakarta Sans"
+            ]
+          },
+          "fontSize": {
+            "display-hero-farfield": [
+              "64px",
+              {
+                "lineHeight": "68px",
+                "letterSpacing": "-0.03em",
+                "fontWeight": "800"
+              }
+            ],
+            "title-sm": [
+              "14px",
+              {
+                "lineHeight": "20px",
+                "fontWeight": "600"
+              }
+            ],
+            "title-md": [
+              "16px",
+              {
+                "lineHeight": "22px",
+                "fontWeight": "600"
+              }
+            ],
+            "body-sm": [
+              "12px",
+              {
+                "lineHeight": "16px",
+                "fontWeight": "400"
+              }
+            ],
+            "label-mono-sm": [
+              "11px",
+              {
+                "lineHeight": "14px",
+                "letterSpacing": "0.05em",
+                "fontWeight": "500"
+              }
+            ],
+            "display-code-spaced": [
+              "32px",
+              {
+                "lineHeight": "40px",
+                "letterSpacing": "0.35em",
+                "fontWeight": "700"
+              }
+            ],
+            "body-lg": [
+              "16px",
+              {
+                "lineHeight": "24px",
+                "fontWeight": "400"
+              }
+            ],
+            "headline-md": [
+              "22px",
+              {
+                "lineHeight": "30px",
+                "letterSpacing": "-0.01em",
+                "fontWeight": "600"
+              }
+            ],
+            "headline-lg": [
+              "28px",
+              {
+                "lineHeight": "36px",
+                "letterSpacing": "-0.02em",
+                "fontWeight": "700"
+              }
+            ],
+            "display-timer-farfield": [
+              "56px",
+              {
+                "lineHeight": "60px",
+                "letterSpacing": "-0.02em",
+                "fontWeight": "700"
+              }
+            ],
+            "label-mono-hud": [
+              "10px",
+              {
+                "lineHeight": "12px",
+                "letterSpacing": "0.02em",
+                "fontWeight": "400"
+              }
+            ],
+            "headline-sm": [
+              "18px",
+              {
+                "lineHeight": "24px",
+                "fontWeight": "600"
+              }
+            ],
+            "body-md": [
+              "14px",
+              {
+                "lineHeight": "20px",
+                "fontWeight": "400"
+              }
+            ]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      background-color: #EFEAE2;
+      font-family: "Plus Jakarta Sans", sans-serif;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .material-symbols-outlined.fill-icon {
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .card-diffused-shadow {
+      box-shadow: 0 4px 20px -2px rgba(31, 36, 33, 0.04), 0 2px 6px -1px rgba(31, 36, 33, 0.02);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="min-h-screen flex items-center justify-center p-0 md:p-6 bg-surface-card-warm text-text-primary antialiased selection:bg-primary selection:text-on-primary">
+<!-- Mobile Screen Container (Android 412dp viewport standard) -->
+<div class="w-full max-w-md bg-canvas-bg min-h-screen md:min-h-[890px] md:max-h-[920px] md:rounded-[36px] overflow-y-auto relative flex flex-col shadow-2xl border-0 md:border-8 md:border-surface-card-warm scroll-smooth">
+<!-- Top App Bar / Wizard Header -->
+<header class="sticky top-0 z-30 bg-canvas-bg/95 backdrop-blur-md px-inset-lg pt-inset-md pb-inset-sm flex items-center justify-between">
+<div class="flex items-center space-x-3">
+<div class="flex items-center justify-center w-8 h-8 rounded-full bg-surface-card-warm text-text-secondary hover:bg-canvas-subtle cursor-pointer transition-colors duration-150">
+<span class="material-symbols-outlined text-[20px]">tune</span>
+</div>
+<div>
+<div class="flex items-center space-x-2">
+<span class="text-label-mono-sm font-label-mono-sm text-text-secondary uppercase">Step 4 of 5</span>
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+<span class="text-label-mono-sm font-label-mono-sm text-primary font-medium">Kinematics</span>
+</div>
+<h1 class="text-headline-sm font-headline-sm text-primary tracking-tight">Review Reference</h1>
+</div>
+</div>
+<!-- Close / Exit Wizard Action -->
+<button aria-label="Close Wizard" class="w-9 h-9 flex items-center justify-center rounded-full bg-canvas-subtle hover:bg-surface-card-warm text-text-secondary transition-colors duration-150 active:scale-95">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</header>
+<!-- Main Content Flow (Vertical screen rhythm 16dp / gap-screen-stack) -->
+<main class="flex-1 px-inset-lg pb-32 pt-2 flex flex-col space-y-4">
+<!-- Wizard Progress Track -->
+<div class="w-full bg-surface-card-warm h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary-container h-full w-4/5 rounded-full transition-all duration-300"></div>
+</div>
+<!-- Header Card: Verdict Banner & Dominant Joint -->
+<div class="bg-surface-card rounded-[24px] p-5 card-diffused-shadow border border-surface-card-warm/80">
+<div class="flex items-start justify-between">
+<div>
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-status-success-wash border border-status-success-ink/20 text-status-success-ink text-label-mono-sm font-label-mono-sm">
+<span class="material-symbols-outlined text-[15px] fill-icon" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-semibold tracking-wide">Accepted</span>
+</div>
+<p class="mt-2 text-body-sm font-body-sm text-text-secondary">
+              8 clean reps <span class="mx-1 text-outline-variant">·</span> 3 joints watched
+            </p>
+</div>
+<div class="w-10 h-10 rounded-2xl bg-canvas-subtle flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[22px]">accessibility_new</span>
+</div>
+</div>
+<div class="mt-4 pt-3.5 border-t border-surface-card-warm flex items-center justify-between">
+<div class="flex items-center space-x-2">
+<span class="text-body-sm font-body-sm text-text-muted">Dominant joint:</span>
+<span class="text-title-sm font-title-sm text-primary">Knee Extension (Right)</span>
+</div>
+<span class="material-symbols-outlined text-[18px] text-text-muted">info</span>
+</div>
+</div>
+<!-- Section 1: Trace Chart with Rep Boundaries -->
+<div class="bg-surface-card rounded-[24px] p-5 card-diffused-shadow border border-surface-card-warm/80">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center space-x-2">
+<span class="material-symbols-outlined text-[18px] text-text-secondary">show_chart</span>
+<h2 class="text-title-md font-title-md text-primary">Kinematic Trace</h2>
+</div>
+<span class="text-label-mono-sm font-label-mono-sm text-text-secondary bg-surface-card-warm px-2 py-0.5 rounded-md">8 Reps Segmented</span>
+</div>
+<!-- Trace SVG Visualization -->
+<div class="w-full h-40 bg-data-chart-ground rounded-2xl p-2 relative overflow-hidden flex flex-col justify-between border border-primary/5">
+<!-- Background Grid lines -->
+<div class="absolute inset-0 flex flex-col justify-between pointer-events-none p-3 opacity-30">
+<div class="border-b border-dashed border-outline-variant w-full"></div>
+<div class="border-b border-dashed border-outline-variant w-full"></div>
+<div class="border-b border-dashed border-outline-variant w-full"></div>
+</div>
+<!-- Rep Boundary Labels -->
+<div class="relative z-10 flex justify-between text-label-mono-hud font-label-mono-hud text-text-muted px-1">
+<span>R1</span>
+<span>R2</span>
+<span>R3</span>
+<span>R4</span>
+<span>R5</span>
+<span>R6</span>
+<span>R7</span>
+<span>R8</span>
+</div>
+<!-- SVG Trace & Red Markers -->
+<div class="relative z-10 w-full h-24 my-auto">
+<svg class="w-full h-full overflow-visible" preserveaspectratio="none" viewbox="0 0 320 80">
+<!-- Rep Start/End Boundaries (Red Markers) -->
+<line opacity="0.85" stroke="#C62828" stroke-dasharray="2 2" stroke-width="1.2" x1="12" x2="12" y1="0" y2="80"></line>
+<line opacity="0.85" stroke="#C62828" stroke-dasharray="2 2" stroke-width="1.2" x1="50" x2="50" y1="0" y2="80"></line>
+<line opacity="0.85" stroke="#C62828" stroke-dasharray="2 2" stroke-width="1.2" x1="90" x2="90" y1="0" y2="80"></line>
+<line opacity="0.85" stroke="#C62828" stroke-dasharray="2 2" stroke-width="1.2" x1="130" x2="130" y1="0" y2="80"></line>
+<line opacity="0.85" stroke="#C62828" stroke-dasharray="2 2" stroke-width="1.2" x1="170" x2="170" y1="0" y2="80"></line>
+<line opacity="0.85" stroke="#C62828" stroke-dasharray="2 2" stroke-width="1.2" x1="210" x2="210" y1="0" y2="80"></line>
+<line opacity="0.85" stroke="#C62828" stroke-dasharray="2 2" stroke-width="1.2" x1="250" x2="250" y1="0" y2="80"></line>
+<line opacity="0.85" stroke="#C62828" stroke-dasharray="2 2" stroke-width="1.2" x1="290" x2="290" y1="0" y2="80"></line>
+<!-- Continuous Smooth Kinematic Trace -->
+<path d="M 0,65 
+                       C 6,65 8,15 25,15 C 38,15 42,65 50,65 
+                       C 58,65 62,14 70,14 C 80,14 84,65 90,65 
+                       C 98,65 102,12 110,12 C 120,12 124,65 130,65 
+                       C 138,65 142,16 150,16 C 160,16 164,65 170,65 
+                       C 178,65 182,13 190,13 C 200,13 204,65 210,65 
+                       C 218,65 222,15 230,15 C 240,15 244,65 250,65 
+                       C 258,65 262,12 270,12 C 280,12 284,65 290,65 
+                       C 298,65 304,18 312,18 C 318,18 320,55 320,60" fill="none" stroke="#1B4332" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+</svg>
+</div>
+<!-- Time Domain Axis -->
+<div class="relative z-10 flex justify-between text-label-mono-hud font-label-mono-hud text-text-secondary px-1 border-t border-outline-variant/40 pt-1">
+<span>0.0s</span>
+<span>12.4s (Total capture)</span>
+</div>
+</div>
+<!-- Section Caption -->
+<div class="mt-3 flex items-start space-x-2">
+<span class="inline-block w-2.5 h-2.5 rounded-full bg-status-danger-ink mt-1 flex-shrink-0"></span>
+<p class="text-body-sm font-body-sm text-text-secondary leading-snug">
+            Trace with rep boundaries. Check the red lines land where each rep really starts.
+          </p>
+</div>
+</div>
+<!-- Section 2: Reference Band (Mean ± 3σ) -->
+<div class="bg-surface-card rounded-[24px] p-5 card-diffused-shadow border border-surface-card-warm/80">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center space-x-2">
+<span class="material-symbols-outlined text-[18px] text-text-secondary">stacked_line_chart</span>
+<h2 class="text-title-md font-title-md text-primary">Reference Band</h2>
+</div>
+<span class="text-label-mono-sm font-label-mono-sm text-primary font-medium bg-tag-exercise-wash text-tag-exercise-ink px-2 py-0.5 rounded-md">Mean ± 3σ</span>
+</div>
+<!-- Band Chart SVG Visualization -->
+<div class="w-full h-36 bg-data-chart-ground rounded-2xl p-2.5 relative overflow-hidden flex flex-col justify-between border border-primary/5">
+<!-- Subtle Grid -->
+<div class="absolute inset-0 flex items-center justify-around pointer-events-none opacity-20">
+<div class="border-r border-outline-variant h-full"></div>
+<div class="border-r border-outline-variant h-full"></div>
+<div class="border-r border-outline-variant h-full"></div>
+</div>
+<!-- Y-axis degrees indicators -->
+<div class="absolute right-2 top-2 flex flex-col justify-between h-24 text-label-mono-hud font-label-mono-hud text-text-muted text-right pointer-events-none">
+<span>110°</span>
+<span>60°</span>
+<span>10°</span>
+</div>
+<!-- SVG Band Plot -->
+<div class="relative z-10 w-full h-24">
+<svg class="w-full h-full overflow-visible" preserveaspectratio="none" viewbox="0 0 300 80">
+<!-- ±3σ Confidence Wash Envelope (Filled 33% Green Wash) -->
+<path d="M 10,68 
+                       C 50,65 75,55 110,22 
+                       C 135,2 165,2 190,22 
+                       C 225,55 255,65 290,68 
+                       L 290,52 
+                       C 255,48 225,38 190,14 
+                       C 165,0 135,0 110,14 
+                       C 75,38 50,48 10,52 Z" fill="#2E7D32" fill-opacity="0.22" stroke="none"></path>
+<!-- Solid Dark Green Mean Line (0% to 100% Movement Phase) -->
+<path d="M 10,60 
+                       C 50,57 75,47 110,18 
+                       C 135,1 165,1 190,18 
+                       C 225,47 255,57 290,60" fill="none" stroke="#1B4332" stroke-linecap="round" stroke-width="2.8"></path>
+<!-- Discrete Phase Marks -->
+<circle cx="150" cy="8" fill="#1B4332" r="3.5"></circle>
+</svg>
+</div>
+<!-- X-Axis Labels 0% to 100% Phase -->
+<div class="relative z-10 flex justify-between text-label-mono-hud font-label-mono-hud text-text-secondary border-t border-outline-variant/40 pt-1">
+<span>0% (Eccentric initiation)</span>
+<span>50% (Peak Angle)</span>
+<span>100% (Full extension)</span>
+</div>
+</div>
+<!-- Section Caption -->
+<div class="mt-3 flex items-center space-x-2">
+<span class="material-symbols-outlined text-[18px] text-text-muted">analytics</span>
+<p class="text-body-sm font-body-sm text-text-secondary leading-snug">
+            One averaged rep, 0 to 100% through the movement.
+          </p>
+</div>
+</div>
+<!-- Section 3: Validator Results Table -->
+<div class="bg-surface-card rounded-[24px] p-5 card-diffused-shadow border border-surface-card-warm/80">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center space-x-2">
+<span class="material-symbols-outlined text-[18px] text-text-secondary">fact_check</span>
+<h2 class="text-title-md font-title-md text-primary">Validator Results</h2>
+</div>
+<span class="text-label-mono-sm font-label-mono-sm text-status-success-ink font-semibold">4 / 4 Cleared</span>
+</div>
+<div class="divide-y divide-surface-card-warm">
+<!-- Monitored joints -->
+<div class="py-2.5 flex items-center justify-between">
+<div class="flex items-center space-x-2.5">
+<span class="w-2 h-2 rounded-full bg-status-success-ink"></span>
+<span class="text-body-md font-body-md text-text-primary">Monitored joints</span>
+</div>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-status-success-wash text-status-success-ink text-label-mono-sm font-label-mono-sm font-semibold">
+              PASS
+            </span>
+</div>
+<!-- Cadence stability -->
+<div class="py-2.5 flex items-center justify-between">
+<div class="flex items-center space-x-2.5">
+<span class="w-2 h-2 rounded-full bg-status-success-ink"></span>
+<span class="text-body-md font-body-md text-text-primary">Cadence stability</span>
+</div>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-status-success-wash text-status-success-ink text-label-mono-sm font-label-mono-sm font-semibold">
+              PASS
+            </span>
+</div>
+<!-- Boundary consistency -->
+<div class="py-2.5 flex items-center justify-between">
+<div class="flex items-center space-x-2.5">
+<span class="w-2 h-2 rounded-full bg-status-success-ink"></span>
+<span class="text-body-md font-body-md text-text-primary">Boundary consistency</span>
+</div>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-status-success-wash text-status-success-ink text-label-mono-sm font-label-mono-sm font-semibold">
+              PASS
+            </span>
+</div>
+<!-- Signal-to-noise ratio -->
+<div class="py-2.5 flex items-center justify-between">
+<div class="flex items-center space-x-2.5">
+<span class="w-2 h-2 rounded-full bg-status-success-ink"></span>
+<span class="text-body-md font-body-md text-text-primary">Signal-to-noise ratio</span>
+</div>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-status-success-wash text-status-success-ink text-label-mono-sm font-label-mono-sm font-semibold">
+              PASS
+            </span>
+</div>
+</div>
+</div>
+<!-- Section 4: Watched Joints Table -->
+<div class="bg-surface-card rounded-[24px] p-5 card-diffused-shadow border border-surface-card-warm/80">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center space-x-2">
+<span class="material-symbols-outlined text-[18px] text-text-secondary">hub</span>
+<h2 class="text-title-md font-title-md text-primary">Watched Joints</h2>
+</div>
+<span class="text-label-mono-sm font-label-mono-sm text-text-secondary">Weight distribution</span>
+</div>
+<div class="space-y-3">
+<!-- Joint 1: Knee angle -->
+<div class="bg-canvas-bg rounded-xl p-3 border border-surface-card-warm">
+<div class="flex items-center justify-between">
+<div class="flex items-center space-x-2">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+<span class="text-title-sm font-title-sm text-text-primary">Knee angle</span>
+</div>
+<div class="flex items-center space-x-3 text-label-mono-sm font-label-mono-sm">
+<span class="text-text-secondary">Salience <strong class="text-text-primary font-medium">0.94</strong></span>
+<span class="bg-surface-card-warm text-primary font-bold px-2 py-0.5 rounded-full">55%</span>
+</div>
+</div>
+<!-- Visual Proportion Bar -->
+<div class="w-full bg-surface-card-warm h-1.5 rounded-full mt-2.5 overflow-hidden">
+<div class="bg-primary-container h-full rounded-full" style="width: 55%"></div>
+</div>
+</div>
+<!-- Joint 2: Tibial drift -->
+<div class="bg-canvas-bg rounded-xl p-3 border border-surface-card-warm">
+<div class="flex items-center justify-between">
+<div class="flex items-center space-x-2">
+<span class="w-2 h-2 rounded-full bg-status-warning-ink"></span>
+<span class="text-title-sm font-title-sm text-text-primary">Tibial drift</span>
+</div>
+<div class="flex items-center space-x-3 text-label-mono-sm font-label-mono-sm">
+<span class="text-text-secondary">Salience <strong class="text-text-primary font-medium">0.78</strong></span>
+<span class="bg-surface-card-warm text-primary font-bold px-2 py-0.5 rounded-full">30%</span>
+</div>
+</div>
+<!-- Visual Proportion Bar -->
+<div class="w-full bg-surface-card-warm h-1.5 rounded-full mt-2.5 overflow-hidden">
+<div class="bg-status-warning-ink h-full rounded-full" style="width: 30%"></div>
+</div>
+</div>
+<!-- Joint 3: Torso compensation -->
+<div class="bg-canvas-bg rounded-xl p-3 border border-surface-card-warm">
+<div class="flex items-center justify-between">
+<div class="flex items-center space-x-2">
+<span class="w-2 h-2 rounded-full bg-tag-hold-ink"></span>
+<span class="text-title-sm font-title-sm text-text-primary">Torso compensation</span>
+</div>
+<div class="flex items-center space-x-3 text-label-mono-sm font-label-mono-sm">
+<span class="text-text-secondary">Salience <strong class="text-text-primary font-medium">0.65</strong></span>
+<span class="bg-surface-card-warm text-primary font-bold px-2 py-0.5 rounded-full">15%</span>
+</div>
+</div>
+<!-- Visual Proportion Bar -->
+<div class="w-full bg-surface-card-warm h-1.5 rounded-full mt-2.5 overflow-hidden">
+<div class="bg-tag-hold-ink h-full rounded-full" style="width: 15%"></div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Fixed Actions (Strictly NO bottom navigation bar as mandated by linear task wizard rules) -->
+<div class="fixed md:absolute bottom-0 left-0 w-full z-40 bg-gradient-to-t from-canvas-bg via-canvas-bg/95 to-transparent px-inset-lg pt-6 pb-inset-xl max-w-md mx-auto pointer-events-none">
+<div class="flex flex-col space-y-2 pointer-events-auto">
+<!-- Primary Action Button with internal trailing white circle disc -->
+<button class="w-full h-14 bg-primary-container hover:bg-primary text-on-primary rounded-full px-5 py-2 flex items-center justify-between shadow-lg transition-transform duration-150 active:scale-[0.98]">
+<span class="text-title-md font-title-md pl-2">Continue to Save</span>
+<div class="w-9 h-9 rounded-full bg-surface-card flex items-center justify-center text-primary shadow-sm">
+<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</div>
+</button>
+<!-- Secondary Text Action -->
+<button class="w-full py-2.5 text-center text-body-sm font-title-sm text-text-secondary hover:text-status-danger-ink transition-colors duration-150">
+          Looks wrong — re-record
+        </button>
+</div>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RightPosture - Progress: Quality</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "tertiary-container": "#00461a",
+            "text-muted": "#8C8F8C",
+            "surface-container-lowest": "#ffffff",
+            "tag-exercise-ink": "#2E6B3A",
+            "status-success-ink": "#2E7D32",
+            "status-absent-wash": "#F3F4F6",
+            "canvas-subtle": "#F4EFEB",
+            "status-danger-ink": "#C62828",
+            "on-background": "#181d1a",
+            "on-primary-fixed-variant": "#274e3d",
+            "tertiary-fixed": "#b0f2b4",
+            "data-chart-ground": "rgba(31, 36, 33, 0.05)",
+            "tag-hold-wash": "#E3EEF6",
+            "surface-tint-sand": "#F8F5EE",
+            "canvas-bg": "#FBF9F4",
+            "status-absent-ink": "#9E9E9E",
+            "primary-fixed": "#c1ecd4",
+            "on-surface": "#181d1a",
+            "surface-container-highest": "#dfe4df",
+            "status-danger-wash": "#FEE2E2",
+            "inverse-primary": "#a5d0b9",
+            "status-warning-ink": "#D97706",
+            "on-tertiary-fixed-variant": "#115224",
+            "surface-container": "#ebefea",
+            "on-error-container": "#93000a",
+            "on-tertiary": "#ffffff",
+            "status-warning-wash": "#FEF3C7",
+            "on-primary-fixed": "#002114",
+            "on-primary-container": "#86af99",
+            "surface-container-high": "#e5e9e4",
+            "surface": "#f6fbf5",
+            "secondary": "#8e4d2a",
+            "tag-hold-ink": "#1B4F72",
+            "on-primary": "#ffffff",
+            "surface-bright": "#f6fbf5",
+            "background": "#f6fbf5",
+            "secondary-fixed-dim": "#ffb691",
+            "surface-card-warm": "#EFEAE2",
+            "status-success-wash": "#E8F5E9",
+            "on-secondary-container": "#783d1a",
+            "on-secondary": "#ffffff",
+            "surface-card": "#FFFFFF",
+            "primary": "#012d1d",
+            "on-error": "#ffffff",
+            "secondary-fixed": "#ffdbcb",
+            "surface-tint": "#3f6653",
+            "tertiary": "#002d0e",
+            "on-secondary-fixed-variant": "#713714",
+            "text-primary": "#1F2421",
+            "primary-container": "#1b4332",
+            "inverse-on-surface": "#edf2ed",
+            "data-chart-trace": "#1565C0",
+            "surface-variant": "#dfe4df",
+            "primary-fixed-dim": "#a5d0b9",
+            "tag-exercise-wash": "#E7F0E8",
+            "error": "#ba1a1a",
+            "on-tertiary-fixed": "#002108",
+            "outline-variant": "#c1c8c2",
+            "text-secondary": "#6E726E",
+            "surface-dim": "#d7dbd6",
+            "secondary-container": "#feaa7f",
+            "inverse-surface": "#2c322e",
+            "outline": "#717973",
+            "on-tertiary-container": "#75b47c",
+            "tertiary-fixed-dim": "#95d69a",
+            "on-surface-variant": "#414844",
+            "surface-container-low": "#f0f5f0",
+            "on-secondary-fixed": "#341100",
+            "error-container": "#ffdad6"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "card": "1.5rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "gap-card-internal": "0.75rem",
+            "gutter-mobile": "1.25rem",
+            "keepout-active-hud": "2rem",
+            "inset-lg": "1.25rem",
+            "nav-bottom-height": "4.5rem",
+            "inset-xs": "0.5rem",
+            "height-chart-canvas": "10rem",
+            "inset-sm": "0.75rem",
+            "height-quality-bar": "1.5rem",
+            "inset-xl": "1.5rem",
+            "inset-2xl": "2rem",
+            "inset-md": "1rem",
+            "inset-2xs": "0.25rem",
+            "gap-screen-stack": "1rem"
+          },
+          "fontFamily": {
+            "title-sm": ["Plus Jakarta Sans", "sans-serif"],
+            "title-md": ["Plus Jakarta Sans", "sans-serif"],
+            "display-code-spaced": ["JetBrains Mono", "monospace"],
+            "display-timer-farfield": ["JetBrains Mono", "monospace"],
+            "headline-md": ["Plus Jakarta Sans", "sans-serif"],
+            "label-mono-sm": ["JetBrains Mono", "monospace"],
+            "body-md": ["Plus Jakarta Sans", "sans-serif"],
+            "headline-sm": ["Plus Jakarta Sans", "sans-serif"],
+            "display-hero-farfield": ["Plus Jakarta Sans", "sans-serif"],
+            "headline-lg": ["Plus Jakarta Sans", "sans-serif"],
+            "body-sm": ["Plus Jakarta Sans", "sans-serif"],
+            "body-lg": ["Plus Jakarta Sans", "sans-serif"],
+            "label-mono-hud": ["JetBrains Mono", "monospace"]
+          },
+          "fontSize": {
+            "title-sm": ["14px", { "lineHeight": "20px", "fontWeight": "600" }],
+            "title-md": ["16px", { "lineHeight": "22px", "fontWeight": "600" }],
+            "display-code-spaced": ["32px", { "lineHeight": "40px", "letterSpacing": "0.35em", "fontWeight": "700" }],
+            "display-timer-farfield": ["56px", { "lineHeight": "60px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "headline-md": ["22px", { "lineHeight": "30px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "label-mono-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "display-hero-farfield": ["64px", { "lineHeight": "68px", "letterSpacing": "-0.03em", "fontWeight": "800" }],
+            "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "label-mono-hud": ["10px", { "lineHeight": "12px", "letterSpacing": "0.02em", "fontWeight": "400" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-canvas-bg text-text-primary antialiased min-h-screen flex justify-center selection:bg-primary-container selection:text-on-primary">
+<div class="w-full max-w-md bg-canvas-bg min-h-screen flex flex-col relative pb-28 shadow-xl">
+<!-- Android System Bar -->
+<div class="w-full pt-3 px-6 pb-2 flex items-center justify-between text-text-primary select-none z-30">
+<span class="font-title-sm text-title-sm font-semibold tracking-tight">9:41</span>
+<div class="flex items-center space-x-2">
+<span class="material-symbols-outlined text-[18px] leading-none" data-icon="signal_cellular_4_bar">signal_cellular_4_bar</span>
+<span class="material-symbols-outlined text-[18px] leading-none" data-icon="wifi">wifi</span>
+<span class="material-symbols-outlined text-[20px] leading-none" data-icon="battery_full">battery_full</span>
+</div>
+</div>
+<!-- TopAppBar from Shared Components Specification -->
+<header class="flex justify-between items-center w-full px-inset-lg py-inset-sm max-w-md mx-auto bg-canvas-bg">
+<div class="flex items-center gap-2.5">
+<div class="w-9 h-9 rounded-full bg-surface-card-warm flex items-center justify-center text-primary-container font-title-sm text-title-sm font-bold shadow-sm">
+<span class="material-symbols-outlined text-[20px]" data-icon="person">person</span>
+</div>
+<div>
+<span class="text-headline-sm font-headline-sm font-bold text-primary tracking-tight">RightPosture</span>
+<span class="block text-label-mono-sm font-label-mono-sm text-text-secondary -mt-0.5">Clinical Recovery</span>
+</div>
+</div>
+<button aria-label="Notifications" class="w-10 h-10 rounded-full bg-surface-card flex items-center justify-center text-primary hover:bg-canvas-subtle transition-colors shadow-sm active:scale-95">
+<span class="material-symbols-outlined text-[22px]" data-icon="notifications">notifications</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 px-inset-lg flex flex-col gap-y-4 pt-1">
+<!-- Screen Header with Editorial Clarity -->
+<section class="flex flex-col gap-1 mt-1">
+<div class="flex items-center justify-between">
+<h1 class="font-headline-lg text-headline-lg text-text-primary tracking-tight">Your Progress</h1>
+<button aria-label="More options" class="w-9 h-9 rounded-full bg-surface-card-warm flex items-center justify-center text-text-primary hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="more_horiz">more_horiz</span>
+</button>
+</div>
+<p class="font-body-md text-body-md text-text-secondary">Track rehabilitation &amp; clinical form</p>
+</section>
+<!-- Exercise Selector Chip -->
+<section class="flex items-center justify-between">
+<div class="inline-flex items-center gap-2 bg-surface-card px-3.5 py-2 rounded-full shadow-[0_2px_10px_-2px_rgba(31,36,33,0.04)] border border-surface-card-warm cursor-pointer active:scale-98 transition-transform">
+<span class="w-2 h-2 rounded-full bg-tag-exercise-ink"></span>
+<span class="font-title-sm text-title-sm text-text-primary">Seated knee extension</span>
+<span class="material-symbols-outlined text-text-secondary text-[18px]" data-icon="keyboard_arrow_down">keyboard_arrow_down</span>
+</div>
+<span class="font-label-mono-sm text-label-mono-sm text-text-muted">ID: RT-204</span>
+</section>
+<!-- Segmented Pill Tab Bar -->
+<section class="w-full bg-surface-card-warm p-1 rounded-full flex items-center shadow-inner">
+<button class="flex-1 py-1.5 rounded-full text-text-secondary font-title-sm text-title-sm text-center hover:text-text-primary transition-colors">Overview</button>
+<button class="flex-1 py-1.5 rounded-full bg-primary-container text-on-primary font-title-sm text-title-sm text-center shadow-sm transition-all">Quality</button>
+<button class="flex-1 py-1.5 rounded-full text-text-secondary font-title-sm text-title-sm text-center hover:text-text-primary transition-colors">Range</button>
+<button class="flex-1 py-1.5 rounded-full text-text-secondary font-title-sm text-title-sm text-center hover:text-text-primary transition-colors">History</button>
+</section>
+<!-- Chart card: quality per session, fixed 0-100 -->
+<section class="bg-surface-card rounded-[24px] p-5 shadow-[0_4px_20px_-2px_rgba(31,36,33,0.04)] flex flex-col gap-3 mt-1">
+<div class="flex items-start justify-between">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-text-primary">Quality per session</h2>
+<p class="font-body-sm text-body-sm text-text-secondary">Last 7 sessions &middot; scale fixed 0&ndash;100</p>
+</div>
+<span class="font-label-mono-sm text-label-mono-sm text-text-secondary bg-canvas-subtle px-2 py-1 rounded-full">Pass &ge; 80</span>
+</div>
+<div class="relative w-full h-height-chart-canvas bg-canvas-bg rounded-2xl border border-canvas-subtle p-3">
+<svg class="w-full h-full overflow-visible" preserveaspectratio="none" viewbox="0 0 320 120">
+<line stroke="#c1c8c2" stroke-dasharray="3 3" stroke-width="1.5" x1="0" x2="320" y1="24" y2="24"></line>
+<line stroke="rgba(31,36,33,0.05)" stroke-width="1" x1="0" x2="320" y1="60" y2="60"></line>
+<line stroke="rgba(31,36,33,0.05)" stroke-width="1" x1="0" x2="320" y1="96" y2="96"></line>
+<!-- Session 4 was not scoreable: the line breaks, it does not drop to the floor -->
+<polyline fill="none" points="16,50 66,44 116,38" stroke="#2E7D32" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></polyline>
+<polyline fill="none" points="216,30 266,22 304,26" stroke="#2E7D32" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></polyline>
+<line stroke="#9E9E9E" stroke-dasharray="4 4" stroke-width="1.5" x1="116" x2="216" y1="38" y2="30"></line>
+<circle cx="16" cy="50" fill="#FFFFFF" r="4.5" stroke="#2E7D32" stroke-width="2.5"></circle>
+<circle cx="66" cy="44" fill="#FFFFFF" r="4.5" stroke="#2E7D32" stroke-width="2.5"></circle>
+<circle cx="116" cy="38" fill="#FFFFFF" r="4.5" stroke="#2E7D32" stroke-width="2.5"></circle>
+<circle cx="166" cy="34" fill="#FBF9F4" r="5" stroke="#9E9E9E" stroke-dasharray="2 2" stroke-width="2"></circle>
+<circle cx="216" cy="30" fill="#FFFFFF" r="4.5" stroke="#2E7D32" stroke-width="2.5"></circle>
+<circle cx="266" cy="22" fill="#FFFFFF" r="4.5" stroke="#2E7D32" stroke-width="2.5"></circle>
+<circle cx="304" cy="26" fill="#2E7D32" r="5.5" stroke="#FFFFFF" stroke-width="2"></circle>
+</svg>
+</div>
+<div class="flex justify-between items-center font-label-mono-sm text-label-mono-sm text-text-secondary">
+<span>76</span><span>79</span><span>82</span><span class="text-status-absent-ink">&mdash;</span><span>86</span><span>88</span><span class="font-bold text-text-primary">84</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary border-t border-canvas-subtle pt-2">
+A hollow marker with a dashed join means that session could not be scored &mdash; on May 16 only 4 reps
+were recorded, below the 6 needed. It is a gap, not a zero.
+</p>
+</section>
+<!-- What moves this -->
+<section class="bg-surface-card rounded-[24px] p-5 shadow-[0_4px_20px_-2px_rgba(31,36,33,0.04)] flex flex-col gap-2.5">
+<h2 class="font-headline-sm text-headline-sm text-text-primary">What moves this number</h2>
+<ul class="flex flex-col gap-2.5">
+<li class="flex gap-2.5 items-start">
+<span class="material-symbols-outlined text-tag-exercise-ink text-[18px] mt-0.5" data-icon="straighten">straighten</span>
+<span class="font-body-md text-body-md text-text-secondary"><span class="text-text-primary font-semibold">Reaching full range.</span> Stopping short of your peak angle costs the most.</span>
+</li>
+<li class="flex gap-2.5 items-start">
+<span class="material-symbols-outlined text-tag-exercise-ink text-[18px] mt-0.5" data-icon="speed">speed</span>
+<span class="font-body-md text-body-md text-text-secondary"><span class="text-text-primary font-semibold">Steady pacing.</span> Reps faster than the reference movement score lower even when the range is right.</span>
+</li>
+<li class="flex gap-2.5 items-start">
+<span class="material-symbols-outlined text-tag-exercise-ink text-[18px] mt-0.5" data-icon="balance">balance</span>
+<span class="font-body-md text-body-md text-text-secondary"><span class="text-text-primary font-semibold">Holding your alignment.</span> Trunk or hip compensation late in a set pulls the last few reps down.</span>
+</li>
+</ul>
+</section>
+<!-- Sessions with their individual scores -->
+<section class="flex flex-col gap-2">
+<div class="flex items-center justify-between px-1">
+<h2 class="font-headline-sm text-headline-sm text-text-primary">Session scores</h2>
+<button class="font-title-sm text-title-sm text-primary flex items-center gap-0.5">See all <span class="material-symbols-outlined text-[16px]" data-icon="chevron_right">chevron_right</span></button>
+</div>
+<button class="w-full bg-surface-card rounded-2xl p-4 shadow-[0_2px_10px_-2px_rgba(31,36,33,0.04)] flex items-center justify-between text-left active:scale-[0.99] transition-transform"><div><span class="font-title-md text-title-md text-text-primary">Today &middot; 09:15</span><p class="font-body-sm text-body-sm text-text-secondary">10 of 12 reps</p><p class="font-body-sm text-body-sm text-status-warning-ink mt-1 flex items-center gap-1"><span class="material-symbols-outlined text-[14px]" data-icon="error">error</span>Form slipped at rep 9</p></div><div class="flex items-center gap-2"><div class="flex flex-col items-end"><span class="font-headline-sm text-headline-sm text-status-warning-ink">84</span><span class="font-label-mono-sm text-label-mono-sm text-text-muted">SCORE</span></div><span class="material-symbols-outlined text-text-muted text-[20px]" data-icon="chevron_right">chevron_right</span></div></button>
+<button class="w-full bg-surface-card rounded-2xl p-4 shadow-[0_2px_10px_-2px_rgba(31,36,33,0.04)] flex items-center justify-between text-left active:scale-[0.99] transition-transform"><div><span class="font-title-md text-title-md text-text-primary">May 18 &middot; 08:40</span><p class="font-body-sm text-body-sm text-text-secondary">12 of 12 reps</p></div><div class="flex items-center gap-2"><div class="flex flex-col items-end"><span class="font-headline-sm text-headline-sm text-status-success-ink">88</span><span class="font-label-mono-sm text-label-mono-sm text-text-muted">SCORE</span></div><span class="material-symbols-outlined text-text-muted text-[20px]" data-icon="chevron_right">chevron_right</span></div></button>
+<button class="w-full bg-surface-card rounded-2xl p-4 shadow-[0_2px_10px_-2px_rgba(31,36,33,0.04)] flex items-center justify-between text-left active:scale-[0.99] transition-transform"><div><span class="font-title-md text-title-md text-text-primary">May 17 &middot; 09:05</span><p class="font-body-sm text-body-sm text-text-secondary">12 of 12 reps</p></div><div class="flex items-center gap-2"><div class="flex flex-col items-end"><span class="font-headline-sm text-headline-sm text-status-success-ink">86</span><span class="font-label-mono-sm text-label-mono-sm text-text-muted">SCORE</span></div><span class="material-symbols-outlined text-text-muted text-[20px]" data-icon="chevron_right">chevron_right</span></div></button>
+<button class="w-full bg-surface-card rounded-2xl p-4 shadow-[0_2px_10px_-2px_rgba(31,36,33,0.04)] flex items-center justify-between text-left active:scale-[0.99] transition-transform"><div><span class="font-title-md text-title-md text-text-primary">May 16 &middot; 18:20</span><p class="font-body-sm text-body-sm text-text-secondary">4 of 12 reps &middot; interrupted</p></div><div class="flex items-center gap-2"><div class="flex flex-col items-end"><span class="font-headline-sm text-headline-sm text-status-absent-ink">&mdash;</span><span class="font-label-mono-sm text-label-mono-sm text-status-absent-ink">Not scored</span></div><span class="material-symbols-outlined text-text-muted text-[20px]" data-icon="chevron_right">chevron_right</span></div></button>
+<button class="w-full bg-surface-card rounded-2xl p-4 shadow-[0_2px_10px_-2px_rgba(31,36,33,0.04)] flex items-center justify-between text-left active:scale-[0.99] transition-transform"><div><span class="font-title-md text-title-md text-text-primary">May 14 &middot; 09:30</span><p class="font-body-sm text-body-sm text-text-secondary">11 of 12 reps</p></div><div class="flex items-center gap-2"><div class="flex flex-col items-end"><span class="font-headline-sm text-headline-sm text-status-success-ink">82</span><span class="font-label-mono-sm text-label-mono-sm text-text-muted">SCORE</span></div><span class="material-symbols-outlined text-text-muted text-[20px]" data-icon="chevron_right">chevron_right</span></div></button>
+</section>
+</main>
+<!-- BottomNavBar from Shared Components Specification -->
+<nav class="fixed bottom-0 left-0 right-0 w-full z-50 flex justify-around items-center h-nav-bottom-height px-gutter-mobile bg-surface-card shadow-[0_-4px_20px_-2px_rgba(31,36,33,0.04)] max-w-md mx-auto">
+<!-- Tab 1: Today (Inactive) -->
+<a class="flex flex-col items-center justify-center text-text-secondary px-inset-md py-1.5 min-w-[64px] min-h-[48px] hover:bg-canvas-subtle rounded-full transition-colors active:scale-95" href="#today">
+<span class="material-symbols-outlined text-[24px]" data-icon="calendar_today">calendar_today</span>
+<span class="font-label-mono-sm text-label-mono-sm mt-0.5">Today</span>
+</a>
+<!-- Tab 2: Progress (Active Destination) -->
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary rounded-full px-inset-md py-1.5 min-w-[64px] min-h-[48px] shadow-sm active:scale-95 transition-transform" href="#progress">
+<span class="material-symbols-outlined text-[24px]" data-icon="monitoring">monitoring</span>
+<span class="font-label-mono-sm text-label-mono-sm mt-0.5">Progress</span>
+</a>
+<!-- Tab 3: Me (Inactive) -->
+<a class="flex flex-col items-center justify-center text-text-secondary px-inset-md py-1.5 min-w-[64px] min-h-[48px] hover:bg-canvas-subtle rounded-full transition-colors active:scale-95" href="#me">
+<span class="material-symbols-outlined text-[24px]" data-icon="person">person</span>
+<span class="font-label-mono-sm text-label-mono-sm mt-0.5">Me</span>
+</a>
+</nav>
+</div>
+</body></html>

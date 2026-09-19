@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Patient Session Summary - RightPosture</title>
+<!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS with Forms and Container Queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Theme Configuration Verbatim -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-primary-fixed-variant": "#274e3d",
+            "surface-dim": "#d7dbd6",
+            "secondary-fixed": "#ffdbcb",
+            "tertiary-fixed-dim": "#95d69a",
+            "background": "#f6fbf5",
+            "on-primary-fixed": "#002114",
+            "on-secondary-fixed": "#341100",
+            "status-danger-wash": "#FEE2E2",
+            "inverse-on-surface": "#edf2ed",
+            "on-primary-container": "#86af99",
+            "on-error-container": "#93000a",
+            "surface-card": "#FFFFFF",
+            "tag-exercise-wash": "#E7F0E8",
+            "on-background": "#181d1a",
+            "surface-variant": "#dfe4df",
+            "primary-fixed-dim": "#a5d0b9",
+            "on-secondary-fixed-variant": "#713714",
+            "surface-container-low": "#f0f5f0",
+            "inverse-surface": "#2c322e",
+            "primary-container": "#1b4332",
+            "tertiary": "#002d0e",
+            "on-error": "#ffffff",
+            "outline": "#717973",
+            "outline-variant": "#c1c8c2",
+            "error-container": "#ffdad6",
+            "text-muted": "#8C8F8C",
+            "surface-container-lowest": "#ffffff",
+            "on-secondary-container": "#783d1a",
+            "inverse-primary": "#a5d0b9",
+            "canvas-bg": "#FBF9F4",
+            "surface-card-warm": "#EFEAE2",
+            "status-warning-wash": "#FEF3C7",
+            "secondary": "#8e4d2a",
+            "surface-tint": "#3f6653",
+            "surface-bright": "#f6fbf5",
+            "data-chart-trace": "#1565C0",
+            "tag-exercise-ink": "#2E6B3A",
+            "surface-container": "#ebefea",
+            "on-surface": "#181d1a",
+            "status-danger-ink": "#C62828",
+            "status-success-ink": "#2E7D32",
+            "primary-fixed": "#c1ecd4",
+            "on-secondary": "#ffffff",
+            "status-success-wash": "#E8F5E9",
+            "surface-container-high": "#e5e9e4",
+            "on-tertiary-fixed": "#002108",
+            "on-primary": "#ffffff",
+            "surface-container-highest": "#dfe4df",
+            "surface": "#f6fbf5",
+            "status-warning-ink": "#D97706",
+            "tertiary-container": "#00461a",
+            "error": "#ba1a1a",
+            "secondary-fixed-dim": "#ffb691",
+            "on-surface-variant": "#414844",
+            "canvas-subtle": "#F4EFEB",
+            "surface-tint-sand": "#F8F5EE",
+            "status-absent-wash": "#F3F4F6",
+            "tertiary-fixed": "#b0f2b4",
+            "tag-hold-ink": "#1B4F72",
+            "tag-hold-wash": "#E3EEF6",
+            "secondary-container": "#feaa7f",
+            "text-secondary": "#6E726E",
+            "status-absent-ink": "#9E9E9E",
+            "on-tertiary-container": "#75b47c",
+            "on-tertiary-fixed-variant": "#115224",
+            "on-tertiary": "#ffffff",
+            "data-chart-ground": "rgba(31, 36, 33, 0.05)",
+            "primary": "#012d1d",
+            "text-primary": "#1F2421"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "inset-2xl": "2rem",
+            "height-chart-canvas": "10rem",
+            "nav-bottom-height": "4.5rem",
+            "inset-xs": "0.5rem",
+            "gap-screen-stack": "1rem",
+            "gutter-mobile": "1.25rem",
+            "inset-sm": "0.75rem",
+            "keepout-active-hud": "2rem",
+            "inset-xl": "1.5rem",
+            "inset-lg": "1.25rem",
+            "inset-md": "1rem",
+            "height-quality-bar": "1.5rem",
+            "inset-2xs": "0.25rem",
+            "gap-card-internal": "0.75rem"
+          },
+          "fontFamily": {
+            "headline-lg": ["Plus Jakarta Sans"],
+            "body-md": ["Plus Jakarta Sans"],
+            "label-mono-sm": ["JetBrains Mono"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "display-hero-farfield": ["Plus Jakarta Sans"],
+            "body-lg": ["Plus Jakarta Sans"],
+            "title-sm": ["Plus Jakarta Sans"],
+            "headline-sm": ["Plus Jakarta Sans"],
+            "label-mono-hud": ["JetBrains Mono"],
+            "title-md": ["Plus Jakarta Sans"],
+            "display-code-spaced": ["JetBrains Mono"],
+            "display-timer-farfield": ["JetBrains Mono"],
+            "body-sm": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "label-mono-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+            "headline-md": ["22px", { "lineHeight": "30px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "display-hero-farfield": ["64px", { "lineHeight": "68px", "letterSpacing": "-0.03em", "fontWeight": "800" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "title-sm": ["14px", { "lineHeight": "20px", "fontWeight": "600" }],
+            "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "label-mono-hud": ["10px", { "lineHeight": "12px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+            "title-md": ["16px", { "lineHeight": "22px", "fontWeight": "600" }],
+            "display-code-spaced": ["32px", { "lineHeight": "40px", "letterSpacing": "0.35em", "fontWeight": "700" }],
+            "display-timer-farfield": ["56px", { "lineHeight": "60px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-canvas-bg text-text-primary min-h-screen flex justify-center selection:bg-primary-fixed antialiased">
+<!-- Mobile Frame Container (max-w-md, 390-412dp standard mobile viewport) -->
+<main class="w-full max-w-md min-h-screen bg-canvas-bg flex flex-col justify-between px-inset-lg pb-inset-xl pt-inset-sm relative">
+<!-- Top Bar: Task-Focused Dismissal & Status Indicator (BottomNavBar suppressed per linear flow mandate) -->
+<header class="flex items-center justify-between w-full py-inset-xs">
+<button aria-label="Dismiss set summary" class="w-10 h-10 rounded-full bg-canvas-subtle hover:bg-surface-card-warm flex items-center justify-center text-text-primary active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="close">close</span>
+</button>
+<div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-canvas-subtle">
+<span class="w-2 h-2 rounded-full bg-status-success-ink"></span>
+<span class="font-label-mono-sm text-label-mono-sm text-text-secondary tracking-wider">SET 1 OF 3 COMPLETE</span>
+</div>
+<button aria-label="Session settings or audio cues" class="w-10 h-10 rounded-full bg-canvas-subtle hover:bg-surface-card-warm flex items-center justify-center text-text-primary active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="tune">tune</span>
+</button>
+</header>
+<!-- Main Content Stack (gap-screen-stack = 16dp) -->
+<section class="flex flex-col gap-gap-screen-stack mt-2 flex-grow">
+<!-- Header Title & Subtitle (Quiet, factual, reassuring) -->
+<div class="flex flex-col pt-1">
+<h1 class="font-headline-lg text-headline-lg text-text-primary tracking-tight">Set Summary</h1>
+<p class="font-body-md text-body-md text-text-secondary mt-0.5">Seated knee extension · Right leg</p>
+</div>
+<!-- Section 1: Hero Result Cards / Bento Stat Matrix -->
+<div class="grid grid-cols-2 gap-3">
+<!-- Reps Completed Card -->
+<article class="bg-surface-card rounded-[24px] p-5 shadow-[0_4px_20px_-2px_rgba(31,36,33,0.04),0_2px_6px_-1px_rgba(31,36,33,0.02)] flex flex-col justify-between min-h-[148px]">
+<div class="flex items-center justify-between">
+<span class="font-title-sm text-title-sm text-text-secondary">Prescribed Reps</span>
+<div class="w-7 h-7 rounded-full bg-canvas-subtle flex items-center justify-center text-text-secondary">
+<span class="material-symbols-outlined text-[16px]" data-icon="fitness_center">fitness_center</span>
+</div>
+</div>
+<div class="my-auto">
+<div class="flex items-baseline gap-1">
+<span class="font-headline-lg text-[32px] leading-tight font-extrabold text-text-primary">10</span>
+<span class="font-title-md text-title-md text-text-secondary font-medium">/ 12</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary mt-0.5">Reps counted</p>
+</div>
+<div class="flex items-center gap-1.5 pt-2 border-t border-canvas-subtle">
+<span class="font-label-mono-sm text-label-mono-sm text-tag-exercise-ink font-semibold">83%</span>
+<span class="font-body-sm text-body-sm text-text-muted">target volume</span>
+</div>
+</article>
+<!-- Set Quality Score Card -->
+<article class="bg-surface-card rounded-[24px] p-5 shadow-[0_4px_20px_-2px_rgba(31,36,33,0.04),0_2px_6px_-1px_rgba(31,36,33,0.02)] flex flex-col justify-between min-h-[148px]">
+<div class="flex items-center justify-between">
+<span class="font-title-sm text-title-sm text-text-secondary">Set Quality</span>
+<span class="px-2 py-0.5 rounded-full bg-status-success-wash text-status-success-ink font-label-mono-sm text-label-mono-sm flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-status-success-ink"></span>
+              SUCCESS
+            </span>
+</div>
+<div class="my-auto">
+<div class="flex items-baseline gap-1">
+<span class="font-headline-lg text-[32px] leading-tight font-extrabold text-text-primary">84</span>
+<span class="font-title-md text-title-md text-text-secondary font-medium">/ 100</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary mt-0.5">Median score</p>
+</div>
+<!-- Mini Quality Bar Indicator -->
+<div class="w-full bg-canvas-subtle h-2 rounded-full overflow-hidden mt-1">
+<div class="bg-status-success-ink h-full rounded-full" style="width: 84%;"></div>
+</div>
+</article>
+</div>
+<!-- Section 2: AI-Generated / Clinical Summary Card -->
+<article class="bg-surface-card rounded-[24px] p-5 shadow-[0_4px_20px_-2px_rgba(31,36,33,0.04),0_2px_6px_-1px_rgba(31,36,33,0.02)] flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-full bg-tag-exercise-wash flex items-center justify-center text-tag-exercise-ink">
+<span class="material-symbols-outlined text-[16px]" data-icon="neurology">neurology</span>
+</div>
+<h2 class="font-title-md text-title-md text-text-primary">Clinical Observation</h2>
+</div>
+<span class="font-label-mono-sm text-label-mono-sm text-text-muted">SET METRICS</span>
+</div>
+<!-- Strict Whitelist Paragraph from UI-CONTENT.md -->
+<p class="font-body-md text-body-md text-text-primary leading-relaxed">
+          You finished <span class="font-semibold text-primary-container">10</span> of <span class="font-semibold text-primary-container">12</span> reps with a median quality of <span class="font-semibold text-primary-container">84</span> out of <span class="font-semibold text-primary-container">100</span>. Your form remained stable until rep <span class="font-semibold text-secondary">9</span>, where range was <span class="font-semibold text-secondary">8 percent</span> smaller. Take a <span class="font-semibold text-text-primary">60-second</span> rest before your next set.
+        </p>
+<!-- Attribution line -->
+<div class="flex items-center gap-1.5 pt-2 border-t border-canvas-subtle text-text-muted">
+<span class="material-symbols-outlined text-[14px]" data-icon="memory">memory</span>
+<span class="font-label-mono-sm text-[10px] text-text-muted tracking-tight">Written on this phone by Gemma on the NPU</span>
+</div>
+</article>
+<!-- Section 3: Next Step Action Card (Rest Countdown + Upcoming Exercise Context) -->
+<article class="bg-surface-tint-sand border border-surface-card-warm rounded-[24px] p-5 flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-container text-[18px]" data-icon="timelapse">timelapse</span>
+<span class="font-title-sm text-title-sm text-text-primary">Rest Interval Active</span>
+</div>
+<div class="flex items-center gap-1 font-label-mono-sm text-label-mono-sm text-primary-container font-semibold bg-white px-2 py-0.5 rounded-full border border-canvas-subtle">
+<span class="tracking-wide" id="rest-timer">00:54</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-1">
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm text-text-secondary">Up Next</span>
+<span class="font-title-md text-title-md text-text-primary">Seated knee extension</span>
+<span class="font-body-sm text-body-sm text-text-secondary">Set 2 of 3 · 12 reps target</span>
+</div>
+<div class="w-11 h-11 rounded-full bg-surface-card flex items-center justify-center text-primary shadow-sm border border-canvas-subtle">
+<span class="material-symbols-outlined text-[22px]" data-icon="arrow_forward">arrow_forward</span>
+</div>
+</div>
+</article><section class="space-y-3 pt-2">
+<div class="flex items-center justify-between px-1">
+<h3 class="text-base font-semibold text-neutral-800 tracking-tight">Your progress</h3>
+<span class="text-xs text-neutral-500 font-medium">Recent sets</span>
+</div>
+<!-- Quality per set card -->
+<div class="bg-white rounded-3xl p-4 shadow-sm border border-neutral-100/60 space-y-2">
+<div class="flex items-center justify-between">
+<span class="text-xs font-semibold text-neutral-700">Quality per set</span>
+<span class="text-[11px] font-mono text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full font-medium">Target: 80</span>
+</div>
+<div class="w-full h-24 relative">
+<svg class="w-full h-full overflow-visible" viewbox="0 0 300 80">
+<line stroke="#d1d5db" stroke-dasharray="3 3" stroke-width="1" x1="0" x2="300" y1="24" y2="24"></line>
+<text fill="#9ca3af" font-family="monospace" font-size="8" text-anchor="end" x="296" y="21">80</text>
+<path d="M 20 28 L 65 24 L 110 26 L 155 80 L 155 80 L 200 23 L 245 20 L 285 21 L 285 80 L 20 80 Z" fill="rgba(27, 67, 50, 0.04)"></path>
+<path d="M 20 28 L 65 24 L 110 26" fill="none" stroke="#935b38" stroke-linecap="round" stroke-width="2"></path>
+<path d="M 200 23 L 245 20 L 285 21" fill="none" stroke="#935b38" stroke-linecap="round" stroke-width="2"></path>
+<line stroke="#d1d5db" stroke-dasharray="2 2" stroke-width="1.5" x1="110" x2="155" y1="26" y2="72"></line>
+<line stroke="#d1d5db" stroke-dasharray="2 2" stroke-width="1.5" x1="155" x2="200" y1="72" y2="23"></line>
+<circle cx="20" cy="28" fill="#935b38" r="3"></circle>
+<circle cx="65" cy="24" fill="#935b38" r="3"></circle>
+<circle cx="110" cy="26" fill="#935b38" r="3"></circle>
+<circle cx="155" cy="72" fill="#fdfbf7" r="3.5" stroke="#9ca3af" stroke-width="1.5"></circle>
+<circle cx="200" cy="23" fill="#935b38" r="3"></circle>
+<circle cx="245" cy="20" fill="#935b38" r="3"></circle>
+<circle cx="285" cy="21" fill="#1b4332" opacity="0.2" r="5"></circle>
+<circle cx="285" cy="21" fill="#1b4332" r="3.5"></circle>
+</svg>
+<div class="flex justify-between text-[9px] text-neutral-400 font-mono mt-1 px-1">
+<span>Set 1</span>
+<span>Set 2</span>
+<span>Set 3</span>
+<span class="text-neutral-300">Set 4*</span>
+<span>Set 5</span>
+<span>Set 6</span>
+<span class="font-semibold text-emerald-800">Latest</span>
+</div>
+</div>
+<p class="text-[11px] text-neutral-500 pt-1">Your quality score across recent sets.</p>
+</div>
+<!-- Range per set card -->
+<div class="bg-white rounded-3xl p-4 shadow-sm border border-neutral-100/60 space-y-2">
+<div class="flex items-center justify-between">
+<span class="text-xs font-semibold text-neutral-700">Range per set</span>
+<span class="text-[11px] font-mono text-neutral-600 font-medium">Peak: 108°</span>
+</div>
+<div class="w-full h-24 relative">
+<svg class="w-full h-full overflow-visible" viewbox="0 0 300 80">
+<line stroke="#e5e7eb" stroke-dasharray="3 3" stroke-width="1" x1="0" x2="300" y1="28" y2="28"></line>
+<text fill="#9ca3af" font-family="monospace" font-size="8" text-anchor="end" x="296" y="25">105° Goal</text>
+<path d="M 20 48 L 65 42 L 110 35 L 200 28 L 245 22 L 285 18 L 285 80 L 20 80 Z" fill="rgba(46, 125, 50, 0.05)"></path>
+<path d="M 20 48 L 65 42 L 110 35" fill="none" stroke="#2e7d32" stroke-linecap="round" stroke-width="2"></path>
+<line stroke="#d1d5db" stroke-dasharray="2 2" stroke-width="1.5" x1="110" x2="200" y1="35" y2="28"></line>
+<path d="M 200 28 L 245 22 L 285 18" fill="none" stroke="#2e7d32" stroke-linecap="round" stroke-width="2"></path>
+<circle cx="20" cy="48" fill="#2e7d32" r="3"></circle>
+<circle cx="65" cy="42" fill="#2e7d32" r="3"></circle>
+<circle cx="110" cy="35" fill="#2e7d32" r="3"></circle>
+<circle cx="200" cy="28" fill="#2e7d32" r="3"></circle>
+<circle cx="245" cy="22" fill="#2e7d32" r="3"></circle>
+<circle cx="285" cy="18" fill="#1b4332" opacity="0.25" r="5"></circle>
+<circle cx="285" cy="18" fill="#1b4332" r="3.5"></circle>
+<text fill="#1b4332" font-family="monospace" font-size="9" font-weight="600" text-anchor="middle" x="285" y="12">108°</text>
+</svg>
+<div class="flex justify-between text-[9px] text-neutral-400 font-mono mt-1 px-1">
+<span>Set 1</span>
+<span>Set 2</span>
+<span>Set 3</span>
+<span class="text-neutral-300">Set 4 (—)</span>
+<span>Set 5</span>
+<span>Set 6</span>
+<span class="font-semibold text-emerald-800">Latest</span>
+</div>
+</div>
+<p class="text-[11px] text-neutral-500 pt-1">Your best three reps in each set, in degrees.</p>
+</div>
+</section>
+</section>
+<!-- Bottom Action Footer (Primary CTA + Deep Dive Secondary Link) -->
+<footer class="flex flex-col gap-3 pt-4">
+<!-- Primary Action CTA Button: Full-width pill height: 56px with internal white circular disc -->
+<button class="w-full h-14 bg-primary-container text-on-primary rounded-full px-5 flex items-center justify-between font-title-md text-title-md active:scale-[0.98] transition-all shadow-[0_4px_16px_rgba(27,67,50,0.18)]" type="button">
+<span class="font-title-md text-title-md font-semibold pl-2">Start Next Set</span>
+<div class="w-9 h-9 rounded-full bg-surface-card flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined text-[20px]" data-icon="arrow_forward">arrow_forward</span>
+</div>
+</button>
+<!-- Secondary Breakdown Link -->
+<button class="w-full py-2 flex items-center justify-center gap-1.5 text-text-secondary hover:text-text-primary active:scale-95 transition-colors" type="button">
+<span class="font-title-sm text-title-sm">View Full Session Breakdown</span>
+<span class="material-symbols-outlined text-[16px]" data-icon="chevron_right">chevron_right</span>
+</button>
+</footer>
+</main>
+<!-- Interactive Rest Timer Micro-Script -->
+<script>
+    (function() {
+      let secondsRemaining = 54;
+      const timerElement = document.getElementById('rest-timer');
+      if (timerElement) {
+        setInterval(() => {
+          if (secondsRemaining > 0) {
+            secondsRemaining--;
+            const mins = String(Math.floor(secondsRemaining / 60)).padStart(2, '0');
+            const secs = String(secondsRemaining % 60).padStart(2, '0');
+            timerElement.textContent = `${mins}:${secs}`;
+          }
+        }, 1000);
+      }
+    })();
+  </script>
+</body></html>

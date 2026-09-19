@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RightPosture - Set Range Goal</title>
+<!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Play CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "text-muted": "#8C8F8C",
+            "on-primary-container": "#86af99",
+            "primary-fixed": "#c1ecd4",
+            "tertiary-fixed": "#b0f2b4",
+            "surface-container-highest": "#dfe4df",
+            "on-secondary": "#ffffff",
+            "on-secondary-fixed-variant": "#713714",
+            "tertiary-fixed-dim": "#95d69a",
+            "tag-exercise-ink": "#2E6B3A",
+            "on-surface": "#181d1a",
+            "secondary-fixed": "#ffdbcb",
+            "surface-tint": "#3f6653",
+            "inverse-primary": "#a5d0b9",
+            "status-absent-ink": "#9E9E9E",
+            "primary": "#012d1d",
+            "surface-dim": "#d7dbd6",
+            "tag-hold-ink": "#1B4F72",
+            "canvas-bg": "#FBF9F4",
+            "tag-hold-wash": "#E3EEF6",
+            "primary-fixed-dim": "#a5d0b9",
+            "data-chart-ground": "rgba(31, 36, 33, 0.05)",
+            "outline": "#717973",
+            "status-absent-wash": "#F3F4F6",
+            "on-primary-fixed-variant": "#274e3d",
+            "on-primary": "#ffffff",
+            "tertiary-container": "#00461a",
+            "surface-card": "#FFFFFF",
+            "outline-variant": "#c1c8c2",
+            "status-warning-ink": "#D97706",
+            "inverse-on-surface": "#edf2ed",
+            "on-tertiary": "#ffffff",
+            "surface-card-warm": "#EFEAE2",
+            "surface-tint-sand": "#F8F5EE",
+            "tag-exercise-wash": "#E7F0E8",
+            "on-secondary-container": "#783d1a",
+            "tertiary": "#002d0e",
+            "surface-bright": "#f6fbf5",
+            "inverse-surface": "#2c322e",
+            "status-danger-ink": "#C62828",
+            "secondary-container": "#feaa7f",
+            "surface-container-low": "#f0f5f0",
+            "error-container": "#ffdad6",
+            "on-error": "#ffffff",
+            "secondary": "#8e4d2a",
+            "surface-container": "#ebefea",
+            "background": "#f6fbf5",
+            "surface": "#f6fbf5",
+            "status-danger-wash": "#FEE2E2",
+            "surface-variant": "#dfe4df",
+            "canvas-subtle": "#F4EFEB",
+            "status-success-wash": "#E8F5E9",
+            "status-warning-wash": "#FEF3C7",
+            "text-primary": "#1F2421",
+            "status-success-ink": "#2E7D32",
+            "error": "#ba1a1a",
+            "on-tertiary-fixed-variant": "#115224",
+            "on-background": "#181d1a",
+            "on-tertiary-fixed": "#002108",
+            "text-secondary": "#6E726E",
+            "data-chart-trace": "#1565C0",
+            "primary-container": "#1b4332",
+            "on-error-container": "#93000a",
+            "secondary-fixed-dim": "#ffb691",
+            "on-secondary-fixed": "#341100",
+            "surface-container-lowest": "#ffffff",
+            "on-primary-fixed": "#002114",
+            "on-surface-variant": "#414844",
+            "surface-container-high": "#e5e9e4",
+            "on-tertiary-container": "#75b47c"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "2xl": "1rem",
+            "3xl": "1.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "height-quality-bar": "1.5rem",
+            "gutter-mobile": "1.25rem",
+            "inset-xl": "1.5rem",
+            "inset-sm": "0.75rem",
+            "gap-screen-stack": "1rem",
+            "height-chart-canvas": "10rem",
+            "inset-2xs": "0.25rem",
+            "inset-2xl": "2rem",
+            "gap-card-internal": "0.75rem",
+            "inset-xs": "0.5rem",
+            "keepout-active-hud": "2rem",
+            "inset-md": "1rem",
+            "inset-lg": "1.25rem",
+            "nav-bottom-height": "4.5rem"
+          },
+          "fontFamily": {
+            "display-hero-farfield": ["Plus Jakarta Sans"],
+            "title-sm": ["Plus Jakarta Sans"],
+            "title-md": ["Plus Jakarta Sans"],
+            "body-sm": ["Plus Jakarta Sans"],
+            "label-mono-sm": ["JetBrains Mono"],
+            "display-code-spaced": ["JetBrains Mono"],
+            "body-lg": ["Plus Jakarta Sans"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "display-timer-farfield": ["JetBrains Mono"],
+            "label-mono-hud": ["JetBrains Mono"],
+            "headline-sm": ["Plus Jakarta Sans"],
+            "body-md": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "display-hero-farfield": ["64px", { "lineHeight": "68px", "letterSpacing": "-0.03em", "fontWeight": "800" }],
+            "title-sm": ["14px", { "lineHeight": "20px", "fontWeight": "600" }],
+            "title-md": ["16px", { "lineHeight": "22px", "fontWeight": "600" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "label-mono-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+            "display-code-spaced": ["32px", { "lineHeight": "40px", "letterSpacing": "0.35em", "fontWeight": "700" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "headline-md": ["22px", { "lineHeight": "30px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "display-timer-farfield": ["56px", { "lineHeight": "60px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "label-mono-hud": ["10px", { "lineHeight": "12px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+            "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    body {
+      background-color: #ECE7DE;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    /* Ambient warm clinical shadow */
+    .clinical-card-shadow {
+      box-shadow: 0 4px 20px -2px rgba(31, 36, 33, 0.06), 0 2px 6px -1px rgba(31, 36, 33, 0.03);
+    }
+    .modal-sheet-shadow {
+      box-shadow: 0 -10px 30px -4px rgba(31, 36, 33, 0.12), 0 -2px 10px rgba(31, 36, 33, 0.05);
+    }
+    input[type=range] {
+      -webkit-appearance: none;
+      background: transparent;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      height: 28px;
+      width: 28px;
+      border-radius: 50%;
+      background: #1b4332;
+      border: 3px solid #ffffff;
+      box-shadow: 0 2px 8px rgba(27, 67, 50, 0.35);
+      cursor: pointer;
+      margin-top: -10px;
+    }
+    input[type=range]::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 8px;
+      cursor: pointer;
+      background: #EFEAE2;
+      border-radius: 9999px;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="p-0 sm:p-6 bg-canvas-subtle">
+<!-- Mobile Viewport Canvas Container (390dp-412dp standard Android) -->
+<div class="relative w-full max-w-md h-[915px] bg-canvas-bg overflow-hidden shadow-2xl rounded-[38px] flex flex-col justify-between border-[8px] border-surface-card-warm">
+<!-- BACKGROUND: Patient Detail Screen (Dimmed by Clinical Scrim) -->
+<div class="absolute inset-0 flex flex-col pointer-events-none select-none filter blur-[1px]">
+<!-- Subdued Status Bar -->
+<div class="flex justify-between items-center px-6 pt-3 pb-2 text-text-secondary">
+<span class="text-xs font-label-mono-sm font-semibold tracking-tight">09:41</span>
+<div class="flex items-center space-x-1.5">
+<span class="material-symbols-outlined text-sm">network_wifi</span>
+<span class="material-symbols-outlined text-sm">battery_full</span>
+</div>
+</div>
+<!-- Detail Screen Mock Navigation -->
+<header class="flex justify-between items-center px-5 py-3">
+<div class="w-10 h-10 rounded-full bg-surface-card flex items-center justify-center text-text-primary shadow-sm">
+<span class="material-symbols-outlined text-lg">arrow_back</span>
+</div>
+<div class="text-center">
+<span class="block text-body-sm font-body-sm text-text-secondary uppercase tracking-wider">Patient Plan</span>
+<h2 class="text-title-md font-title-md text-text-primary">Elena Rostova</h2>
+</div>
+<div class="w-10 h-10 rounded-full bg-surface-card flex items-center justify-center text-text-primary shadow-sm">
+<span class="material-symbols-outlined text-lg">more_vert</span>
+</div>
+</header>
+<!-- Background Content Preview (Charts, Patient Data) -->
+<div class="px-5 space-y-4 pt-2 opacity-65">
+<!-- Patient Context Card -->
+<div class="bg-surface-card rounded-3xl p-5 clinical-card-shadow">
+<div class="flex items-center space-x-3">
+<div class="w-12 h-12 rounded-full bg-canvas-subtle flex items-center justify-center text-primary font-bold">ER</div>
+<div>
+<div class="text-title-md font-title-md text-text-primary">Right Knee ACL Rehab</div>
+<div class="text-body-sm font-body-sm text-text-secondary">Post-op Week 6 · 24 Sessions logged</div>
+</div>
+</div>
+</div>
+<!-- Metric Stat Bento -->
+<div class="grid grid-cols-2 gap-3">
+<div class="bg-surface-card p-4 rounded-3xl">
+<span class="text-body-sm text-text-secondary">Avg Extension</span>
+<div class="text-headline-lg font-headline-lg text-text-primary mt-1">82°</div>
+<div class="text-label-mono-sm text-tag-exercise-ink mt-1">↑ +4° this week</div>
+</div>
+<div class="bg-surface-card p-4 rounded-3xl">
+<span class="text-body-sm text-text-secondary">Adherence Rate</span>
+<div class="text-headline-lg font-headline-lg text-text-primary mt-1">94%</div>
+<div class="text-label-mono-sm text-status-success-ink mt-1">Consistent</div>
+</div>
+</div>
+<!-- Graph Mockup -->
+<div class="bg-surface-card p-5 rounded-3xl space-y-2">
+<span class="text-title-sm font-title-sm text-text-secondary">Degrees of ROM Velocity</span>
+<div class="h-24 bg-surface-tint-sand rounded-2xl flex items-end p-2 space-x-2">
+<div class="flex-1 bg-primary/20 rounded-t h-[40%]"></div>
+<div class="flex-1 bg-primary/30 rounded-t h-[55%]"></div>
+<div class="flex-1 bg-primary/40 rounded-t h-[50%]"></div>
+<div class="flex-1 bg-primary/60 rounded-t h-[65%]"></div>
+<div class="flex-1 bg-primary-container rounded-t h-[78%]"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- SEMI-TRANSPARENT CLUSTER SCRIM (Warm Charcoal / Slate Glass Overlay) -->
+<div class="absolute inset-0 bg-primary/40 backdrop-blur-[3px] transition-opacity duration-300 z-10"></div>
+<!-- FOREGROUND MODAL BOTTOM SHEET: "Set Range Goal" (Task-Focused: Suppresses standard bottom bar) -->
+<section aria-labelledby="modal-headline" aria-modal="true" class="relative z-20 w-full bg-surface-card rounded-t-[32px] pt-3 pb-6 px-inset-lg modal-sheet-shadow flex flex-col justify-end max-h-[92%] mt-auto border-t border-surface-container-highest/60" role="dialog">
+<!-- 1. Handle bar at top -->
+<div class="w-12 h-1.5 bg-outline-variant/80 rounded-full mx-auto mb-3 cursor-grab"></div>
+<!-- Header & Context Badge -->
+<div class="space-y-2 text-left">
+<div class="flex items-center justify-between">
+<!-- 2. Title -->
+<h1 class="text-headline-md font-headline-md text-text-primary tracking-tight" id="modal-headline">
+            Set Range Goal
+          </h1>
+<button aria-label="Dismiss modal" class="w-8 h-8 rounded-full bg-canvas-subtle flex items-center justify-center text-text-secondary hover:text-text-primary active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-lg">close</span>
+</button>
+</div>
+<!-- 3. Patient Contextual Badge -->
+<div class="inline-flex items-center space-x-2 bg-tag-exercise-wash px-3 py-1.5 rounded-full">
+<span class="material-symbols-outlined text-tag-exercise-ink text-[16px]">accessibility_new</span>
+<span class="text-label-mono-sm font-label-mono-sm text-tag-exercise-ink font-semibold">
+            Elena Rostova · Seated knee extension (Right Leg)
+          </span>
+</div>
+<!-- 4. Clinical Rationale Explanation -->
+<p class="text-body-sm font-body-sm text-text-secondary leading-relaxed pt-0.5">
+          A range goal is required to assess progression readiness. Setting this turns on automated milestone tracking.
+        </p>
+</div>
+<!-- 5. Baseline vs Target Input Section -->
+<div class="my-4 bg-surface-tint-sand rounded-2xl p-4 border border-surface-card-warm space-y-4">
+<!-- Current Baseline Row -->
+<div class="flex justify-between items-center pb-3 border-b border-outline-variant/40">
+<div class="flex items-center space-x-2">
+<div class="w-2.5 h-2.5 rounded-full bg-status-warning-ink"></div>
+<span class="text-body-sm font-body-sm text-text-secondary">Current Baseline</span>
+</div>
+<div class="text-right">
+<span class="text-title-sm font-title-sm text-text-primary font-bold">82° ROM</span>
+<span class="block text-[10px] font-label-mono-sm text-text-muted">Captured at intake</span>
+</div>
+</div>
+<!-- Hero Target Goal Stepper & Interactive Visualizer -->
+<div class="pt-1 flex flex-col items-center justify-center">
+<span class="text-label-mono-sm font-label-mono-sm uppercase text-text-secondary tracking-wider mb-1">
+            Active Knee Extension Degrees
+          </span>
+<!-- Stepper Value Row -->
+<div class="flex items-center justify-center space-x-5 w-full">
+<button aria-label="Decrease target degree" class="w-11 h-11 rounded-full bg-surface-card text-text-primary shadow-sm flex items-center justify-center active:scale-95 transition-all border border-surface-card-warm hover:bg-canvas-subtle" id="decrement-btn" type="button">
+<span class="material-symbols-outlined text-xl">remove</span>
+</button>
+<!-- Large Hero Indicator -->
+<div class="flex items-baseline justify-center select-none min-w-[120px]">
+<span class="font-display-hero-farfield text-display-hero-farfield text-primary tracking-tight" id="goal-degree-display">
+                105
+              </span>
+<span class="text-headline-lg font-headline-lg text-primary-container ml-1">°</span>
+</div>
+<button aria-label="Increase target degree" class="w-11 h-11 rounded-full bg-surface-card text-text-primary shadow-sm flex items-center justify-center active:scale-95 transition-all border border-surface-card-warm hover:bg-canvas-subtle" id="increment-btn" type="button">
+<span class="material-symbols-outlined text-xl">add</span>
+</button>
+</div>
+<!-- Discrete Arc / Slider Range Controller -->
+<div class="w-full px-2 mt-3">
+<input class="w-full h-2 bg-surface-card-warm rounded-full appearance-none cursor-pointer" id="rom-slider" max="140" min="85" step="1" type="range" value="105"/>
+<div class="flex justify-between items-center text-label-mono-sm font-label-mono-sm text-text-muted mt-1.5">
+<span>Min: 85°</span>
+<span class="text-primary-container font-semibold">Suggested: 100° – 110°</span>
+<span>Max: 140°</span>
+</div>
+</div>
+<!-- Goal Delta Indicator Pill -->
+<div class="mt-2.5 inline-flex items-center space-x-1.5 bg-canvas-bg px-3 py-1 rounded-full border border-surface-card-warm">
+<span class="material-symbols-outlined text-tag-exercise-ink text-sm">trending_up</span>
+<span class="text-label-mono-sm font-label-mono-sm text-text-primary font-medium" id="delta-display">
+              Target Delta: +23° extension gain
+            </span>
+</div>
+</div>
+</div>
+<!-- 6. Clinical Safety & Outcome Notice -->
+<div class="bg-canvas-bg rounded-xl p-3.5 border border-surface-card-warm flex items-start space-x-2.5 mb-5">
+<span class="material-symbols-outlined text-status-warning-ink text-lg mt-0.5 shrink-0">info</span>
+<div class="text-left">
+<p class="text-[11px] font-body-sm text-text-primary leading-[15px]">
+<strong class="font-semibold text-text-primary">Clinical Rule:</strong> Meeting this goal triggers a <span class="text-status-success-ink font-semibold">‘Ready to progress’</span> recommendation to advance resistance band. Meeting a goal never automatically advances a patient — you make the clinical decision.
+          </p>
+</div>
+</div>
+<!-- 7. Action Buttons -->
+<div class="space-y-2.5 pt-1">
+<!-- Primary CTA: Confirm & Set Goal -->
+<button class="w-full h-14 bg-primary-container text-on-primary rounded-full font-title-md text-title-md flex items-center justify-between px-6 shadow-md hover:opacity-95 active:scale-[0.98] transition-all" id="confirm-btn" type="button">
+<span class="mx-auto pl-7">Confirm &amp; Set Goal</span>
+<div class="w-9 h-9 rounded-full bg-surface-card text-primary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-lg">check</span>
+</div>
+</button>
+<!-- Secondary Outlined: Cancel -->
+<button class="w-full h-11 bg-transparent border border-surface-card-warm text-text-secondary rounded-full font-title-sm text-title-sm flex items-center justify-center hover:bg-canvas-subtle active:scale-[0.98] transition-all" type="button">
+          Cancel
+        </button>
+</div>
+</section>
+</div>
+<!-- Micro-interaction JS for Stepper / Slider Synchronization -->
+<script>
+    const display = document.getElementById('goal-degree-display');
+    const slider = document.getElementById('rom-slider');
+    const delta = document.getElementById('delta-display');
+    const incBtn = document.getElementById('increment-btn');
+    const decBtn = document.getElementById('decrement-btn');
+    const baseline = 82;
+
+    function updateGoal(val) {
+      const numericVal = Math.min(140, Math.max(85, parseInt(val, 10)));
+      display.textContent = numericVal;
+      slider.value = numericVal;
+      const gain = numericVal - baseline;
+      delta.textContent = `Target Delta: +${gain}° extension gain`;
+    }
+
+    slider.addEventListener('input', (e) => updateGoal(e.target.value));
+
+    incBtn.addEventListener('click', () => {
+      updateGoal(parseInt(slider.value, 10) + 1);
+    });
+
+    decBtn.addEventListener('click', () => {
+      updateGoal(parseInt(slider.value, 10) - 1);
+    });
+  </script>
+</body></html>

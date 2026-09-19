@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RightPosture — Calibration Wizard Step 2</title>
+<!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS with CDN plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "text-muted": "#8C8F8C",
+            "on-primary-container": "#86af99",
+            "primary-fixed": "#c1ecd4",
+            "tertiary-fixed": "#b0f2b4",
+            "surface-container-highest": "#dfe4df",
+            "on-secondary": "#ffffff",
+            "on-secondary-fixed-variant": "#713714",
+            "tertiary-fixed-dim": "#95d69a",
+            "tag-exercise-ink": "#2E6B3A",
+            "on-surface": "#181d1a",
+            "secondary-fixed": "#ffdbcb",
+            "surface-tint": "#3f6653",
+            "inverse-primary": "#a5d0b9",
+            "status-absent-ink": "#9E9E9E",
+            "primary": "#012d1d",
+            "surface-dim": "#d7dbd6",
+            "tag-hold-ink": "#1B4F72",
+            "canvas-bg": "#FBF9F4",
+            "tag-hold-wash": "#E3EEF6",
+            "primary-fixed-dim": "#a5d0b9",
+            "data-chart-ground": "rgba(31, 36, 33, 0.05)",
+            "outline": "#717973",
+            "status-absent-wash": "#F3F4F6",
+            "on-primary-fixed-variant": "#274e3d",
+            "on-primary": "#ffffff",
+            "tertiary-container": "#00461a",
+            "surface-card": "#FFFFFF",
+            "outline-variant": "#c1c8c2",
+            "status-warning-ink": "#D97706",
+            "inverse-on-surface": "#edf2ed",
+            "on-tertiary": "#ffffff",
+            "surface-card-warm": "#EFEAE2",
+            "surface-tint-sand": "#F8F5EE",
+            "tag-exercise-wash": "#E7F0E8",
+            "on-secondary-container": "#783d1a",
+            "tertiary": "#002d0e",
+            "surface-bright": "#f6fbf5",
+            "inverse-surface": "#2c322e",
+            "status-danger-ink": "#C62828",
+            "secondary-container": "#feaa7f",
+            "surface-container-low": "#f0f5f0",
+            "error-container": "#ffdad6",
+            "on-error": "#ffffff",
+            "secondary": "#8e4d2a",
+            "surface-container": "#ebefea",
+            "background": "#f6fbf5",
+            "surface": "#f6fbf5",
+            "status-danger-wash": "#FEE2E2",
+            "surface-variant": "#dfe4df",
+            "canvas-subtle": "#F4EFEB",
+            "status-success-wash": "#E8F5E9",
+            "status-warning-wash": "#FEF3C7",
+            "text-primary": "#1F2421",
+            "status-success-ink": "#2E7D32",
+            "error": "#ba1a1a",
+            "on-tertiary-fixed-variant": "#115224",
+            "on-background": "#181d1a",
+            "on-tertiary-fixed": "#002108",
+            "text-secondary": "#6E726E",
+            "data-chart-trace": "#1565C0",
+            "primary-container": "#1b4332",
+            "on-error-container": "#93000a",
+            "secondary-fixed-dim": "#ffb691",
+            "on-secondary-fixed": "#341100",
+            "surface-container-lowest": "#ffffff",
+            "on-primary-fixed": "#002114",
+            "on-surface-variant": "#414844",
+            "surface-container-high": "#e5e9e4",
+            "on-tertiary-container": "#75b47c"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "height-quality-bar": "1.5rem",
+            "gutter-mobile": "1.25rem",
+            "inset-xl": "1.5rem",
+            "inset-sm": "0.75rem",
+            "gap-screen-stack": "1rem",
+            "height-chart-canvas": "10rem",
+            "inset-2xs": "0.25rem",
+            "inset-2xl": "2rem",
+            "gap-card-internal": "0.75rem",
+            "inset-xs": "0.5rem",
+            "keepout-active-hud": "2rem",
+            "inset-md": "1rem",
+            "inset-lg": "1.25rem",
+            "nav-bottom-height": "4.5rem"
+          },
+          "fontFamily": {
+            "display-hero-farfield": ["Plus Jakarta Sans"],
+            "title-sm": ["Plus Jakarta Sans"],
+            "title-md": ["Plus Jakarta Sans"],
+            "body-sm": ["Plus Jakarta Sans"],
+            "label-mono-sm": ["JetBrains Mono"],
+            "display-code-spaced": ["JetBrains Mono"],
+            "body-lg": ["Plus Jakarta Sans"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "display-timer-farfield": ["JetBrains Mono"],
+            "label-mono-hud": ["JetBrains Mono"],
+            "headline-sm": ["Plus Jakarta Sans"],
+            "body-md": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "display-hero-farfield": ["64px", { "lineHeight": "68px", "letterSpacing": "-0.03em", "fontWeight": "800" }],
+            "title-sm": ["14px", { "lineHeight": "20px", "fontWeight": "600" }],
+            "title-md": ["16px", { "lineHeight": "22px", "fontWeight": "600" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "label-mono-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+            "display-code-spaced": ["32px", { "lineHeight": "40px", "letterSpacing": "0.35em", "fontWeight": "700" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "headline-md": ["22px", { "lineHeight": "30px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "display-timer-farfield": ["56px", { "lineHeight": "60px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "label-mono-hud": ["10px", { "lineHeight": "12px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+            "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .custom-scroll::-webkit-scrollbar {
+      width: 4px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background-color: #EFEAE2;
+      border-radius: 9999px;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-canvas-subtle min-h-screen flex justify-center items-center font-body-md text-text-primary antialiased selection:bg-primary-fixed-dim">
+<!-- Mobile Viewport Container (Android Ergonomic Standard 390-412dp) -->
+<div class="relative w-full max-w-md h-[892px] max-h-screen bg-canvas-bg overflow-hidden shadow-2xl flex flex-col justify-between select-none">
+<!-- CAMERA PREVIEW LAYER (z-0) -->
+<div class="absolute inset-0 z-0 bg-neutral-900 overflow-hidden">
+<!-- High Aesthetic Therapy Session Environment Photo -->
+<img class="w-full h-full object-cover object-center opacity-85 scale-105 transform" data-alt="A tranquil, sunlit Scandinavian living room with soft ivory walls and warm light oak flooring where a patient stands at medium distance in athletic wear ready for physical therapy. High-key natural lighting enters through a wide sheer curtain window, casting gentle ambient shadows. Minimalist biophilic interior styling with an earthen planter and neutral textiles creating a focused clinical calmness." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcOF8WzPKXqdQa8-ES_DLn3D9gNbcHB-toonDvU4U1LNtnHH5IQCxbq7VWnz-eYcUcrospbC84BEgxxF4ZtIzGLIm-pJSzAvCqMUq5juF1CVvC4-RCoeIVrox95VFtih8i_Hsjd7LyQcWzqAUMrbN5KHOLEkDN4EW-wj0w1xH6UGdMIk0c_K5KKywWYh0BXckMfQabBxT22O189rUcTc3My6zL0wRwHKoBfTaKCY1o5ZhnJKHaFW7ekA"/>
+<!-- Gentle Clinical Vignette Gradients for Text Contrast -->
+<div class="absolute inset-0 bg-gradient-to-b from-primary/75 via-transparent to-primary/90 pointer-events-none"></div>
+<div class="absolute inset-0 bg-primary/20 pointer-events-none"></div>
+</div>
+<!-- POSE-ESTIMATION LANDMARK SKELETON OVERLAY (z-1) -->
+<svg class="absolute inset-0 z-10 w-full h-full pointer-events-none" fill="none" viewbox="0 0 400 850" xmlns="http://www.w3.org/2000/svg">
+<!-- Medical Green Biomechanical Vectors -->
+<defs>
+<filter height="140%" id="glow" width="140%" x="-20%" y="-20%">
+<fedropshadow dx="0" dy="0" flood-color="#2E7D32" flood-opacity="0.6" stddeviation="2"></fedropshadow>
+</filter>
+</defs>
+<!-- Center Alignment Guideline -->
+<line stroke="rgba(255, 255, 255, 0.15)" stroke-dasharray="4 6" stroke-width="1" x1="200" x2="200" y1="90" y2="780"></line>
+<!-- Head & Cervical Segment -->
+<circle cx="200" cy="180" fill="rgba(46, 125, 50, 0.08)" r="28" stroke="#2E7D32" stroke-dasharray="3 3" stroke-width="2"></circle>
+<circle cx="200" cy="180" fill="#E8F5E9" r="4" stroke="#2E7D32" stroke-width="2"></circle>
+<line stroke="#2E7D32" stroke-width="2.5" x1="200" x2="200" y1="208" y2="236"></line>
+<!-- Shoulder Girdle -->
+<line filter="url(#glow)" stroke="#2E7D32" stroke-width="3" x1="160" x2="240" y1="236" y2="236"></line>
+<!-- Torso Frame -->
+<line stroke="#2E7D32" stroke-width="2.5" x1="160" x2="168" y1="236" y2="340"></line>
+<line stroke="#2E7D32" stroke-width="2.5" x1="240" x2="232" y1="236" y2="340"></line>
+<line filter="url(#glow)" stroke="#2E7D32" stroke-width="3" x1="168" x2="232" y1="340" y2="340"></line>
+<!-- Left Arm (Camera Perspective) -->
+<line stroke="#2E7D32" stroke-width="2.5" x1="160" x2="135" y1="236" y2="305"></line>
+<line stroke="#2E7D32" stroke-width="2" x1="135" x2="120" y1="305" y2="370"></line>
+<!-- Right Arm (Raised / Testing Mobility) -->
+<line stroke="#2E7D32" stroke-width="2.5" x1="240" x2="275" y1="236" y2="280"></line>
+<line stroke="#2E7D32" stroke-width="2" x1="275" x2="295" y1="280" y2="230"></line>
+<!-- Lower Extremities -->
+<line stroke="#2E7D32" stroke-width="2.5" x1="168" x2="162" y1="340" y2="445"></line>
+<line stroke="#2E7D32" stroke-width="2" x1="162" x2="160" y1="445" y2="540"></line>
+<line stroke="#2E7D32" stroke-width="2.5" x1="232" x2="238" y1="340" y2="445"></line>
+<line stroke="#2E7D32" stroke-width="2" x1="238" x2="240" y1="445" y2="540"></line>
+<!-- Joint Landmark Nodes (Verified Keypoints) -->
+<circle cx="160" cy="236" fill="#E8F5E9" r="4.5" stroke="#2E7D32" stroke-width="2.5"></circle>
+<circle cx="240" cy="236" fill="#E8F5E9" r="4.5" stroke="#2E7D32" stroke-width="2.5"></circle>
+<circle cx="135" cy="305" fill="#E8F5E9" r="4" stroke="#2E7D32" stroke-width="2"></circle>
+<circle cx="275" cy="280" fill="#E8F5E9" r="4" stroke="#2E7D32" stroke-width="2"></circle>
+<circle cx="120" cy="370" fill="#E8F5E9" r="3.5" stroke="#2E7D32" stroke-width="2"></circle>
+<circle cx="295" cy="230" fill="#E8F5E9" r="3.5" stroke="#2E7D32" stroke-width="2"></circle>
+<circle cx="168" cy="340" fill="#E8F5E9" r="4" stroke="#2E7D32" stroke-width="2.5"></circle>
+<circle cx="232" cy="340" fill="#E8F5E9" r="4" stroke="#2E7D32" stroke-width="2.5"></circle>
+<circle cx="162" cy="445" fill="#E8F5E9" r="4" stroke="#2E7D32" stroke-width="2"></circle>
+<circle cx="238" cy="445" fill="#E8F5E9" r="4" stroke="#2E7D32" stroke-width="2"></circle>
+<circle cx="160" cy="540" fill="#E8F5E9" r="3.5" stroke="#2E7D32" stroke-width="2"></circle>
+<circle cx="240" cy="540" fill="#E8F5E9" r="3.5" stroke="#2E7D32" stroke-width="2"></circle>
+<!-- Bounding Calibration Target Frame -->
+<rect height="440" rx="20" stroke="rgba(255, 255, 255, 0.3)" stroke-dasharray="8 8" stroke-width="1.5" width="220" x="90" y="140"></rect>
+</svg>
+<!-- TOP HEADER / WIZARD STEP CONTROLS (z-20) -->
+<header class="relative z-20 pt-inset-md px-inset-lg flex flex-col gap-inset-xs">
+<!-- Top Nav Bar Row -->
+<div class="flex items-center justify-between">
+<!-- Back Action -->
+<button aria-label="Back" class="w-10 h-10 rounded-full bg-surface-card/90 backdrop-blur-md text-text-primary flex items-center justify-center shadow-sm active:scale-95 transition-transform duration-150" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="arrow_back">arrow_back</span>
+</button>
+<!-- Step Counter Pill -->
+<div class="px-inset-md py-1 rounded-full bg-surface-card/95 backdrop-blur-md shadow-sm flex items-center gap-1.5 border border-outline-variant/30">
+<span class="w-2 h-2 rounded-full bg-tag-exercise-ink animate-pulse"></span>
+<span class="font-label-mono-sm text-label-mono-sm text-text-primary uppercase tracking-wider font-semibold">Step 2 of 5: Set up</span>
+</div>
+<!-- Camera Switch Toggle Button -->
+<button aria-label="Toggle camera lens" class="w-10 h-10 rounded-full bg-surface-card/90 backdrop-blur-md text-text-primary flex items-center justify-center shadow-sm active:scale-95 transition-transform duration-150" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="flip_camera_ios">flip_camera_ios</span>
+</button>
+</div>
+<!-- Telemetry Status Bar -->
+<div class="flex items-center justify-between px-1">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/80 backdrop-blur-md border border-white/10 text-surface-card">
+<span class="material-symbols-outlined text-[14px] text-primary-fixed" data-icon="videocam">videocam</span>
+<span class="font-label-mono-hud text-label-mono-hud tracking-wide">Front Camera · 30 FPS</span>
+</div>
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-card/85 backdrop-blur-md text-tag-exercise-ink">
+<span class="material-symbols-outlined text-[13px]" data-icon="lock">lock</span>
+<span class="font-label-mono-hud text-label-mono-hud font-medium">CV Model v3.4 Locked</span>
+</div>
+</div>
+<!-- Progressive Wizard Step Track -->
+<div class="w-full flex items-center gap-1.5 px-0.5 pt-1">
+<div class="h-1 flex-1 rounded-full bg-status-success-ink"></div>
+<div class="h-1 flex-1 rounded-full bg-white shadow-sm"></div>
+<div class="h-1 flex-1 rounded-full bg-white/30"></div>
+<div class="h-1 flex-1 rounded-full bg-white/30"></div>
+<div class="h-1 flex-1 rounded-full bg-white/30"></div>
+</div>
+</header>
+<!-- LIVE HUD CENTER SPACING CUE (z-20) -->
+<div class="relative z-20 flex justify-center items-center my-auto pointer-events-none px-inset-lg">
+<div class="bg-primary/85 backdrop-blur-md border border-white/15 px-inset-md py-inset-xs rounded-full shadow-lg flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-fixed text-[18px]" data-icon="accessibility_new">accessibility_new</span>
+<span class="font-title-sm text-title-sm text-surface-card">Stand back so full torso is visible</span>
+</div>
+</div>
+<!-- CALIBRATION CHECKLIST OVERLAY SHEET (z-30) -->
+<!-- Bottom anchored sheet following tactile tonal hierarchy -->
+<div class="relative z-30 bg-canvas-bg rounded-t-[28px] shadow-[0_-8px_30px_rgba(0,0,0,0.18)] border-t border-surface-card-warm/60 px-inset-lg pt-inset-md pb-inset-lg flex flex-col gap-inset-sm transition-all duration-300">
+<!-- Visual Drag Handle Bar -->
+<div class="w-10 h-1 bg-surface-variant rounded-full mx-auto mb-0.5"></div>
+<!-- Card Header Stack -->
+<div class="flex items-center justify-between pb-1 border-b border-surface-card-warm">
+<div class="flex flex-col">
+<span class="font-label-mono-sm text-label-mono-sm text-text-secondary uppercase">Calibration Checklist</span>
+<h2 class="font-headline-sm text-headline-sm text-text-primary">Getting ready — follow the checklist</h2>
+</div>
+<div class="w-9 h-9 rounded-full bg-surface-card-warm flex items-center justify-center text-tag-exercise-ink font-label-mono-sm font-semibold">
+          5/7
+        </div>
+</div>
+<!-- 7 Calibration Criteria Checklist Rows -->
+<div class="flex flex-col max-h-[220px] overflow-y-auto pr-1 custom-scroll divide-y divide-canvas-subtle">
+<!-- Check 1: Joint Visibility (Complete) -->
+<div class="py-2 flex items-center justify-between group">
+<div class="flex items-center gap-2.5">
+<div class="w-5 h-5 rounded-full bg-status-success-wash text-status-success-ink flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[15px]" data-icon="check">check</span>
+</div>
+<span class="font-body-sm text-body-sm text-text-primary">I can see the joints I need to watch</span>
+</div>
+<span class="font-label-mono-sm text-label-mono-sm text-status-success-ink font-medium">Verified</span>
+</div>
+<!-- Check 2: Distance (Complete) -->
+<div class="py-2 flex items-center justify-between group">
+<div class="flex items-center gap-2.5">
+<div class="w-5 h-5 rounded-full bg-status-success-wash text-status-success-ink flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[15px]" data-icon="check">check</span>
+</div>
+<span class="font-body-sm text-body-sm text-text-primary">You're the right distance from the camera</span>
+</div>
+<span class="font-label-mono-sm text-label-mono-sm text-status-success-ink font-medium">2.4m optimal</span>
+</div>
+<!-- Check 3: Centred Frame (Complete) -->
+<div class="py-2 flex items-center justify-between group">
+<div class="flex items-center gap-2.5">
+<div class="w-5 h-5 rounded-full bg-status-success-wash text-status-success-ink flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[15px]" data-icon="check">check</span>
+</div>
+<span class="font-body-sm text-body-sm text-text-primary">You're centred in the frame</span>
+</div>
+<span class="font-label-mono-sm text-label-mono-sm text-status-success-ink font-medium">Balanced</span>
+</div>
+<!-- Check 4: Camera Angle (Complete) -->
+<div class="py-2 flex items-center justify-between group">
+<div class="flex items-center gap-2.5">
+<div class="w-5 h-5 rounded-full bg-status-success-wash text-status-success-ink flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[15px]" data-icon="check">check</span>
+</div>
+<span class="font-body-sm text-body-sm text-text-primary">The camera is angled correctly for this exercise</span>
+</div>
+<span class="font-label-mono-sm text-label-mono-sm text-status-success-ink font-medium">90° lateral</span>
+</div>
+<!-- Check 5: Phone Upright (Complete) -->
+<div class="py-2 flex items-center justify-between group">
+<div class="flex items-center gap-2.5">
+<div class="w-5 h-5 rounded-full bg-status-success-wash text-status-success-ink flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[15px]" data-icon="check">check</span>
+</div>
+<span class="font-body-sm text-body-sm text-text-primary">The phone is upright</span>
+</div>
+<span class="font-label-mono-sm text-label-mono-sm text-status-success-ink font-medium">Pitch 88°</span>
+</div>
+<!-- Check 6: Lighting (Amber Pending) -->
+<div class="py-2 flex items-center justify-between bg-status-warning-wash/40 px-2 rounded-lg -mx-1">
+<div class="flex items-center gap-2.5">
+<div class="w-5 h-5 rounded-full border border-status-warning-ink text-status-warning-ink flex items-center justify-center shrink-0 bg-white">
+<span class="material-symbols-outlined text-[14px]" data-icon="light_mode">light_mode</span>
+</div>
+<span class="font-body-sm text-body-sm text-text-primary font-medium">The lighting is good enough</span>
+</div>
+<span class="font-label-mono-sm text-label-mono-sm text-status-warning-ink font-medium">Low contrast</span>
+</div>
+<!-- Check 7: Holding Still (Pending) -->
+<div class="py-2 flex items-center justify-between group px-1">
+<div class="flex items-center gap-2.5">
+<div class="w-5 h-5 rounded-full border border-status-absent-ink text-status-absent-ink flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[12px]" data-icon="radio_button_unchecked">radio_button_unchecked</span>
+</div>
+<span class="font-body-sm text-body-sm text-text-secondary">You're holding still</span>
+</div>
+<span class="font-label-mono-sm text-label-mono-sm text-text-muted">Awaiting calm</span>
+</div>
+</div>
+<!-- Informational Bypass Callout Notice -->
+<div class="bg-surface-tint-sand border border-surface-card-warm px-3 py-2 rounded-xl flex items-start gap-2">
+<span class="material-symbols-outlined text-text-secondary text-[16px] mt-0.5" data-icon="info">info</span>
+<p class="font-body-sm text-body-sm text-text-secondary">
+<span class="font-semibold text-text-primary">Start anyway skips:</span> The lighting is good enough, You're holding still
+        </p>
+</div>
+<!-- Action Cluster -->
+<div class="pt-1 flex flex-col gap-2">
+<!-- Row with Cancel and Primary CTA -->
+<div class="flex items-center gap-inset-sm">
+<!-- Secondary Cancel Icon/Text Action -->
+<button class="h-14 px-4 rounded-full border-1.5 border-surface-card-warm bg-surface-card text-text-primary font-title-sm text-title-sm flex items-center justify-center hover:bg-canvas-subtle active:scale-95 transition-all" type="button">
+            Cancel
+          </button>
+<!-- Primary Full-Width CTA -->
+<button class="flex-1 h-14 rounded-full bg-primary text-on-primary font-title-md text-title-md flex items-center justify-between px-inset-md shadow-md active:scale-98 hover:bg-primary-container transition-all" type="button">
+<span class="ml-2">Continue to Recording</span>
+<div class="w-9 h-9 rounded-full bg-white text-primary flex items-center justify-center shrink-0 shadow-sm">
+<span class="material-symbols-outlined text-[20px]" data-icon="arrow_forward">arrow_forward</span>
+</div>
+</button>
+</div>
+<!-- Subtle Skip Option ("Start anyway") -->
+<div class="text-center pt-0.5">
+<button class="font-body-sm text-body-sm font-semibold text-text-secondary hover:text-text-primary underline underline-offset-4 active:scale-95 transition-all py-1" type="button">
+            Start anyway
+          </button>
+</div>
+</div>
+</div>
+</div>
+</body></html>

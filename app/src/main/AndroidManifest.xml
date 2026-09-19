@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!--
+        Android 11 and newer hide other packages unless they are declared here. Without this the
+        TextToSpeech constructor cannot see com.google.android.tts and reports it missing even when
+        it is installed. Required by 12.4.
+    -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.TTS_SERVICE" />
+        </intent>
+    </queries>
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera.any" android:required="true" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.RightPosture">
+
+        <!--
+            LiteRT-LM's GPU backend reaches the Adreno through OpenCL, and OpenCL lives in the
+            vendor partition. Since Android 12 an app may not dlopen a vendor library unless it
+            declares it here, so without these the engine initialises happily on GPU and then fails
+            every single generation with:
+
+                Can not find OpenCL library on this device
+
+            Measured on the target device: /vendor/lib64/libOpenCL.so exists, the app simply was
+            not permitted to load it. All are optional - a device without one falls down the ladder
+            rather than failing to install.
+        -->
+        <uses-native-library android:name="libOpenCL.so" android:required="false" />
+        <uses-native-library android:name="libOpenCL-car.so" android:required="false" />
+        <uses-native-library android:name="libOpenCL-pixel.so" android:required="false" />
+        <uses-native-library android:name="libGLES_mali.so" android:required="false" />
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.RightPosture">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

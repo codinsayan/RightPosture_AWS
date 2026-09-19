@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RightPosture Physiotherapist - Step 3: Record Reference</title>
+<!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "text-muted": "#8C8F8C",
+            "on-primary-container": "#86af99",
+            "primary-fixed": "#c1ecd4",
+            "tertiary-fixed": "#b0f2b4",
+            "surface-container-highest": "#dfe4df",
+            "on-secondary": "#ffffff",
+            "on-secondary-fixed-variant": "#713714",
+            "tertiary-fixed-dim": "#95d69a",
+            "tag-exercise-ink": "#2E6B3A",
+            "on-surface": "#181d1a",
+            "secondary-fixed": "#ffdbcb",
+            "surface-tint": "#3f6653",
+            "inverse-primary": "#a5d0b9",
+            "status-absent-ink": "#9E9E9E",
+            "primary": "#012d1d",
+            "surface-dim": "#d7dbd6",
+            "tag-hold-ink": "#1B4F72",
+            "canvas-bg": "#FBF9F4",
+            "tag-hold-wash": "#E3EEF6",
+            "primary-fixed-dim": "#a5d0b9",
+            "data-chart-ground": "rgba(31, 36, 33, 0.05)",
+            "outline": "#717973",
+            "status-absent-wash": "#F3F4F6",
+            "on-primary-fixed-variant": "#274e3d",
+            "on-primary": "#ffffff",
+            "tertiary-container": "#00461a",
+            "surface-card": "#FFFFFF",
+            "outline-variant": "#c1c8c2",
+            "status-warning-ink": "#D97706",
+            "inverse-on-surface": "#edf2ed",
+            "on-tertiary": "#ffffff",
+            "surface-card-warm": "#EFEAE2",
+            "surface-tint-sand": "#F8F5EE",
+            "tag-exercise-wash": "#E7F0E8",
+            "on-secondary-container": "#783d1a",
+            "tertiary": "#002d0e",
+            "surface-bright": "#f6fbf5",
+            "inverse-surface": "#2c322e",
+            "status-danger-ink": "#C62828",
+            "secondary-container": "#feaa7f",
+            "surface-container-low": "#f0f5f0",
+            "error-container": "#ffdad6",
+            "on-error": "#ffffff",
+            "secondary": "#8e4d2a",
+            "surface-container": "#ebefea",
+            "background": "#f6fbf5",
+            "surface": "#f6fbf5",
+            "status-danger-wash": "#FEE2E2",
+            "surface-variant": "#dfe4df",
+            "canvas-subtle": "#F4EFEB",
+            "status-success-wash": "#E8F5E9",
+            "status-warning-wash": "#FEF3C7",
+            "text-primary": "#1F2421",
+            "status-success-ink": "#2E7D32",
+            "error": "#ba1a1a",
+            "on-tertiary-fixed-variant": "#115224",
+            "on-background": "#181d1a",
+            "on-tertiary-fixed": "#002108",
+            "text-secondary": "#6E726E",
+            "data-chart-trace": "#1565C0",
+            "primary-container": "#1b4332",
+            "on-error-container": "#93000a",
+            "secondary-fixed-dim": "#ffb691",
+            "on-secondary-fixed": "#341100",
+            "surface-container-lowest": "#ffffff",
+            "on-primary-fixed": "#002114",
+            "on-surface-variant": "#414844",
+            "surface-container-high": "#e5e9e4",
+            "on-tertiary-container": "#75b47c"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "height-quality-bar": "1.5rem",
+            "gutter-mobile": "1.25rem",
+            "inset-xl": "1.5rem",
+            "inset-sm": "0.75rem",
+            "gap-screen-stack": "1rem",
+            "height-chart-canvas": "10rem",
+            "inset-2xs": "0.25rem",
+            "inset-2xl": "2rem",
+            "gap-card-internal": "0.75rem",
+            "inset-xs": "0.5rem",
+            "keepout-active-hud": "2rem",
+            "inset-md": "1rem",
+            "inset-lg": "1.25rem",
+            "nav-bottom-height": "4.5rem"
+          },
+          "fontFamily": {
+            "display-hero-farfield": ["Plus Jakarta Sans"],
+            "title-sm": ["Plus Jakarta Sans"],
+            "title-md": ["Plus Jakarta Sans"],
+            "body-sm": ["Plus Jakarta Sans"],
+            "label-mono-sm": ["JetBrains Mono"],
+            "display-code-spaced": ["JetBrains Mono"],
+            "body-lg": ["Plus Jakarta Sans"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "display-timer-farfield": ["JetBrains Mono"],
+            "label-mono-hud": ["JetBrains Mono"],
+            "headline-sm": ["Plus Jakarta Sans"],
+            "body-md": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "display-hero-farfield": ["64px", { "lineHeight": "68px", "letterSpacing": "-0.03em", "fontWeight": "800" }],
+            "title-sm": ["14px", { "lineHeight": "20px", "fontWeight": "600" }],
+            "title-md": ["16px", { "lineHeight": "22px", "fontWeight": "600" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "label-mono-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+            "display-code-spaced": ["32px", { "lineHeight": "40px", "letterSpacing": "0.35em", "fontWeight": "700" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "headline-md": ["22px", { "lineHeight": "30px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "display-timer-farfield": ["56px", { "lineHeight": "60px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "label-mono-hud": ["10px", { "lineHeight": "12px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+            "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    /* Soft ambient card diffusion from design guidelines */
+    .soft-ambient-card {
+      box-shadow: 0 4px 20px -2px rgba(31, 36, 33, 0.08), 0 2px 6px -1px rgba(31, 36, 33, 0.04);
+    }
+    /* Pulsing tracking point animation */
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); opacity: 0.8; }
+      50% { transform: scale(1.15); opacity: 0.3; }
+      100% { transform: scale(0.95); opacity: 0.8; }
+    }
+    .pulse-node {
+      animation: pulse-ring 2s infinite ease-in-out;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-[#1F2421] min-h-screen flex items-center justify-center p-0 md:p-6 antialiased font-body-md text-text-primary">
+<!-- Mobile Viewport Simulation Shell (390px - 412px Android viewport specs) -->
+<div class="relative w-full max-w-md h-[890px] bg-canvas-bg rounded-[40px] shadow-2xl overflow-hidden flex flex-col justify-between select-none">
+<!-- Z-0: Full Screen Camera Feed Layer (Clinician/Patient Studio Environment) -->
+<div class="absolute inset-0 z-0 bg-[#2a2f2c] overflow-hidden">
+<!-- High cohesion clinical camera feed image -->
+<img class="w-full h-full object-cover object-center opacity-70 filter contrast-[1.05] brightness-95" data-alt="A focused rehabilitation clinic room in natural daytime light with a patient seated on an ergonomic treatment plinth preparing for a knee extension movement. The interior features warm ivory walls, modern light oak floors, and Scandinavian minimalist physical therapy equipment. The atmosphere is calm, clinical, and reassuring with soft shadows." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIQZ3HJMZsJajBc5NuvD0bCCXgfNHFCslZ1dn-H2R92wS75y3UQ4kIWyl0UBzjiBAKR5YSx4CKOQi5agz1sogFVo95hv8g-hKKNOobrcKqn-5CgnqeSsD0emhwZMLansiLaxA0uqerJN9t2VXARUdl7U8nXTIU97KgPqo8src9C93YuwtPouHbe-7HonFb_YbzJidcj-iOSYxb4lSVM1WipGWUsjCZTymjP_pqV71nKx07MzCRLort1A"/>
+<!-- Ambient subtle vignette to retain UI legibility in HUD zones -->
+<div class="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/75 pointer-events-none"></div>
+</div>
+<!-- Z-1: Computer Vision Landmark Skeleton Overlay (Real-time Seated Knee Extension) -->
+<svg class="absolute inset-0 z-10 w-full h-full pointer-events-none" fill="none" viewbox="0 0 412 890" xmlns="http://www.w3.org/2000/svg">
+<!-- Defined Defs for Glow/Filters -->
+<defs>
+<filter height="140%" id="skeleton-glow" width="140%" x="-20%" y="-20%">
+<fedropshadow dx="0" dy="0" flood-color="#2E7D32" flood-opacity="0.8" stddeviation="3"></fedropshadow>
+</filter>
+</defs>
+<!-- Torso Skeleton & Spine -->
+<line filter="url(#skeleton-glow)" stroke="#2E7D32" stroke-linecap="round" stroke-width="3" x1="206" x2="206" y1="365" y2="465"></line>
+<!-- Shoulders -->
+<line stroke="#2E7D32" stroke-linecap="round" stroke-width="3" x1="162" x2="250" y1="380" y2="380"></line>
+<line stroke="#2E7D32" stroke-linecap="round" stroke-width="2.5" x1="162" x2="152" y1="380" y2="445"></line>
+<line stroke="#2E7D32" stroke-linecap="round" stroke-width="2.5" x1="250" x2="260" y1="380" y2="445"></line>
+<!-- Pelvis & Right Active Leg (Seated Knee Extension Active Articulation) -->
+<line stroke="#2E7D32" stroke-linecap="round" stroke-width="3" x1="185" x2="232" y1="465" y2="465"></line>
+<!-- Inactive Leg / Support (Faded) -->
+<line stroke="#2E7D32" stroke-dasharray="4 3" stroke-opacity="0.4" stroke-width="2.5" x1="185" x2="175" y1="465" y2="545"></line>
+<line stroke="#2E7D32" stroke-dasharray="4 3" stroke-opacity="0.4" stroke-width="2.5" x1="175" x2="170" y1="545" y2="625"></line>
+<!-- Active Leg Thigh (Femur) -->
+<line filter="url(#skeleton-glow)" stroke="#2E7D32" stroke-linecap="round" stroke-width="3.5" x1="230" x2="245" y1="465" y2="535"></line>
+<!-- Active Shin (Tibia/Knee Extended Upwards 32° from vertical) -->
+<line filter="url(#skeleton-glow)" stroke="#2E7D32" stroke-linecap="round" stroke-width="3.5" x1="245" x2="288" y1="535" y2="500"></line>
+<!-- Ankle & Foot Vector -->
+<line stroke="#2E7D32" stroke-linecap="round" stroke-width="2.5" x1="288" x2="310" y1="500" y2="488"></line>
+<!-- Tracking Nodes (Joints) -->
+<!-- Head/Sternum -->
+<circle cx="206" cy="340" fill="#FFFFFF" r="5" stroke="#2E7D32" stroke-width="3"></circle>
+<!-- Shoulders -->
+<circle cx="162" cy="380" fill="#FFFFFF" r="4.5" stroke="#2E7D32" stroke-width="2.5"></circle>
+<circle cx="250" cy="380" fill="#FFFFFF" r="4.5" stroke="#2E7D32" stroke-width="2.5"></circle>
+<!-- Hip Joints -->
+<circle cx="185" cy="465" fill="#FFFFFF" r="4.5" stroke="#2E7D32" stroke-width="2.5"></circle>
+<circle cx="230" cy="465" fill="#FFFFFF" r="5" stroke="#2E7D32" stroke-width="3"></circle>
+<!-- Active Knee Angle Arc Indicator (Primary articulation focus) -->
+<circle cx="245" cy="535" fill="none" r="14" stroke="#FEAA7F" stroke-dasharray="3 3" stroke-width="2"></circle>
+<circle class="pulse-node" cx="245" cy="535" fill="#1B4332" r="7" stroke="#FFFFFF" stroke-width="2"></circle>
+<text class="font-label-mono-sm text-[11px] font-bold" fill="#FFFFFF" filter="url(#skeleton-glow)" x="264" y="546">74°</text>
+<!-- Ankle -->
+<circle cx="288" cy="500" fill="#FFFFFF" r="5.5" stroke="#2E7D32" stroke-width="2.5"></circle>
+<!-- Toe/Foot point -->
+<circle cx="310" cy="488" fill="#FFFFFF" r="4" stroke="#2E7D32" stroke-width="2"></circle>
+</svg>
+<!-- Z-2: Heads-Up Display (Far-field glanceable HUD layer) -->
+<div class="relative z-20 flex flex-col justify-between h-full p-inset-lg pointer-events-none">
+<!-- TOP BAR CHROME & NAVIGATION (Step 3 of 5, Live Countdown, Exercise Label) -->
+<div class="flex flex-col gap-2 pointer-events-auto">
+<!-- Status Row: Wizard Step and Emergency Escape -->
+<div class="flex items-center justify-between">
+<!-- Wizard Step Indicator -->
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-card/90 backdrop-blur-md border border-white/20 soft-ambient-card">
+<span class="w-2 h-2 rounded-full bg-tag-exercise-ink animate-ping"></span>
+<span class="font-label-mono-sm text-label-mono-sm font-semibold tracking-wider text-primary">STEP 3 OF 5</span>
+</div>
+<!-- Timer Countdown: "0:48" with far-field legibility -->
+<div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-surface-card/95 backdrop-blur-md border border-white/30 shadow-md">
+<span class="material-symbols-outlined text-text-secondary text-[18px]" data-icon="timer">timer</span>
+<span class="font-display-timer-farfield text-[22px] leading-none font-bold text-text-primary tracking-tight" id="countdown-timer">0:48</span>
+</div>
+</div>
+<!-- Exercise Sub-header Pill Card -->
+<div class="flex items-center justify-between px-inset-md py-2.5 rounded-2xl bg-surface-card/90 backdrop-blur-md soft-ambient-card border border-white/25">
+<div class="flex flex-col">
+<span class="font-label-mono-sm text-[10px] uppercase tracking-widest text-text-secondary">EXERCISE DEFINITION</span>
+<span class="font-headline-sm text-headline-sm text-text-primary leading-tight font-bold">Seated knee extension</span>
+</div>
+<span class="inline-flex items-center px-2.5 py-1 rounded-full bg-tag-exercise-wash text-tag-exercise-ink font-label-mono-sm text-[11px] font-semibold">
+            Reference Authoring
+          </span>
+</div>
+</div>
+<!-- CENTER / UPPER READOUTS (High Legibility 2-3 Meters Away) -->
+<div class="flex flex-col gap-3 my-auto pointer-events-auto">
+<!-- 1. Large High-Contrast Instruction Card -->
+<div class="w-full bg-surface-card/95 backdrop-blur-lg p-5 rounded-[24px] soft-ambient-card border border-white/40 flex items-start gap-4">
+<div class="w-10 h-10 rounded-full bg-tag-exercise-wash text-tag-exercise-ink flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[24px]" data-icon="motion_sensor_active">motion_sensor_active</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-mono-sm text-[11px] font-semibold text-tag-exercise-ink uppercase tracking-wider">Calibration in Progress</span>
+<h2 class="font-headline-md text-headline-md text-text-primary leading-snug font-bold">Finding a valid pattern</h2>
+<p class="font-body-md text-text-secondary text-[14px] mt-0.5">Recording 8 clean reps at controlled velocity</p>
+</div>
+</div>
+<!-- 2. Rep Pacing / Counter Indicator: "Rep 4 of 8 captured" with visual tick marks -->
+<div class="w-full bg-surface-card/95 backdrop-blur-lg p-5 rounded-[24px] soft-ambient-card border border-white/40 flex flex-col gap-3.5">
+<div class="flex items-baseline justify-between">
+<div class="flex items-baseline gap-2">
+<span class="font-display-hero-farfield text-[40px] leading-none font-extrabold text-primary">4</span>
+<span class="font-headline-sm text-text-secondary font-medium">of 8 captured</span>
+</div>
+<span class="font-label-mono-sm text-label-mono-sm text-status-success-ink font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="check_circle">check_circle</span>
+              50% Complete
+            </span>
+</div>
+<!-- Discrete Quality/Validation Rep Ticks -->
+<div class="grid grid-cols-8 gap-1.5 h-3.5 w-full items-center">
+<!-- Rep 1: Captured -->
+<div class="h-full rounded-full bg-status-success-ink transition-all" title="Rep 1: Valid (94%)"></div>
+<!-- Rep 2: Captured -->
+<div class="h-full rounded-full bg-status-success-ink transition-all" title="Rep 2: Valid (91%)"></div>
+<!-- Rep 3: Captured -->
+<div class="h-full rounded-full bg-status-success-ink transition-all" title="Rep 3: Valid (88%)"></div>
+<!-- Rep 4: Captured (Just validated) -->
+<div class="h-full rounded-full bg-status-success-ink transition-all ring-2 ring-primary ring-offset-1" title="Rep 4: Valid (95%)"></div>
+<!-- Rep 5: Active/In Progress -->
+<div class="h-full rounded-full bg-secondary-container animate-pulse" title="Rep 5: Capturing"></div>
+<!-- Rep 6: Pending -->
+<div class="h-full rounded-full bg-surface-container-highest" title="Rep 6: Pending"></div>
+<!-- Rep 7: Pending -->
+<div class="h-full rounded-full bg-surface-container-highest" title="Rep 7: Pending"></div>
+<!-- Rep 8: Pending -->
+<div class="h-full rounded-full bg-surface-container-highest" title="Rep 8: Pending"></div>
+</div>
+<!-- Micro Cue Pill for Far-Field Alignment -->
+<div class="flex items-center justify-between pt-1 border-t border-surface-container">
+<span class="font-body-sm text-[12px] text-text-secondary flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-status-success-ink"></span>
+              Peak Extension Hold: 1.2s
+            </span>
+<span class="font-label-mono-sm text-[11px] text-primary font-medium tracking-tight bg-surface-card-warm px-2 py-0.5 rounded-md">
+              Pacing: Optimal (0.8 m/s)
+            </span>
+</div>
+</div>
+<!-- 3. Clinical Inference Status Line -->
+<div class="w-full bg-black/40 backdrop-blur-md px-3.5 py-2 rounded-xl border border-white/10 flex items-center justify-between text-white/90">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-status-success-ink"></span>
+<span class="font-label-mono-hud text-[11px] font-mono tracking-wide">Gemma 2B · NPU</span>
+</div>
+<div class="flex items-center gap-2 font-label-mono-hud text-[11px] font-mono opacity-85">
+<span>1080p</span>
+<span>·</span>
+<span>30 fps</span>
+<span>·</span>
+<span class="text-primary-fixed font-bold">24ms inference</span>
+</div>
+</div>
+</div>
+<!-- BOTTOM CONTROLS (Safety Perimeter & Prominent Emergency/Stop Action) -->
+<!-- Keepout active HUD perimeter buffer applied -->
+<div class="flex flex-col gap-3 pb-2 pointer-events-auto">
+<!-- Large Prominent Emergency/Stop Button: Single Primary "Stop and review" action -->
+<button class="group w-full h-14 px-inset-md rounded-full bg-primary-container hover:bg-primary active:scale-[0.98] text-white flex items-center justify-between shadow-xl transition-all duration-150 border border-white/15" onclick="handleStopReview()" type="button">
+<div class="flex items-center gap-3 pl-3">
+<span class="material-symbols-outlined text-[22px] text-primary-fixed group-hover:rotate-12 transition-transform duration-200" data-icon="stop_circle">stop_circle</span>
+<span class="font-title-md text-title-md text-white font-semibold tracking-wide">Stop and review</span>
+</div>
+<!-- Inner Disc Icon Token matching design specifications -->
+<div class="w-9 h-9 rounded-full bg-white text-primary flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[20px]" data-icon="arrow_forward">arrow_forward</span>
+</div>
+</button>
+<!-- Secondary Neutral Action: Cancel Recording -->
+<button class="w-full py-2.5 text-center font-title-sm text-[13px] text-white/80 hover:text-white transition-colors" onclick="handleCancelRecording()" type="button">
+          Cancel recording
+        </button>
+</div>
+</div>
+</div>
+<!-- Micro Interaction Handler Script -->
+<script>
+    // Live countdown simulation: counting down from 48 seconds
+    let seconds = 48;
+    const timerElement = document.getElementById('countdown-timer');
+
+    const countdownInterval = setInterval(() => {
+      if (seconds > 0) {
+        seconds--;
+        const formatted = `0:${seconds < 10 ? '0' : ''}${seconds}`;
+        if (timerElement) {
+          timerElement.textContent = formatted;
+          // When under 10 seconds, turn urgent red as per spec
+          if (seconds <= 10) {
+            timerElement.classList.remove('text-text-primary');
+            timerElement.classList.add('text-status-danger-ink');
+          }
+        }
+      } else {
+        clearInterval(countdownInterval);
+      }
+    }, 1000);
+
+    function handleStopReview() {
+      // Direct navigation to wizard validation review step
+      window.dispatchEvent(new CustomEvent('wizard-step-complete', { detail: { step: 3, repsCaptured: 4 } }));
+    }
+
+    function handleCancelRecording() {
+      if (confirm('Discard current reference recording and return to setup?')) {
+        window.history.back();
+      }
+    }
+  </script>
+</body></html>

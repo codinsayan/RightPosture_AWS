@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RightPosture - Live Exercise Flow</title>
+<!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS with configuration plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "tertiary-container": "#00461a",
+            "text-muted": "#8C8F8C",
+            "surface-container-lowest": "#ffffff",
+            "tag-exercise-ink": "#2E6B3A",
+            "status-success-ink": "#2E7D32",
+            "status-absent-wash": "#F3F4F6",
+            "canvas-subtle": "#F4EFEB",
+            "status-danger-ink": "#C62828",
+            "on-background": "#181d1a",
+            "on-primary-fixed-variant": "#274e3d",
+            "tertiary-fixed": "#b0f2b4",
+            "data-chart-ground": "rgba(31, 36, 33, 0.05)",
+            "tag-hold-wash": "#E3EEF6",
+            "surface-tint-sand": "#F8F5EE",
+            "canvas-bg": "#FBF9F4",
+            "status-absent-ink": "#9E9E9E",
+            "primary-fixed": "#c1ecd4",
+            "on-surface": "#181d1a",
+            "surface-container-highest": "#dfe4df",
+            "status-danger-wash": "#FEE2E2",
+            "inverse-primary": "#a5d0b9",
+            "status-warning-ink": "#D97706",
+            "on-tertiary-fixed-variant": "#115224",
+            "surface-container": "#ebefea",
+            "on-error-container": "#93000a",
+            "on-tertiary": "#ffffff",
+            "status-warning-wash": "#FEF3C7",
+            "on-primary-fixed": "#002114",
+            "on-primary-container": "#86af99",
+            "surface-container-high": "#e5e9e4",
+            "surface": "#f6fbf5",
+            "secondary": "#8e4d2a",
+            "tag-hold-ink": "#1B4F72",
+            "on-primary": "#ffffff",
+            "surface-bright": "#f6fbf5",
+            "background": "#f6fbf5",
+            "secondary-fixed-dim": "#ffb691",
+            "surface-card-warm": "#EFEAE2",
+            "status-success-wash": "#E8F5E9",
+            "on-secondary-container": "#783d1a",
+            "on-secondary": "#ffffff",
+            "surface-card": "#FFFFFF",
+            "primary": "#012d1d",
+            "on-error": "#ffffff",
+            "secondary-fixed": "#ffdbcb",
+            "surface-tint": "#3f6653",
+            "tertiary": "#002d0e",
+            "on-secondary-fixed-variant": "#713714",
+            "text-primary": "#1F2421",
+            "primary-container": "#1b4332",
+            "inverse-on-surface": "#edf2ed",
+            "data-chart-trace": "#1565C0",
+            "surface-variant": "#dfe4df",
+            "primary-fixed-dim": "#a5d0b9",
+            "tag-exercise-wash": "#E7F0E8",
+            "error": "#ba1a1a",
+            "on-tertiary-fixed": "#002108",
+            "outline-variant": "#c1c8c2",
+            "text-secondary": "#6E726E",
+            "surface-dim": "#d7dbd6",
+            "secondary-container": "#feaa7f",
+            "inverse-surface": "#2c322e",
+            "outline": "#717973",
+            "on-tertiary-container": "#75b47c",
+            "tertiary-fixed-dim": "#95d69a",
+            "on-surface-variant": "#414844",
+            "surface-container-low": "#f0f5f0",
+            "on-secondary-fixed": "#341100",
+            "error-container": "#ffdad6"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "gap-card-internal": "0.75rem",
+            "gutter-mobile": "1.25rem",
+            "keepout-active-hud": "2rem",
+            "inset-lg": "1.25rem",
+            "nav-bottom-height": "4.5rem",
+            "inset-xs": "0.5rem",
+            "height-chart-canvas": "10rem",
+            "inset-sm": "0.75rem",
+            "height-quality-bar": "1.5rem",
+            "inset-xl": "1.5rem",
+            "inset-2xl": "2rem",
+            "inset-md": "1rem",
+            "inset-2xs": "0.25rem",
+            "gap-screen-stack": "1rem"
+          },
+          "fontFamily": {
+            "title-sm": ["Plus Jakarta Sans"],
+            "title-md": ["Plus Jakarta Sans"],
+            "display-code-spaced": ["JetBrains Mono"],
+            "display-timer-farfield": ["JetBrains Mono"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "label-mono-sm": ["JetBrains Mono"],
+            "body-md": ["Plus Jakarta Sans"],
+            "headline-sm": ["Plus Jakarta Sans"],
+            "display-hero-farfield": ["Plus Jakarta Sans"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "body-sm": ["Plus Jakarta Sans"],
+            "body-lg": ["Plus Jakarta Sans"],
+            "label-mono-hud": ["JetBrains Mono"]
+          },
+          "fontSize": {
+            "title-sm": ["14px", { "lineHeight": "20px", "fontWeight": "600" }],
+            "title-md": ["16px", { "lineHeight": "22px", "fontWeight": "600" }],
+            "display-code-spaced": ["32px", { "lineHeight": "40px", "letterSpacing": "0.35em", "fontWeight": "700" }],
+            "display-timer-farfield": ["56px", { "lineHeight": "60px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "headline-md": ["22px", { "lineHeight": "30px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "label-mono-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "display-hero-farfield": ["64px", { "lineHeight": "68px", "letterSpacing": "-0.03em", "fontWeight": "800" }],
+            "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "label-mono-hud": ["10px", { "lineHeight": "12px", "letterSpacing": "0.02em", "fontWeight": "400" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-primary text-text-primary antialiased min-h-screen flex justify-center items-center p-0 select-none overflow-x-hidden font-body-md text-body-md">
+<!-- Mobile Viewport Simulation Shell (390px - 412px target) -->
+<div class="relative w-full max-w-[412px] h-[890px] bg-canvas-bg overflow-hidden flex flex-col justify-between shadow-[0_20px_50px_rgba(0,0,0,0.35)] md:rounded-[40px] border border-surface-card-warm/20">
+<!-- Z-0: CAMERA VIEWPORT FEED (Live camera simulation of patient performing Seated knee extension) -->
+<div class="absolute inset-0 z-0 bg-canvas-bg overflow-hidden">
+<img class="w-full h-full object-cover brightness-[0.92] contrast-[0.98]" data-alt="A focused physical therapy patient sitting upright on a modern wooden chair in a tranquil Scandinavian sunlit room performing a seated knee extension exercise. The atmosphere is calming with warm ivory tones, soft architectural shadows, and biophilic natural wood textures. Crisp natural light streams in from a side window, highlighting pristine knee alignment and rehabilitation posture." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQRiB2A7yoYpZNuceLcdQIP2JJ6108q4CrVsoXOiwQcrmytUw3IqIpSTq8opgcFKU7juhssUYSfNsyh1D6sLYJojPnHM-b8UNBhAL1aIE7FZ7XplG0U0QkYAhwW1zfSvHrha-Nzbwvu2Ku8jmzcGw74O7HTIkU0mAaFhGf15La-hABN94PSEwvPlur8uw6oaAzlkkmDhz76DYZdzvK4IVpDtp6a7CISDj9xttRQcFfRsQSnIt9C8shYQ"/>
+<!-- Biophilic Subtle Camera Vignette & Contrast Grading -->
+<div class="absolute inset-0 bg-gradient-to-b from-primary/80 via-transparent to-primary/85 pointer-events-none"></div>
+<div class="absolute inset-0 bg-primary/20 pointer-events-none mix-blend-multiply"></div>
+</div>
+<!-- Z-1: POSE-ESTIMATION LANDMARK SKELETON (Vector graphic overlay over joints) -->
+<svg class="absolute inset-0 z-10 w-full h-full pointer-events-none" fill="none" viewbox="0 0 412 890" xmlns="http://www.w3.org/2000/svg">
+<!-- Target Joint Connection Lines (Calm biophilic emerald glow) -->
+<!-- Spine to Hip -->
+<line opacity="0.75" stroke="#2E7D32" stroke-dasharray="4 4" stroke-linecap="round" stroke-width="3" x1="205" x2="208" y1="360" y2="475"></line>
+<!-- Hip to Knee (Thigh) -->
+<line stroke="#2E7D32" stroke-linecap="round" stroke-width="4" x1="208" x2="242" y1="475" y2="538"></line>
+<!-- Knee to Ankle (Extended lower leg) -->
+<line stroke="#2E7D32" stroke-linecap="round" stroke-width="4.5" x1="242" x2="295" y1="538" y2="550"></line>
+<!-- ROM Angle Arc Indicator on Active Knee -->
+<path d="M 230 515 A 32 32 0 0 1 270 540" fill="none" stroke="#FEF3C7" stroke-linecap="round" stroke-width="2.5"></path>
+<!-- Vector Joint Anchor Nodes -->
+<!-- Hip joint -->
+<circle cx="208" cy="475" fill="#FFFFFF" r="5" stroke="#2E7D32" stroke-width="2.5"></circle>
+<!-- Tracked Knee Focal Joint (Active tracking highlight with animated pulse ring) -->
+<circle class="animate-ping" cx="242" cy="538" fill="none" r="14" stroke="#2E7D32" stroke-opacity="0.4" stroke-width="1.5"></circle>
+<circle cx="242" cy="538" fill="#FFFFFF" r="9" stroke="#2E7D32" stroke-width="3.5"></circle>
+<circle cx="242" cy="538" fill="#2E7D32" r="3.5"></circle>
+<!-- Ankle joint -->
+<circle cx="295" cy="550" fill="#FFFFFF" r="7" stroke="#2E7D32" stroke-width="3"></circle>
+<!-- ROM Degree Badge Floating in Near-Field -->
+<rect fill="#1B4332" fill-opacity="0.85" height="20" rx="10" width="46" x="250" y="504"></rect>
+<text fill="#FFFFFF" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="600" text-anchor="middle" x="273" y="518">168°</text>
+</svg>
+<!-- Z-2: HEADS-UP DISPLAY (HUD) PERIMETER WITH 32dp KEEPOUT ZONE -->
+<div class="relative z-20 flex flex-col justify-between h-full p-keepout-active-hud pointer-events-none">
+<!-- TOP SECTION: System Readout, Form Quality HUD Bar & Primary Rep Counter -->
+<div class="flex flex-col gap-inset-sm w-full pt-inset-xs">
+<!-- 5. Technical Readout & Language Indicator Row -->
+<div class="flex items-center justify-between pointer-events-auto">
+<!-- Hardware Engine / Model Stream Meta -->
+<div class="flex items-center gap-inset-xs bg-primary/70 backdrop-blur-md px-2.5 py-1 rounded-full border border-surface-card-warm/15 text-canvas-bg/90">
+<span class="w-1.5 h-1.5 rounded-full bg-tag-exercise-ink animate-pulse"></span>
+<span class="font-label-mono-hud text-label-mono-hud tracking-wider uppercase text-canvas-bg">Gemma 2B · NPU · 30 fps · 1080p</span>
+</div>
+<!-- 6. Spoken Language / Voice Pill -->
+<button aria-label="Select audio coaching voice" class="flex items-center gap-1 bg-primary/70 backdrop-blur-md px-2.5 py-1 rounded-full border border-surface-card-warm/15 text-canvas-bg hover:bg-primary-container transition-colors">
+<span class="material-symbols-outlined text-[14px] text-canvas-bg" data-icon="record_voice_over">record_voice_over</span>
+<span class="font-label-mono-sm text-label-mono-sm text-canvas-bg font-medium">Voice: English</span>
+<span class="material-symbols-outlined text-[14px] text-canvas-bg" data-icon="arrow_drop_down">arrow_drop_down</span>
+</button>
+</div>
+<!-- 2. Full-Width Form Quality Bar at Top (24dp height) -->
+<div class="w-full bg-surface-card/90 backdrop-blur-md p-inset-xs rounded-full shadow-[0_4px_20px_-2px_rgba(31,36,33,0.12)] border border-surface-card-warm/20 pointer-events-auto">
+<div class="flex items-center justify-between px-inset-xs mb-1">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-status-success-ink"></span>
+<span class="font-title-sm text-title-sm text-text-primary tracking-tight font-bold">Form Quality 84</span>
+<span class="text-text-secondary font-body-sm text-body-sm">· Good</span>
+</div>
+<span class="font-label-mono-sm text-label-mono-sm text-status-success-ink font-semibold">84%</span>
+</div>
+<!-- Quality Bar Fill (Success Band >= 80%: #2E7D32) -->
+<div class="w-full h-height-quality-bar bg-data-chart-ground rounded-full overflow-hidden p-0.5 relative">
+<div class="h-full bg-status-success-ink rounded-full transition-all duration-300 ease-out flex items-center justify-end pr-2" style="width: 84%">
+<div class="w-1 h-3 bg-white/40 rounded-full"></div>
+</div>
+</div>
+</div>
+<!-- 3. Giant Far-Field Rep Counter & Set Details (Legible at 2-3 meters) -->
+<div class="flex items-start justify-between mt-1 pointer-events-auto">
+<!-- Exercise Category & Movement Name -->
+<div class="flex flex-col">
+<div class="inline-flex items-center gap-1 bg-tag-exercise-wash text-tag-exercise-ink px-2 py-0.5 rounded-full w-fit mb-1 border border-tag-exercise-ink/20">
+<span class="material-symbols-outlined text-[12px]" data-icon="fitness_center">fitness_center</span>
+<span class="font-label-mono-sm text-label-mono-sm font-semibold tracking-wide uppercase">Exercise</span>
+</div>
+<h1 class="font-headline-sm text-headline-sm font-bold text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)] tracking-tight">
+              Seated knee extension
+            </h1>
+<span class="font-title-sm text-title-sm text-canvas-subtle drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)]">
+              Right Leg · Resistance Band
+            </span>
+</div>
+<!-- Giant Far-Field Counter Cluster -->
+<div class="flex flex-col items-end bg-primary/85 backdrop-blur-md px-3.5 py-2 rounded-2xl border border-surface-card-warm/20 shadow-[0_8px_24px_rgba(0,0,0,0.25)]">
+<span class="font-label-mono-sm text-label-mono-sm uppercase text-canvas-subtle tracking-wider font-semibold">
+              Set 2 of 3
+            </span>
+<div class="flex items-baseline gap-1 text-white">
+<span class="font-display-hero-farfield text-display-hero-farfield leading-none font-extrabold tracking-tighter tabular-nums text-white">
+                7
+              </span>
+<span class="font-headline-md text-headline-md text-canvas-subtle/80 font-bold">
+                / 12
+              </span>
+</div>
+<span class="font-label-mono-hud text-label-mono-hud text-tag-exercise-ink bg-tag-exercise-wash px-2 py-0.5 rounded-full font-bold mt-0.5">
+              Reps Target
+            </span>
+</div>
+</div>
+</div>
+<!-- BOTTOM SECTION: Real-Time Coaching Line, Emergency Affordance & Fixed CTA -->
+<div class="flex flex-col gap-inset-sm w-full pb-inset-xs pointer-events-auto">
+<!-- 4. Dominant Real-Time Coaching Card (High-Contrast Sand/Ivory Ground) -->
+<div class="bg-canvas-bg/95 backdrop-blur-lg rounded-[24px] p-inset-md shadow-[0_10px_30px_-5px_rgba(0,0,0,0.3)] border border-surface-card-warm flex flex-col gap-inset-xs">
+<!-- Active State Row -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="flex h-3 w-3 relative">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-tag-exercise-ink opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3 w-3 bg-tag-exercise-ink"></span>
+</span>
+<span class="font-headline-sm text-headline-sm font-bold text-text-primary tracking-tight">
+                Tracking.
+              </span>
+</div>
+<div class="flex items-center gap-1 text-text-secondary font-label-mono-sm text-label-mono-sm">
+<span class="material-symbols-outlined text-[16px]" data-icon="videocam">videocam</span>
+<span>Full Joint Lock</span>
+</div>
+</div>
+<!-- Dominant Feedback Cue & Rep Slip Alert -->
+<p class="font-body-md text-body-md text-text-primary font-medium">
+            Extend fully and pause at top extension for 1 second.
+          </p>
+<!-- Tally of Uncounted Reps (Amber Pill) -->
+<div class="flex items-center gap-2 bg-status-warning-wash text-status-warning-ink px-3 py-2 rounded-xl border border-status-warning-ink/30 mt-0.5">
+<span class="material-symbols-outlined text-[18px] text-status-warning-ink flex-shrink-0" data-icon="info">info</span>
+<span class="font-body-sm text-body-sm font-semibold tracking-tight">
+              1 didn't count · it didn't reach the full range
+            </span>
+</div>
+</div>
+<!-- 7. Safety Stop Affordance (Subtle warning bar preview) -->
+<div class="flex items-center justify-between px-inset-sm py-1.5 bg-status-danger-wash/90 backdrop-blur-md rounded-xl border border-status-danger-ink/20">
+<div class="flex items-center gap-1.5 text-status-danger-ink">
+<span class="material-symbols-outlined text-[16px]" data-icon="shield_with_heart">shield_with_heart</span>
+<span class="font-label-mono-sm text-label-mono-sm font-medium">Form Safety Guardian active</span>
+</div>
+<button class="font-label-mono-sm text-label-mono-sm font-bold text-status-danger-ink hover:underline flex items-center gap-0.5" onclick="triggerSafetyStop()">
+<span>Emergency Stop</span>
+<span class="material-symbols-outlined text-[14px]" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+<!-- 8. Primary Action: Fixed Forest Green CTA Button (Height: 56px) -->
+<div class="w-full pt-1">
+<button aria-label="Finish current exercise set" class="w-full h-14 bg-primary-container hover:bg-tertiary-container active:scale-[0.98] transition-all duration-150 rounded-full flex items-center justify-between px-6 shadow-[0_8px_20px_rgba(1,45,29,0.35)] text-white group">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-primary-fixed" data-icon="check_circle">check_circle</span>
+<span class="font-title-md text-title-md font-bold tracking-tight text-white">Finish set</span>
+</div>
+<!-- Internal Circular White Disc with Trailing Icon -->
+<div class="w-9 h-9 bg-white rounded-full flex items-center justify-center text-primary-container shadow-sm group-hover:translate-x-0.5 transition-transform">
+<span class="material-symbols-outlined text-[20px]" data-icon="arrow_forward">arrow_forward</span>
+</div>
+</button>
+</div>
+</div>
+</div>
+<!-- Z-4: EMERGENCY SAFETY STOP OVERLAY (Hidden by default, callable via micro-interaction) -->
+<div class="absolute inset-0 z-40 bg-status-danger-ink text-white flex flex-col justify-between p-inset-xl transform translate-y-full transition-transform duration-300 ease-in-out" id="safetyStopOverlay">
+<div class="flex justify-end">
+<button aria-label="Close Safety Alert" class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center hover:bg-white/30 text-white" onclick="dismissSafetyStop()">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+</div>
+<div class="flex flex-col items-center text-center my-auto gap-4">
+<div class="w-20 h-20 rounded-full bg-white text-status-danger-ink flex items-center justify-center shadow-lg">
+<span class="material-symbols-outlined text-[48px]" data-icon="emergency">emergency</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg font-bold tracking-tight text-white uppercase">SAFETY STOP</h2>
+<p class="font-body-lg text-body-lg text-white/90 max-w-xs">
+          Form degradation detected. Rest and re-align your posture before proceeding.
+        </p>
+<div class="bg-black/20 rounded-2xl p-inset-md w-full text-left mt-2">
+<span class="font-label-mono-sm text-label-mono-sm text-white/70 block uppercase">Trigger Cause</span>
+<span class="font-title-sm text-title-sm text-white">Lumbar compensation &gt; 18° during extension phase</span>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<button class="w-full h-14 bg-white text-status-danger-ink font-title-md text-title-md font-bold rounded-full shadow-lg active:scale-95 transition-transform" onclick="dismissSafetyStop()">
+          Resume Calibration
+        </button>
+<button class="w-full h-12 bg-transparent border border-white/40 text-white font-title-sm text-title-sm font-medium rounded-full" onclick="dismissSafetyStop()">
+          Discard Set &amp; Rest
+        </button>
+</div>
+</div>
+</div>
+<!-- Inline Lightweight Micro-Interactions -->
+<script>
+    function triggerSafetyStop() {
+      const overlay = document.getElementById('safetyStopOverlay');
+      if (overlay) {
+        overlay.classList.remove('translate-y-full');
+      }
+    }
+
+    function dismissSafetyStop() {
+      const overlay = document.getElementById('safetyStopOverlay');
+      if (overlay) {
+        overlay.classList.add('translate-y-full');
+      }
+    }
+  </script>
+</body></html>

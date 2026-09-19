@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Square flat dark grey-green background -->
+  <rect width="512" height="512" fill="#2D4D31" />
+
+  <!-- Clean, geometric stickman in vibrant orange #FFB600 -->
+  <g fill="#FFB600" stroke="#FFB600" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Circular Head -->
+    <circle cx="256" cy="116" r="42" stroke="none" />
+
+    <!-- Vertical Trunk / Body Stem with rounded ends -->
+    <line x1="256" y1="240" x2="256" y2="424" stroke-width="40" />
+
+    <!-- Left Diagonal Arm (upward ~45° forming Y shape) -->
+    <line x1="256" y1="242" x2="152" y2="156" stroke-width="40" />
+
+    <!-- Right Diagonal Arm (upward ~45° forming Y shape) -->
+    <line x1="256" y1="242" x2="360" y2="156" stroke-width="40" />
+
+    <!-- Smooth center junction join blend -->
+    <circle cx="256" cy="242" r="20" stroke="none" />
+  </g>
+</svg>

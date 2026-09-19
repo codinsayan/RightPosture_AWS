@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RightPosture - Record Reference (Step 1: Choose)</title>
+<!-- Google Fonts & Material Symbols -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&amp;family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS with Forms & Container Queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "text-muted": "#8C8F8C",
+            "on-primary-container": "#86af99",
+            "primary-fixed": "#c1ecd4",
+            "tertiary-fixed": "#b0f2b4",
+            "surface-container-highest": "#dfe4df",
+            "on-secondary": "#ffffff",
+            "on-secondary-fixed-variant": "#713714",
+            "tertiary-fixed-dim": "#95d69a",
+            "tag-exercise-ink": "#2E6B3A",
+            "on-surface": "#181d1a",
+            "secondary-fixed": "#ffdbcb",
+            "surface-tint": "#3f6653",
+            "inverse-primary": "#a5d0b9",
+            "status-absent-ink": "#9E9E9E",
+            "primary": "#012d1d",
+            "surface-dim": "#d7dbd6",
+            "tag-hold-ink": "#1B4F72",
+            "canvas-bg": "#FBF9F4",
+            "tag-hold-wash": "#E3EEF6",
+            "primary-fixed-dim": "#a5d0b9",
+            "data-chart-ground": "rgba(31, 36, 33, 0.05)",
+            "outline": "#717973",
+            "status-absent-wash": "#F3F4F6",
+            "on-primary-fixed-variant": "#274e3d",
+            "on-primary": "#ffffff",
+            "tertiary-container": "#00461a",
+            "surface-card": "#FFFFFF",
+            "outline-variant": "#c1c8c2",
+            "status-warning-ink": "#D97706",
+            "inverse-on-surface": "#edf2ed",
+            "on-tertiary": "#ffffff",
+            "surface-card-warm": "#EFEAE2",
+            "surface-tint-sand": "#F8F5EE",
+            "tag-exercise-wash": "#E7F0E8",
+            "on-secondary-container": "#783d1a",
+            "tertiary": "#002d0e",
+            "surface-bright": "#f6fbf5",
+            "inverse-surface": "#2c322e",
+            "status-danger-ink": "#C62828",
+            "secondary-container": "#feaa7f",
+            "surface-container-low": "#f0f5f0",
+            "error-container": "#ffdad6",
+            "on-error": "#ffffff",
+            "secondary": "#8e4d2a",
+            "surface-container": "#ebefea",
+            "background": "#f6fbf5",
+            "surface": "#f6fbf5",
+            "status-danger-wash": "#FEE2E2",
+            "surface-variant": "#dfe4df",
+            "canvas-subtle": "#F4EFEB",
+            "status-success-wash": "#E8F5E9",
+            "status-warning-wash": "#FEF3C7",
+            "text-primary": "#1F2421",
+            "status-success-ink": "#2E7D32",
+            "error": "#ba1a1a",
+            "on-tertiary-fixed-variant": "#115224",
+            "on-background": "#181d1a",
+            "on-tertiary-fixed": "#002108",
+            "text-secondary": "#6E726E",
+            "data-chart-trace": "#1565C0",
+            "primary-container": "#1b4332",
+            "on-error-container": "#93000a",
+            "secondary-fixed-dim": "#ffb691",
+            "on-secondary-fixed": "#341100",
+            "surface-container-lowest": "#ffffff",
+            "on-primary-fixed": "#002114",
+            "on-surface-variant": "#414844",
+            "surface-container-high": "#e5e9e4",
+            "on-tertiary-container": "#75b47c"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "height-quality-bar": "1.5rem",
+            "gutter-mobile": "1.25rem",
+            "inset-xl": "1.5rem",
+            "inset-sm": "0.75rem",
+            "gap-screen-stack": "1rem",
+            "height-chart-canvas": "10rem",
+            "inset-2xs": "0.25rem",
+            "inset-2xl": "2rem",
+            "gap-card-internal": "0.75rem",
+            "inset-xs": "0.5rem",
+            "keepout-active-hud": "2rem",
+            "inset-md": "1rem",
+            "inset-lg": "1.25rem",
+            "nav-bottom-height": "4.5rem"
+          },
+          "fontFamily": {
+            "display-hero-farfield": ["Plus Jakarta Sans"],
+            "title-sm": ["Plus Jakarta Sans"],
+            "title-md": ["Plus Jakarta Sans"],
+            "body-sm": ["Plus Jakarta Sans"],
+            "label-mono-sm": ["JetBrains Mono"],
+            "display-code-spaced": ["JetBrains Mono"],
+            "body-lg": ["Plus Jakarta Sans"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "display-timer-farfield": ["JetBrains Mono"],
+            "label-mono-hud": ["JetBrains Mono"],
+            "headline-sm": ["Plus Jakarta Sans"],
+            "body-md": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "display-hero-farfield": ["64px", { "lineHeight": "68px", "letterSpacing": "-0.03em", "fontWeight": "800" }],
+            "title-sm": ["14px", { "lineHeight": "20px", "fontWeight": "600" }],
+            "title-md": ["16px", { "lineHeight": "22px", "fontWeight": "600" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "label-mono-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+            "display-code-spaced": ["32px", { "lineHeight": "40px", "letterSpacing": "0.35em", "fontWeight": "700" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "headline-md": ["22px", { "lineHeight": "30px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "display-timer-farfield": ["56px", { "lineHeight": "60px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "label-mono-hud": ["10px", { "lineHeight": "12px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+            "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .custom-warm-shadow {
+      box-shadow: 0 4px 20px -2px rgba(31, 36, 33, 0.04), 0 2px 6px -1px rgba(31, 36, 33, 0.02);
+    }
+    .card-selected-ring {
+      box-shadow: 0 0 0 2px #1B4332, 0 8px 24px -4px rgba(27, 67, 50, 0.08);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-[#e9e5dd] min-h-screen flex items-center justify-center p-0 sm:p-4 text-text-primary antialiased font-body-md selection:bg-primary-fixed selection:text-primary">
+<!-- Mobile Canvas Device Shell (390-412dp viewport standard) -->
+<main class="w-full max-w-md bg-canvas-bg min-h-screen relative flex flex-col shadow-2xl sm:rounded-[40px] overflow-hidden">
+<!-- Top Bar & Linear Wizard Progress (Task-Focused: No Bottom Navigation) -->
+<header class="pt-6 pb-3 px-inset-lg bg-canvas-bg flex flex-col gap-3 shrink-0">
+<!-- Top Action Navigation Header -->
+<div class="flex items-center justify-between">
+<!-- Close/Cancel Button -->
+<button aria-label="Cancel and close wizard" class="w-10 h-10 rounded-full flex items-center justify-center bg-canvas-subtle hover:bg-surface-card-warm active:scale-95 transition-all text-text-primary" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+<!-- Wizard Title -->
+<h1 class="font-headline-sm text-headline-sm text-primary font-bold tracking-tight">Record Reference</h1>
+<!-- Contextual Help / Info -->
+<button aria-label="Setup guide" class="w-10 h-10 rounded-full flex items-center justify-center bg-canvas-subtle hover:bg-surface-card-warm active:scale-95 transition-all text-text-secondary" type="button">
+<span class="material-symbols-outlined text-[20px]">help_outline</span>
+</button>
+</div>
+<!-- 5-Step Segmented Clinical Progress Indicator -->
+<div class="space-y-1.5 pt-1">
+<div class="flex items-center justify-between font-label-mono-sm text-label-mono-sm text-primary font-semibold tracking-wider">
+<span class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+            1 · Choose
+          </span>
+<span class="text-text-muted font-normal">Step 1 of 5</span>
+</div>
+<!-- 5-Stage Step Bar -->
+<div class="grid grid-cols-5 gap-1.5 h-1.5 w-full">
+<div class="bg-primary-container rounded-full h-full"></div>
+<div class="bg-canvas-subtle rounded-full h-full"></div>
+<div class="bg-canvas-subtle rounded-full h-full"></div>
+<div class="bg-canvas-subtle rounded-full h-full"></div>
+<div class="bg-canvas-subtle rounded-full h-full"></div>
+</div>
+</div>
+</header>
+<!-- Scrollable Content Canvas -->
+<div class="flex-1 overflow-y-auto px-inset-lg pb-28 pt-2 space-y-5">
+<!-- Section 1: Exercise Mode Selector Segmented Control -->
+<section aria-label="Exercise Mode" class="space-y-2">
+<div class="flex items-center justify-between">
+<span class="font-title-sm text-title-sm text-text-secondary uppercase tracking-wider text-[11px]">Movement Pattern</span>
+<span class="font-label-mono-sm text-label-mono-sm text-tag-exercise-ink bg-tag-exercise-wash px-2 py-0.5 rounded-full">CV-Trained</span>
+</div>
+<div class="bg-surface-card-warm p-1 rounded-full flex gap-1 items-center" role="tablist">
+<button aria-selected="true" class="flex-1 py-2.5 px-4 rounded-full bg-primary-container text-on-primary font-title-sm text-title-sm font-semibold transition-all shadow-sm text-center flex items-center justify-center gap-1.5" role="tab" type="button">
+<span class="material-symbols-outlined text-[18px]">cached</span>
+<span>Cyclic Movement</span>
+</button>
+<button aria-selected="false" class="flex-1 py-2.5 px-4 rounded-full text-text-secondary hover:text-text-primary font-title-sm text-title-sm transition-all text-center flex items-center justify-center gap-1.5" role="tab" type="button">
+<span class="material-symbols-outlined text-[18px]">timer</span>
+<span>Static Hold</span>
+</button>
+</div>
+</section>
+<!-- Section 2: Clinical Catalog Exercises -->
+<section aria-label="Exercise Catalog" class="space-y-3">
+<div class="flex items-baseline justify-between pt-1">
+<h2 class="font-title-sm text-title-sm text-text-secondary uppercase tracking-wider text-[11px]">Protocol Catalog</h2>
+<span class="font-body-sm text-body-sm text-text-muted">4 movements</span>
+</div>
+<!-- 1. Selected Exercise Card: Seated knee extension -->
+<article class="bg-surface-card rounded-[24px] p-5 card-selected-ring relative transition-all cursor-pointer">
+<!-- Selection Status Badge -->
+<div class="absolute -top-2.5 right-6 bg-primary-container text-on-primary font-label-mono-sm text-label-mono-sm px-2.5 py-0.5 rounded-full shadow-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span>Active Selection</span>
+</div>
+<div class="flex items-start justify-between gap-3">
+<div class="space-y-1">
+<div class="flex items-center gap-2">
+<span class="bg-tag-exercise-wash text-tag-exercise-ink font-label-mono-sm text-label-mono-sm px-2.5 py-0.5 rounded-full font-medium">Cyclic</span>
+<span class="text-text-muted text-xs">•</span>
+<span class="font-label-mono-sm text-label-mono-sm text-text-secondary">12×3 · 60s rest</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-text-primary font-bold">Seated knee extension</h3>
+</div>
+<!-- Radio indicator -->
+<div class="w-6 h-6 rounded-full border-2 border-primary-container flex items-center justify-center shrink-0 mt-1">
+<div class="w-3 h-3 rounded-full bg-primary-container"></div>
+</div>
+</div>
+<!-- Expanded Clinical Guidance Cluster -->
+<div class="mt-4 pt-3.5 border-t border-canvas-subtle space-y-3">
+<!-- Setup Note -->
+<div class="bg-canvas-subtle rounded-xl p-3 flex gap-2.5 items-start">
+<span class="material-symbols-outlined text-primary-container text-[18px] shrink-0 mt-0.5">videocam</span>
+<p class="font-body-sm text-body-sm text-text-primary leading-relaxed">
+<strong class="font-title-sm text-primary font-semibold">Setup:</strong> Sit side-on to the phone, working leg nearest the lens. Phone at knee height, about 2 m away, whole body in frame.
+              </p>
+</div>
+<!-- Amber Clinical Safety Note -->
+<div class="bg-status-warning-wash rounded-xl p-3 flex gap-2.5 items-start">
+<span class="material-symbols-outlined text-status-warning-ink text-[18px] shrink-0 mt-0.5" style="font-variation-settings: 'FILL' 1;">warning</span>
+<p class="font-body-sm text-body-sm text-on-surface leading-relaxed">
+<strong class="font-title-sm text-status-warning-ink font-semibold">Safety Note:</strong> Stop if the knee hurts rather than works. Do not lock the knee at the top.
+              </p>
+</div>
+</div>
+</article>
+<!-- 2. Exercise Card: Wall sit -->
+<article class="bg-surface-card rounded-[24px] p-4 custom-warm-shadow border border-transparent hover:border-canvas-subtle transition-all cursor-pointer flex items-center justify-between">
+<div class="flex items-center gap-3.5">
+<div class="w-12 h-12 rounded-2xl bg-tag-hold-wash text-tag-hold-ink flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[24px]">airline_seat_recline_normal</span>
+</div>
+<div class="space-y-0.5">
+<div class="flex items-center gap-2">
+<span class="bg-tag-hold-wash text-tag-hold-ink font-label-mono-sm text-label-mono-sm px-2 py-0.5 rounded-full font-medium">Hold</span>
+<span class="font-label-mono-sm text-label-mono-sm text-text-muted">30s×3 · 60s rest</span>
+</div>
+<h3 class="font-title-md text-title-md text-text-primary font-semibold">Wall sit</h3>
+</div>
+</div>
+<div class="w-6 h-6 rounded-full border-2 border-outline-variant flex items-center justify-center shrink-0"></div>
+</article>
+<!-- 3. Exercise Card: Sit to stand -->
+<article class="bg-surface-card rounded-[24px] p-4 custom-warm-shadow border border-transparent hover:border-canvas-subtle transition-all cursor-pointer flex items-center justify-between">
+<div class="flex items-center gap-3.5">
+<div class="w-12 h-12 rounded-2xl bg-tag-exercise-wash text-tag-exercise-ink flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[24px]">accessibility_new</span>
+</div>
+<div class="space-y-0.5">
+<div class="flex items-center gap-2">
+<span class="bg-tag-exercise-wash text-tag-exercise-ink font-label-mono-sm text-label-mono-sm px-2 py-0.5 rounded-full font-medium">Cyclic</span>
+<span class="font-label-mono-sm text-label-mono-sm text-text-muted">10×3 · 90s rest</span>
+</div>
+<h3 class="font-title-md text-title-md text-text-primary font-semibold">Sit to stand</h3>
+</div>
+</div>
+<div class="w-6 h-6 rounded-full border-2 border-outline-variant flex items-center justify-center shrink-0"></div>
+</article>
+<!-- 4. Exercise Card: Standing hip abduction -->
+<article class="bg-surface-card rounded-[24px] p-4 custom-warm-shadow border border-transparent hover:border-canvas-subtle transition-all cursor-pointer flex items-center justify-between">
+<div class="flex items-center gap-3.5">
+<div class="w-12 h-12 rounded-2xl bg-tag-exercise-wash text-tag-exercise-ink flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[24px]">directions_walk</span>
+</div>
+<div class="space-y-0.5">
+<div class="flex items-center gap-2">
+<span class="bg-tag-exercise-wash text-tag-exercise-ink font-label-mono-sm text-label-mono-sm px-2 py-0.5 rounded-full font-medium">Cyclic</span>
+<span class="font-label-mono-sm text-label-mono-sm text-text-muted">12×3 · 60s rest</span>
+</div>
+<h3 class="font-title-md text-title-md text-text-primary font-semibold">Standing hip abduction</h3>
+</div>
+</div>
+<div class="w-6 h-6 rounded-full border-2 border-outline-variant flex items-center justify-center shrink-0"></div>
+</article>
+</section>
+<!-- Section 3: Author Custom Movement Bento Option -->
+<section aria-label="Author Custom Movement" class="pt-1">
+<button class="w-full bg-surface-tint-sand hover:bg-canvas-subtle border-2 border-dashed border-[#dcd7cb] rounded-[24px] p-4 text-left flex items-center justify-between transition-colors active:scale-[0.99] group" type="button">
+<div class="flex items-center gap-3.5">
+<div class="w-11 h-11 rounded-2xl bg-surface-card flex items-center justify-center text-primary shadow-xs group-hover:bg-primary group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined text-[22px]">add_circle_outline</span>
+</div>
+<div>
+<h4 class="font-title-md text-title-md text-primary font-semibold">Author Custom Movement</h4>
+<p class="font-body-sm text-body-sm text-text-secondary">Define joint angle tracking &amp; custom tempo</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-text-secondary text-[20px] group-hover:translate-x-0.5 transition-transform">chevron_right</span>
+</button>
+</section>
+</div>
+<!-- Bottom Docked Action Panel (No Bottom Navigation) -->
+<footer class="fixed sm:absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-canvas-bg via-canvas-bg to-canvas-bg/90 backdrop-blur-sm z-30 max-w-md mx-auto">
+<button class="w-full h-14 bg-primary-container hover:bg-primary active:scale-[0.98] transition-all rounded-full px-6 flex items-center justify-between text-on-primary shadow-lg shadow-primary-container/20 group" type="button">
+<span class="font-title-md text-title-md font-semibold tracking-wide pl-2">Continue to Calibration</span>
+<!-- Trailing Disc Indicator as Mandated by Design Tokens -->
+<span class="w-9 h-9 rounded-full bg-white text-primary flex items-center justify-center shrink-0 shadow-sm group-hover:translate-x-0.5 transition-transform">
+<span class="material-symbols-outlined text-[20px] font-bold">arrow_forward</span>
+</span>
+</button>
+</footer>
+</main>
+<script>
+    // Lightweight interactivity for mode switching and exercise selection
+    document.addEventListener('DOMContentLoaded', () => {
+      // Toggle for Cyclic vs Hold Segmented Tab
+      const segmentButtons = document.querySelectorAll('[role="tab"]');
+      segmentButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          segmentButtons.forEach(b => {
+            b.setAttribute('aria-selected', 'false');
+            b.className = "flex-1 py-2.5 px-4 rounded-full text-text-secondary hover:text-text-primary font-title-sm text-title-sm transition-all text-center flex items-center justify-center gap-1.5";
+          });
+          btn.setAttribute('aria-selected', 'true');
+          btn.className = "flex-1 py-2.5 px-4 rounded-full bg-primary-container text-on-primary font-title-sm text-title-sm font-semibold transition-all shadow-sm text-center flex items-center justify-center gap-1.5";
+        });
+      });
+    });
+  </script>
+</body></html>

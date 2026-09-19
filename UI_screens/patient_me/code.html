@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RightPosture - Patient Me</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-primary-fixed-variant": "#274e3d",
+            "surface-dim": "#d7dbd6",
+            "secondary-fixed": "#ffdbcb",
+            "tertiary-fixed-dim": "#95d69a",
+            "background": "#f6fbf5",
+            "on-primary-fixed": "#002114",
+            "on-secondary-fixed": "#341100",
+            "status-danger-wash": "#FEE2E2",
+            "inverse-on-surface": "#edf2ed",
+            "on-primary-container": "#86af99",
+            "on-error-container": "#93000a",
+            "surface-card": "#FFFFFF",
+            "tag-exercise-wash": "#E7F0E8",
+            "on-background": "#181d1a",
+            "surface-variant": "#dfe4df",
+            "primary-fixed-dim": "#a5d0b9",
+            "on-secondary-fixed-variant": "#713714",
+            "surface-container-low": "#f0f5f0",
+            "inverse-surface": "#2c322e",
+            "primary-container": "#1b4332",
+            "tertiary": "#002d0e",
+            "on-error": "#ffffff",
+            "outline": "#717973",
+            "outline-variant": "#c1c8c2",
+            "error-container": "#ffdad6",
+            "text-muted": "#8C8F8C",
+            "surface-container-lowest": "#ffffff",
+            "on-secondary-container": "#783d1a",
+            "inverse-primary": "#a5d0b9",
+            "canvas-bg": "#FBF9F4",
+            "surface-card-warm": "#EFEAE2",
+            "status-warning-wash": "#FEF3C7",
+            "secondary": "#8e4d2a",
+            "surface-tint": "#3f6653",
+            "surface-bright": "#f6fbf5",
+            "data-chart-trace": "#1565C0",
+            "tag-exercise-ink": "#2E6B3A",
+            "surface-container": "#ebefea",
+            "on-surface": "#181d1a",
+            "status-danger-ink": "#C62828",
+            "status-success-ink": "#2E7D32",
+            "primary-fixed": "#c1ecd4",
+            "on-secondary": "#ffffff",
+            "status-success-wash": "#E8F5E9",
+            "surface-container-high": "#e5e9e4",
+            "on-tertiary-fixed": "#002108",
+            "on-primary": "#ffffff",
+            "surface-container-highest": "#dfe4df",
+            "surface": "#f6fbf5",
+            "status-warning-ink": "#D97706",
+            "tertiary-container": "#00461a",
+            "error": "#ba1a1a",
+            "secondary-fixed-dim": "#ffb691",
+            "on-surface-variant": "#414844",
+            "canvas-subtle": "#F4EFEB",
+            "surface-tint-sand": "#F8F5EE",
+            "status-absent-wash": "#F3F4F6",
+            "tertiary-fixed": "#b0f2b4",
+            "tag-hold-ink": "#1B4F72",
+            "tag-hold-wash": "#E3EEF6",
+            "secondary-container": "#feaa7f",
+            "text-secondary": "#6E726E",
+            "status-absent-ink": "#9E9E9E",
+            "on-tertiary-container": "#75b47c",
+            "on-tertiary-fixed-variant": "#115224",
+            "on-tertiary": "#ffffff",
+            "data-chart-ground": "rgba(31, 36, 33, 0.05)",
+            "primary": "#012d1d",
+            "text-primary": "#1F2421"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "2xl": "1.25rem",
+            "3xl": "1.5rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "inset-2xl": "2rem",
+            "height-chart-canvas": "10rem",
+            "nav-bottom-height": "4.5rem",
+            "inset-xs": "0.5rem",
+            "gap-screen-stack": "1rem",
+            "gutter-mobile": "1.25rem",
+            "inset-sm": "0.75rem",
+            "keepout-active-hud": "2rem",
+            "inset-xl": "1.5rem",
+            "inset-lg": "1.25rem",
+            "inset-md": "1rem",
+            "height-quality-bar": "1.5rem",
+            "inset-2xs": "0.25rem",
+            "gap-card-internal": "0.75rem"
+          },
+          "fontFamily": {
+            "headline-lg": ["Plus Jakarta Sans"],
+            "body-md": ["Plus Jakarta Sans"],
+            "label-mono-sm": ["JetBrains Mono"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "display-hero-farfield": ["Plus Jakarta Sans"],
+            "body-lg": ["Plus Jakarta Sans"],
+            "title-sm": ["Plus Jakarta Sans"],
+            "headline-sm": ["Plus Jakarta Sans"],
+            "label-mono-hud": ["JetBrains Mono"],
+            "title-md": ["Plus Jakarta Sans"],
+            "display-code-spaced": ["JetBrains Mono"],
+            "display-timer-farfield": ["JetBrains Mono"],
+            "body-sm": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "label-mono-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+            "headline-md": ["22px", { "lineHeight": "30px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "display-hero-farfield": ["64px", { "lineHeight": "68px", "letterSpacing": "-0.03em", "fontWeight": "800" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "title-sm": ["14px", { "lineHeight": "20px", "fontWeight": "600" }],
+            "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "label-mono-hud": ["10px", { "lineHeight": "12px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+            "title-md": ["16px", { "lineHeight": "22px", "fontWeight": "600" }],
+            "display-code-spaced": ["32px", { "lineHeight": "40px", "letterSpacing": "0.35em", "fontWeight": "700" }],
+            "display-timer-farfield": ["56px", { "lineHeight": "60px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-canvas-bg text-text-primary antialiased min-h-screen flex justify-center selection:bg-primary-fixed selection:text-primary">
+<!-- Mobile Device Shell (Android 390-412dp viewport simulation) -->
+<div class="w-full max-w-md bg-canvas-bg min-h-screen flex flex-col relative pb-28 shadow-[0_4px_30px_rgba(0,0,0,0.03)]">
+<!-- Top App Bar (Shared Component Contract) -->
+<header class="bg-canvas-bg w-full px-inset-lg py-inset-sm max-w-md mx-auto flex justify-between items-center sticky top-0 z-30">
+<div class="flex items-center gap-3">
+<!-- Patient Avatar -->
+<div class="relative w-10 h-10 rounded-full overflow-hidden border border-surface-card-warm bg-surface-card-warm flex items-center justify-center shadow-sm">
+<img class="w-full h-full object-cover" data-alt="Warm natural portrait of Elena Rostova, a clinical physical therapy patient in a brightly lit modern wellness space with calm earth tones and soft focus background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDoZ78_9TSE2O5yAEbYDLRoneK7rKukFxq31bsiPrVX_3NnuyGyuqycRxB8gBIPI0ADQOAZ3AoR94BZHRr72EhB9c9_oTUNyLxtEJwsS_o2WSC6U4gN0xOAA7Jj7gJLRswQlh67epv4f70xfyNwmwpbtltfykgioinQKsXA3KQXIXd2Xi-4nFSxXDMzXROoGqU3SQcbhojTNBSsGpZt_HrBrUx3qE9uQUKPTGIh_gGuiChO-Unm9jMNzg"/>
+</div>
+<div class="flex flex-col">
+<span class="text-headline-sm font-headline-sm font-bold text-primary tracking-tight">RightPosture</span>
+<span class="text-label-mono-sm font-label-mono-sm text-text-secondary">PATIENT PORTAL</span>
+</div>
+</div>
+<button aria-label="Notifications" class="w-10 h-10 rounded-full flex items-center justify-center text-text-secondary hover:bg-canvas-subtle transition-colors duration-150 active:scale-95">
+<span class="material-symbols-outlined text-[22px]">notifications</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 px-gutter-mobile pt-inset-xs pb-inset-xl flex flex-col gap-5">
+<!-- Profile Header Block -->
+<section class="bg-surface-card rounded-3xl p-5 shadow-[0_4px_20px_-2px_rgba(31,36,33,0.04),0_2px_6px_-1px_rgba(31,36,33,0.02)] border border-surface-card-warm/60">
+<div class="flex items-start justify-between">
+<div>
+<span class="inline-block text-label-mono-sm font-label-mono-sm text-tag-exercise-ink bg-tag-exercise-wash px-2.5 py-0.5 rounded-full mb-1.5 font-medium">REHABILITATION ID #PT-4821</span>
+<h1 class="text-headline-md font-headline-md text-text-primary">Elena Rostova</h1>
+<p class="text-body-md font-body-md text-text-secondary mt-0.5">Cervical Spine &amp; Lumbar Restoration</p>
+</div>
+<div class="w-11 h-11 rounded-2xl bg-canvas-subtle flex items-center justify-center text-primary-container font-headline-sm font-semibold border border-surface-card-warm">
+            ER
+          </div>
+</div>
+<div class="mt-4 pt-3.5 border-t border-canvas-subtle flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-text-secondary flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-tag-exercise-ink" style="font-variation-settings: 'FILL' 1;">verified</span>
+            Prescription active
+          </span>
+<span class="font-label-mono-sm text-label-mono-sm text-text-primary font-medium">Phase 2 / Week 4</span>
+</div>
+</section>
+<!-- Section 1: Linked Physiotherapist Card -->
+<section class="bg-surface-card rounded-3xl p-5 shadow-[0_4px_20px_-2px_rgba(31,36,33,0.04)] border border-surface-card-warm/60 flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<h2 class="text-title-md font-headline-sm text-text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-primary">clinical_notes</span>
+            Care Team
+          </h2>
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-status-success-wash text-status-success-ink text-label-mono-sm font-label-mono-sm font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-status-success-ink"></span>
+            Connected
+          </span>
+</div>
+<!-- Physio Item Details -->
+<div class="flex items-center gap-3.5 p-3 rounded-2xl bg-canvas-bg border border-surface-card-warm/80">
+<div class="w-12 h-12 rounded-xl overflow-hidden bg-surface-card-warm flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Professional clinical headshot of Dr. Sarah Chen, licensed physical therapist wearing medical attire in a bright natural light clinical studio." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWmn9bskAGYlJ53hDIBMjbqawdHTxqsBiFWno1zga3yM33ZE29zIYixCOBKPvSJAQFxz-lVFJkoaDFjj8zP0hdFGLxAPPlkxL70nuPnVNfgIkN1ZmFJyQuK5k349aMsZgVPpYR4tue7YIhYk3MEZ3fcsuzjtr_o9uhZ16M5KDGwCkvpf4RN34Jw_NegA46Xdf_-XvwnITQE5lyOFRA-uXHiQGWAF2nW7KnhEmClWQWZvJyvYAGCUS6JQ"/>
+</div>
+<div class="flex-1 min-w-0">
+<h3 class="text-title-sm font-title-sm text-text-primary truncate">Dr. Sarah Chen, PT</h3>
+<p class="text-body-sm font-body-sm text-text-secondary truncate">St. Jude Orthopaedic Clinic</p>
+<div class="flex items-center gap-1 mt-0.5 text-label-mono-sm font-label-mono-sm text-text-muted">
+<span>Reviewed:</span>
+<span class="text-text-primary">Yesterday, 16:40</span>
+</div>
+</div>
+</div>
+<!-- Action buttons for physio -->
+<div class="grid grid-cols-2 gap-2.5 pt-1">
+<button class="flex items-center justify-center gap-2 py-2.5 px-3 rounded-full border border-surface-card-warm bg-canvas-bg hover:bg-canvas-subtle transition-colors text-text-primary text-title-sm font-title-sm">
+<span class="material-symbols-outlined text-[18px]">chat_bubble</span>
+            Message
+          </button>
+<button class="flex items-center justify-center gap-2 py-2.5 px-3 rounded-full bg-primary-container hover:opacity-95 transition-opacity text-on-primary text-title-sm font-title-sm">
+<span class="material-symbols-outlined text-[18px]">share</span>
+            Share Notes
+          </button>
+</div>
+<!-- Clinic Invite row helper -->
+<div class="pt-2 border-t border-canvas-subtle flex items-center justify-between text-body-sm font-body-sm text-text-secondary">
+<span>Change clinic or enter referral code</span>
+<button class="text-tag-exercise-ink font-semibold flex items-center gap-0.5 hover:underline">
+            Link New
+            <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</div>
+</section>
+<!-- Section 2: Audio & Coaching Preferences -->
+<section class="bg-surface-card rounded-3xl p-5 shadow-[0_4px_20px_-2px_rgba(31,36,33,0.04)] border border-surface-card-warm/60 flex flex-col gap-4">
+<h2 class="text-title-md font-headline-sm text-text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-primary">volume_up</span>
+          Audio &amp; Coaching
+        </h2>
+<div class="space-y-3.5 divide-y divide-canvas-subtle">
+<!-- Voice Guidance Toggle -->
+<div class="flex items-center justify-between pt-1">
+<div class="pr-3">
+<span class="text-title-sm font-title-sm text-text-primary block">Voice Guidance</span>
+<span class="text-body-sm font-body-sm text-text-secondary">Spoken pacing and alignment reminders</span>
+</div>
+<!-- Toggle Switch ON -->
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-12 h-7 bg-surface-card-warm peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-primary-container"></div>
+</label>
+</div>
+<!-- Language Selector (Bilingual Specs) -->
+<div class="flex items-center justify-between pt-3.5">
+<div class="pr-2">
+<span class="text-title-sm font-title-sm text-text-primary block">Guidance Language</span>
+<span class="text-body-sm font-body-sm text-text-secondary">Clinical cues and spoken corrections</span>
+</div>
+<div class="flex items-center gap-1.5 bg-canvas-bg border border-surface-card-warm px-3 py-1.5 rounded-full cursor-pointer hover:bg-canvas-subtle transition-colors">
+<span class="text-label-mono-sm font-label-mono-sm font-semibold text-text-primary">English (UK)</span>
+<span class="material-symbols-outlined text-[16px] text-text-secondary">unfold_more</span>
+</div>
+</div>
+<!-- Real-Time Audio Cues -->
+<div class="flex items-center justify-between pt-3.5">
+<div class="pr-3">
+<span class="text-title-sm font-title-sm text-text-primary block">Real-time Joint Cues</span>
+<span class="text-body-sm font-body-sm text-text-secondary">Instant chime upon angle deviance &gt; 12°</span>
+</div>
+<!-- Toggle Switch ON -->
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-12 h-7 bg-surface-card-warm peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-primary-container"></div>
+</label>
+</div>
+</div>
+</section>
+<!-- Section 3: Account & Session Data -->
+<section class="bg-surface-card rounded-3xl p-5 shadow-[0_4px_20px_-2px_rgba(31,36,33,0.04)] border border-surface-card-warm/60 flex flex-col gap-4">
+<h2 class="text-title-md font-headline-sm text-text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-primary">manage_accounts</span>
+          Account &amp; Device Cache
+        </h2>
+<div class="space-y-3 divide-y divide-canvas-subtle text-body-md font-body-md">
+<!-- Account ID -->
+<div class="flex items-center justify-between pt-1">
+<span class="text-text-secondary">Account ID</span>
+<span class="font-label-mono-sm text-label-mono-sm text-text-primary truncate max-w-[200px]">elena.rostova@example.com</span>
+</div>
+<!-- Local Storage -->
+<div class="flex items-center justify-between pt-3">
+<div>
+<span class="text-title-sm font-title-sm text-text-primary block">Telemetry Storage</span>
+<span class="text-body-sm font-body-sm text-text-secondary">2 sessions cached locally on device</span>
+</div>
+<button class="text-label-mono-sm font-label-mono-sm text-status-danger-ink px-2.5 py-1 rounded-full hover:bg-status-danger-wash transition-colors">
+              Clear Cache
+            </button>
+</div>
+<!-- Clinician Switcher -->
+<div class="pt-3">
+<button class="w-full flex items-center justify-between p-3 rounded-2xl bg-canvas-bg border border-surface-card-warm hover:bg-canvas-subtle transition-colors group text-left">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-xl bg-canvas-subtle flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[20px]">medical_services</span>
+</div>
+<div>
+<span class="text-title-sm font-title-sm text-text-primary block">Switch to Physiotherapist mode</span>
+<span class="text-body-sm font-body-sm text-text-muted">Clinician portal &amp; caseload triage</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-[20px] text-text-secondary group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Section 4: About & Clinical Compliance -->
+<section class="bg-surface-card-warm/50 rounded-3xl p-5 border border-surface-card-warm flex flex-col gap-3">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary-container text-[22px] mt-0.5" style="font-variation-settings: 'FILL' 1;">shield_lock</span>
+<div>
+<h3 class="text-title-sm font-title-sm text-text-primary">Edge Privacy Guarantee</h3>
+<p class="text-body-sm font-body-sm text-text-secondary mt-1 leading-relaxed">
+              All computer vision &amp; pose analysis runs locally on your device via the on-device NPU. Camera frames are never recorded, transmitted, or uploaded to any cloud server.
+            </p>
+</div>
+</div>
+<div class="mt-2 pt-3 border-t border-surface-card-warm flex flex-col sm:flex-row sm:items-center justify-between text-label-mono-sm font-label-mono-sm text-text-muted gap-1">
+<span>Engine: RightPosture v2.4.1</span>
+<span>Gemma 2B NPU local engine</span>
+</div>
+</section>
+<!-- Sign out link -->
+<div class="text-center py-2">
+<button class="text-body-sm font-body-sm text-status-danger-ink hover:underline">
+          Sign out of Elena's profile
+        </button>
+</div>
+</main>
+<!-- Persistent Bottom Navigation (Shared Component Specification) -->
+<!-- Destination count: 3; Active tab: 'Me' -->
+<nav aria-label="Bottom Navigation" class="fixed bottom-0 left-0 right-0 w-full z-50 flex justify-around items-center h-nav-bottom-height px-gutter-mobile bg-surface-card max-w-md mx-auto shadow-[0_-4px_20px_-2px_rgba(31,36,33,0.04)]">
+<!-- Tab 1: Today (Inactive) -->
+<a class="flex flex-col items-center justify-center text-text-secondary px-inset-md py-1.5 min-w-[64px] min-h-[48px] hover:bg-canvas-subtle rounded-full transition-colors duration-150 active:scale-95" href="#today">
+<span class="material-symbols-outlined text-[24px]">calendar_today</span>
+<span class="text-label-mono-sm font-label-mono-sm mt-0.5">Today</span>
+</a>
+<!-- Tab 2: Progress (Inactive) -->
+<a class="flex flex-col items-center justify-center text-text-secondary px-inset-md py-1.5 min-w-[64px] min-h-[48px] hover:bg-canvas-subtle rounded-full transition-colors duration-150 active:scale-95" href="#progress">
+<span class="material-symbols-outlined text-[24px]">monitoring</span>
+<span class="text-label-mono-sm font-label-mono-sm mt-0.5">Progress</span>
+</a>
+<!-- Tab 3: Me (ACTIVE) - strictly mapped per semantic shell mandate -->
+<a aria-current="page" class="flex flex-col items-center justify-center bg-primary-container text-on-primary rounded-full px-inset-md py-1.5 min-w-[64px] min-h-[48px] active:scale-95 transition-transform duration-150 shadow-sm" href="#me">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="text-label-mono-sm font-label-mono-sm font-semibold mt-0.5 text-white">Me</span>
+</a>
+</nav>
+</div>
+</body></html>

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RightPosture · Live Hold Exercise HUD</title>
+<!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "text-secondary": "#6E726E",
+            "data-chart-trace": "#1565C0",
+            "on-error-container": "#93000a",
+            "surface-container": "#ebefea",
+            "surface": "#f6fbf5",
+            "text-primary": "#1F2421",
+            "status-warning-ink": "#D97706",
+            "surface-container-low": "#f0f5f0",
+            "on-secondary": "#ffffff",
+            "surface-tint": "#3f6653",
+            "on-tertiary-container": "#75b47c",
+            "surface-card": "#FFFFFF",
+            "inverse-primary": "#a5d0b9",
+            "on-tertiary": "#ffffff",
+            "tag-hold-wash": "#E3EEF6",
+            "surface-tint-sand": "#F8F5EE",
+            "error": "#ba1a1a",
+            "on-primary-fixed-variant": "#274e3d",
+            "data-chart-ground": "rgba(31, 36, 33, 0.05)",
+            "status-danger-ink": "#C62828",
+            "on-primary": "#ffffff",
+            "on-background": "#181d1a",
+            "background": "#f6fbf5",
+            "status-success-ink": "#2E7D32",
+            "surface-bright": "#f6fbf5",
+            "status-absent-wash": "#F3F4F6",
+            "surface-container-lowest": "#ffffff",
+            "canvas-subtle": "#F4EFEB",
+            "tertiary-container": "#00461a",
+            "status-danger-wash": "#FEE2E2",
+            "status-absent-ink": "#9E9E9E",
+            "primary-fixed": "#c1ecd4",
+            "status-warning-wash": "#FEF3C7",
+            "on-secondary-container": "#783d1a",
+            "inverse-surface": "#2c322e",
+            "canvas-bg": "#FBF9F4",
+            "surface-dim": "#d7dbd6",
+            "outline": "#717973",
+            "error-container": "#ffdad6",
+            "on-tertiary-fixed-variant": "#115224",
+            "surface-container-high": "#e5e9e4",
+            "on-tertiary-fixed": "#002108",
+            "status-success-wash": "#E8F5E9",
+            "on-secondary-fixed": "#341100",
+            "secondary-fixed-dim": "#ffb691",
+            "on-surface-variant": "#414844",
+            "tertiary-fixed-dim": "#95d69a",
+            "tag-exercise-ink": "#2E6B3A",
+            "outline-variant": "#c1c8c2",
+            "on-secondary-fixed-variant": "#713714",
+            "secondary-container": "#feaa7f",
+            "tag-hold-ink": "#1B4F72",
+            "tertiary-fixed": "#b0f2b4",
+            "text-muted": "#8C8F8C",
+            "surface-card-warm": "#EFEAE2",
+            "surface-variant": "#dfe4df",
+            "secondary": "#8e4d2a",
+            "on-error": "#ffffff",
+            "tertiary": "#002d0e",
+            "on-primary-container": "#86af99",
+            "primary-fixed-dim": "#a5d0b9",
+            "tag-exercise-wash": "#E7F0E8",
+            "surface-container-highest": "#dfe4df",
+            "inverse-on-surface": "#edf2ed",
+            "on-primary-fixed": "#002114",
+            "secondary-fixed": "#ffdbcb",
+            "primary-container": "#1b4332",
+            "on-surface": "#181d1a",
+            "primary": "#012d1d"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "height-chart-canvas": "10rem",
+            "inset-xl": "1.5rem",
+            "inset-2xs": "0.25rem",
+            "inset-md": "1rem",
+            "inset-2xl": "2rem",
+            "keepout-active-hud": "2rem",
+            "nav-bottom-height": "4.5rem",
+            "inset-sm": "0.75rem",
+            "gutter-mobile": "1.25rem",
+            "inset-xs": "0.5rem",
+            "gap-card-internal": "0.75rem",
+            "gap-screen-stack": "1rem",
+            "inset-lg": "1.25rem",
+            "height-quality-bar": "1.5rem"
+          },
+          "fontFamily": {
+            "display-hero-farfield": ["Plus Jakarta Sans"],
+            "display-timer-farfield": ["JetBrains Mono"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "label-mono-hud": ["JetBrains Mono"],
+            "title-sm": ["Plus Jakarta Sans"],
+            "headline-sm": ["Plus Jakarta Sans"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "body-md": ["Plus Jakarta Sans"],
+            "title-md": ["Plus Jakarta Sans"],
+            "display-code-spaced": ["JetBrains Mono"],
+            "body-sm": ["Plus Jakarta Sans"],
+            "label-mono-sm": ["JetBrains Mono"],
+            "body-lg": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "display-hero-farfield": ["64px", { "lineHeight": "68px", "letterSpacing": "-0.03em", "fontWeight": "800" }],
+            "display-timer-farfield": ["56px", { "lineHeight": "60px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "headline-md": ["22px", { "lineHeight": "30px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "label-mono-hud": ["10px", { "lineHeight": "12px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+            "title-sm": ["14px", { "lineHeight": "20px", "fontWeight": "600" }],
+            "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "title-md": ["16px", { "lineHeight": "22px", "fontWeight": "600" }],
+            "display-code-spaced": ["32px", { "lineHeight": "40px", "letterSpacing": "0.35em", "fontWeight": "700" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "label-mono-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+          }
+        }
+      }
+    };
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    /* Subtle camera vignette to preserve HUD readability */
+    .hud-scrim {
+      background: linear-gradient(180deg, rgba(31, 36, 33, 0.45) 0%, rgba(31, 36, 33, 0.1) 28%, rgba(31, 36, 33, 0.15) 60%, rgba(31, 36, 33, 0.6) 100%);
+    }
+    /* Pulse micro-glow for active green tracking landmark */
+    @keyframes subtle-pulse {
+      0%, 100% { transform: scale(1); opacity: 0.9; }
+      50% { transform: scale(1.15); opacity: 1; }
+    }
+    .landmark-pulse {
+      animation: subtle-pulse 2.2s infinite ease-in-out;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-canvas-bg text-text-primary antialiased flex justify-center items-center min-h-screen sm:py-6 sm:px-4 select-none">
+<!-- Mobile Viewport Container (Android 412dp standard simulation) -->
+<main class="relative w-full max-w-[412px] h-[884px] max-h-[915px] overflow-hidden bg-text-primary shadow-2xl sm:rounded-[36px] flex flex-col justify-between">
+<!-- LAYER 0: Raw Camera Sensor Feed (Simulated Realistic Wall-Sit Frame) -->
+<div class="absolute inset-0 z-0">
+<img class="w-full h-full object-cover object-center opacity-85 scale-105" data-alt="A realistic warm living room bathed in gentle morning daylight with cream walls, light natural oak flooring, and minimalist Scandinavian furniture. In the mid-ground, an athletic female patient is propped in an accurate 90-degree wall sit posture against a smooth off-white interior wall, wearing deep moss green athletic apparel. The environment is serene, quiet, and grounded with low-contrast cinematic biophilic lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6ReC_nlPMTS7yHwgPsApcPCtIKF04B18NwA33AERxqN4Izs5Re278K4PAePP_9rFZ1R3QzIXCUe4yeXXYKhY6DKS4OwdF0ikPhj30awGkVJ7eZFu4iDwAvKCyvcfRpuzBYizyoK4QHCVNsVylpw0EG2QrT5-F7Da-AfG3nBqP1GxlGVaG4djwliPSMMDcVTCRIgOba_AYVd9BNjwPaXLsIDP_bQGYQ7k7kpEkpVfYPLQejzWOubc6dw"/>
+<!-- Lighting Scrim for High-Contrast Far-Field Readability -->
+<div class="absolute inset-0 hud-scrim"></div>
+</div>
+<!-- LAYER 1: Computer Vision Skeleton / Pose Estimation Overlay -->
+<svg class="absolute inset-0 z-[1] w-full h-full pointer-events-none" fill="none" viewbox="0 0 412 915" xmlns="http://www.w3.org/2000/svg">
+<!-- Kinetic Skeleton Connections (Subtle Clinical Green) -->
+<!-- Head to Thorax -->
+<line opacity="0.85" stroke="#2E7D32" stroke-dasharray="3 2" stroke-width="2.5" x1="206" x2="206" y1="368" y2="408"></line>
+<!-- Torso / Spine line against wall -->
+<line opacity="0.9" stroke="#2E7D32" stroke-width="3" x1="206" x2="198" y1="408" y2="505"></line>
+<!-- Left Leg (Thigh: Hip to Knee 90 deg horizontal) -->
+<line opacity="0.95" stroke="#2E7D32" stroke-width="3.5" x1="198" x2="254" y1="505" y2="512"></line>
+<!-- Left Leg (Shin: Knee to Ankle 90 deg vertical) -->
+<line opacity="0.95" stroke="#2E7D32" stroke-width="3.5" x1="254" x2="256" y1="512" y2="618"></line>
+<!-- Foot vector -->
+<line opacity="0.8" stroke="#2E7D32" stroke-width="2.5" x1="256" x2="280" y1="618" y2="624"></line>
+<!-- Upper Arms / Crossed at Chest -->
+<line opacity="0.75" stroke="#2E7D32" stroke-width="2" x1="206" x2="178" y1="416" y2="455"></line>
+<line opacity="0.75" stroke="#2E7D32" stroke-width="2" x1="206" x2="234" y1="416" y2="455"></line>
+<!-- Key Tracking Landmark Nodes -->
+<!-- Head / Neck anchor -->
+<circle cx="206" cy="368" fill="#FFFFFF" r="4.5" stroke="#2E7D32" stroke-width="2"></circle>
+<!-- Thoracic wall anchor -->
+<circle cx="206" cy="408" fill="#2E7D32" r="4"></circle>
+<!-- Lumbar spine sensor check (Green checked dot) -->
+<circle class="landmark-pulse" cx="198" cy="505" fill="#2E7D32" r="5.5"></circle>
+<circle cx="198" cy="505" opacity="0.6" r="8.5" stroke="#2E7D32" stroke-dasharray="2 2" stroke-width="1.5"></circle>
+<!-- Knee joint (Angle highlight ~90 deg) -->
+<circle cx="254" cy="512" fill="#FFFFFF" r="6" stroke="#2E7D32" stroke-width="3"></circle>
+<text class="drop-shadow-md" fill="#FFFFFF" font-family="'JetBrains Mono'" font-size="11" font-weight="600" x="264" y="508">90.4°</text>
+<!-- Ankle joint -->
+<circle cx="256" cy="618" fill="#2E7D32" r="4.5" stroke="#FFFFFF" stroke-width="1.5"></circle>
+<!-- Back Wall Plane Alignment Reference Line -->
+<line opacity="0.45" stroke="#FFFFFF" stroke-dasharray="4 3" stroke-width="1.5" x1="184" x2="184" y1="360" y2="530"></line>
+<text fill="#E8F5E9" font-family="'JetBrains Mono'" font-size="9" letter-spacing="0.05em" opacity="0.85" x="134" y="445">WALL PLANE</text>
+</svg>
+<!-- LAYER 2: Heads-Up Display (HUD) Container with Screen Keepout Margins -->
+<div class="relative z-[2] w-full h-full flex flex-col justify-between p-keepout-active-hud pointer-events-none">
+<!-- TOP CLUSTER: NPU Engine Bar & Far-Field Quality Indicator -->
+<header class="w-full flex flex-col gap-inset-xs pointer-events-auto">
+<!-- Technical NPU Status Capsule & Voice Pill -->
+<div class="flex items-center justify-between w-full">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-card/90 backdrop-blur-md shadow-sm border border-canvas-subtle/50">
+<span class="w-2 h-2 rounded-full bg-status-success-ink animate-ping"></span>
+<span class="font-label-mono-sm text-label-mono-sm text-text-primary">Front Cam · 30 FPS · Gemma 2B NPU</span>
+</div>
+<!-- Language Selector -->
+<div class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface-card/90 backdrop-blur-md shadow-sm border border-canvas-subtle/50 font-label-mono-sm text-label-mono-sm text-text-secondary">
+<span class="material-symbols-outlined text-text-secondary" style="font-size: 14px;">record_voice_over</span>
+<span class="text-text-primary font-medium">Voice: EN</span>
+<span class="text-text-muted">/ हिन्दी</span>
+</div>
+</div>
+<!-- Exercise Subtitle Pill & Hold Category Tag -->
+<div class="flex items-center justify-between mt-1 px-1">
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full bg-tag-hold-wash text-tag-hold-ink font-label-mono-sm text-label-mono-sm font-semibold">
+              Hold
+            </span>
+<h1 class="font-headline-sm text-headline-sm text-surface-card drop-shadow">Wall sit · 3 × 30s hold</h1>
+</div>
+<span class="font-label-mono-sm text-label-mono-sm text-surface-card/85 font-medium">Session #14</span>
+</div>
+<!-- Clinical Quality Indicator Bar (Height: 24dp, rounded full, Pass/Score state) -->
+<section class="w-full bg-surface-card/95 backdrop-blur-sm p-3 rounded-xl shadow-sm mt-1">
+<div class="flex items-center justify-between mb-1.5 font-label-mono-sm text-label-mono-sm">
+<div class="flex items-center gap-1.5 text-status-success-ink font-semibold">
+<span class="material-symbols-outlined text-status-success-ink" data-weight="fill" style="font-size: 14px; font-variation-settings: 'FILL' 1;">check_circle</span>
+<span>Form Quality 88 · Pass (≥80)</span>
+</div>
+<span class="text-text-secondary">Tolerance ±4°</span>
+</div>
+<!-- The Real-Time Dynamic Fill Track (88% filled with Forest Green #2E7D32) -->
+<div class="relative w-full h-[22px] bg-canvas-subtle rounded-full overflow-hidden flex items-center p-0.5">
+<!-- Strict Clinical Color Coding >= 80% = #2E7D32 -->
+<div class="h-full bg-status-success-ink rounded-full transition-all duration-300 relative flex items-center justify-end pr-2" style="width: 88%;">
+<span class="text-[10px] font-label-mono-sm font-bold text-on-primary">88%</span>
+</div>
+<!-- Clinical Pass Threshold Milestone Marker at 80% -->
+<div class="absolute top-0 bottom-0 left-[80%] w-0.5 bg-text-primary/30 z-10"></div>
+</div>
+</section>
+</header>
+<!-- CENTER HERO DISPLAY: Far-Field Glanceable Timer & Set Target -->
+<section class="w-full flex flex-col items-center justify-center my-auto pointer-events-auto py-2">
+<div class="bg-surface-card/90 backdrop-blur-md rounded-3xl px-8 py-4 shadow-xl border border-canvas-subtle/80 flex flex-col items-center text-center max-w-[280px] w-full">
+<span class="font-label-mono-sm text-label-mono-sm text-text-secondary tracking-widest uppercase">Time Elapsed</span>
+<!-- ENORMOUS Timer (Readable across room at 3 meters) -->
+<div class="font-display-timer-farfield text-display-timer-farfield text-primary tracking-tight my-0.5 font-bold">
+            0:22
+          </div>
+<!-- Target and Set Indicators -->
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-card-warm text-text-primary font-label-mono-sm text-label-mono-sm font-semibold mt-1">
+<span>Target 0:30</span>
+<span class="text-text-muted">·</span>
+<span>Set 2 of 3</span>
+</div>
+</div>
+</section>
+<!-- BOTTOM CLUSTER: Coaching Instruction, Diagnostics, and Intentional Stop Action -->
+<footer class="w-full flex flex-col gap-2.5 pointer-events-auto">
+<!-- Floating High-Contrast Coaching Card -->
+<article class="bg-surface-card rounded-2xl p-4 shadow-lg border border-canvas-subtle">
+<div class="flex items-start gap-2.5">
+<div class="w-7 h-7 rounded-full bg-status-success-wash flex items-center justify-center flex-shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-status-success-ink" style="font-size: 18px;">auto_awesome</span>
+</div>
+<div class="flex-1">
+<p class="font-title-sm text-title-sm text-text-primary leading-snug">
+                Held well <span class="text-status-success-ink font-bold">88%</span> of the time. Keep your lower back pressed firmly against the wall.
+              </p>
+</div>
+</div>
+<!-- Attempt History & Monospace Diagnostics Sub-Row -->
+<div class="mt-2.5 pt-2 border-t border-canvas-subtle flex flex-col gap-1 font-label-mono-sm text-label-mono-sm text-text-secondary">
+<div class="flex items-center justify-between">
+<span class="text-text-primary font-medium">Attempt 2</span>
+<span>last 28s · best 31s</span>
+</div>
+<div class="flex items-center justify-between text-[10px] text-text-muted pt-0.5">
+<span>Watching: Knee flexion (90°), Lumbar wall contact</span>
+<span class="font-mono text-status-success-ink">drift +0.12 σ/s</span>
+</div>
+</div>
+</article>
+<!-- Primary Escape / Stop Button (Full-width 56px, Forest Green with embedded disc) -->
+<div class="w-full pt-1">
+<button class="w-full h-14 bg-primary-container hover:bg-primary text-on-primary rounded-full px-6 flex items-center justify-between shadow-lg transition-transform duration-150 active:scale-95 cursor-pointer" onclick="alert('Hold complete: 22s recorded at 88% form quality.')" type="button">
+<span class="font-title-md text-title-md font-semibold tracking-normal pl-2">Stop Hold</span>
+<span class="w-9 h-9 rounded-full bg-surface-card text-primary flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-primary" data-weight="fill" style="font-size: 20px; font-variation-settings: 'FILL' 1;">stop</span>
+</span>
+</button>
+</div>
+</footer>
+</div>
+</main>
+<script>
+    // Lightweight far-field timer tick simulation for realistic dynamic exercise feel
+    let seconds = 22;
+    const timerElement = document.querySelector('.font-display-timer-farfield');
+    if (timerElement) {
+      setInterval(() => {
+        if (seconds < 30) {
+          seconds++;
+          const formatted = `0:${seconds < 10 ? '0' : ''}${seconds}`;
+          timerElement.textContent = formatted;
+        }
+      }, 1000);
+    }
+  </script>
+</body></html>

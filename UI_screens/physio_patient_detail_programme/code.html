@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RightPosture — Elena Rostova (Programme)</title>
+<!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 with Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-error": "#ffffff",
+            "secondary-fixed-dim": "#ffb691",
+            "tag-hold-wash": "#E3EEF6",
+            "tertiary-fixed-dim": "#95d69a",
+            "status-warning-ink": "#D97706",
+            "on-tertiary-fixed": "#002108",
+            "secondary": "#8e4d2a",
+            "primary-fixed-dim": "#a5d0b9",
+            "tertiary": "#002d0e",
+            "tag-exercise-wash": "#E7F0E8",
+            "surface": "#f6fbf5",
+            "tag-exercise-ink": "#2E6B3A",
+            "on-surface": "#181d1a",
+            "on-tertiary": "#ffffff",
+            "on-surface-variant": "#414844",
+            "primary-fixed": "#c1ecd4",
+            "surface-variant": "#dfe4df",
+            "surface-container-lowest": "#ffffff",
+            "surface-dim": "#d7dbd6",
+            "on-primary-container": "#86af99",
+            "surface-card-warm": "#EFEAE2",
+            "on-tertiary-fixed-variant": "#115224",
+            "on-background": "#181d1a",
+            "background": "#f6fbf5",
+            "text-secondary": "#6E726E",
+            "secondary-fixed": "#ffdbcb",
+            "on-error-container": "#93000a",
+            "text-muted": "#8C8F8C",
+            "status-success-wash": "#E8F5E9",
+            "on-primary-fixed": "#002114",
+            "canvas-bg": "#FBF9F4",
+            "error-container": "#ffdad6",
+            "on-secondary-fixed-variant": "#713714",
+            "inverse-primary": "#a5d0b9",
+            "status-absent-ink": "#9E9E9E",
+            "surface-container-low": "#f0f5f0",
+            "text-primary": "#1F2421",
+            "canvas-subtle": "#F4EFEB",
+            "surface-container-highest": "#dfe4df",
+            "surface-card": "#FFFFFF",
+            "error": "#ba1a1a",
+            "tag-hold-ink": "#1B4F72",
+            "on-primary": "#ffffff",
+            "on-primary-fixed-variant": "#274e3d",
+            "status-success-ink": "#2E7D32",
+            "inverse-surface": "#2c322e",
+            "status-danger-ink": "#C62828",
+            "outline": "#717973",
+            "on-secondary-container": "#783d1a",
+            "data-chart-trace": "#1565C0",
+            "inverse-on-surface": "#edf2ed",
+            "on-tertiary-container": "#75b47c",
+            "on-secondary-fixed": "#341100",
+            "outline-variant": "#c1c8c2",
+            "tertiary-container": "#00461a",
+            "surface-tint": "#3f6653",
+            "secondary-container": "#feaa7f",
+            "on-secondary": "#ffffff",
+            "status-absent-wash": "#F3F4F6",
+            "surface-container-high": "#e5e9e4",
+            "data-chart-ground": "rgba(31, 36, 33, 0.05)",
+            "primary": "#012d1d",
+            "surface-container": "#ebefea",
+            "status-danger-wash": "#FEE2E2",
+            "surface-tint-sand": "#F8F5EE",
+            "primary-container": "#1b4332",
+            "surface-bright": "#f6fbf5",
+            "tertiary-fixed": "#b0f2b4",
+            "status-warning-wash": "#FEF3C7"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "2xl": "1.25rem",
+            "3xl": "1.5rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "inset-lg": "1.25rem",
+            "gap-card-internal": "0.75rem",
+            "gap-screen-stack": "1rem",
+            "gutter-mobile": "1.25rem",
+            "inset-2xl": "2rem",
+            "inset-md": "1rem",
+            "inset-xs": "0.5rem",
+            "nav-bottom-height": "4.5rem",
+            "keepout-active-hud": "2rem",
+            "inset-xl": "1.5rem",
+            "height-chart-canvas": "10rem",
+            "inset-2xs": "0.25rem",
+            "inset-sm": "0.75rem",
+            "height-quality-bar": "1.5rem"
+          },
+          "fontFamily": {
+            "display-hero-farfield": ["Plus Jakarta Sans"],
+            "title-md": ["Plus Jakarta Sans"],
+            "body-lg": ["Plus Jakarta Sans"],
+            "display-code-spaced": ["JetBrains Mono"],
+            "display-timer-farfield": ["JetBrains Mono"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "title-sm": ["Plus Jakarta Sans"],
+            "body-md": ["Plus Jakarta Sans"],
+            "label-mono-sm": ["JetBrains Mono"],
+            "label-mono-hud": ["JetBrains Mono"],
+            "headline-sm": ["Plus Jakarta Sans"],
+            "body-sm": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "display-hero-farfield": ["64px", { "lineHeight": "68px", "letterSpacing": "-0.03em", "fontWeight": "800" }],
+            "title-md": ["16px", { "lineHeight": "22px", "fontWeight": "600" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "display-code-spaced": ["32px", { "lineHeight": "40px", "letterSpacing": "0.35em", "fontWeight": "700" }],
+            "display-timer-farfield": ["56px", { "lineHeight": "60px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "headline-md": ["22px", { "lineHeight": "30px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "title-sm": ["14px", { "lineHeight": "20px", "fontWeight": "600" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "label-mono-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+            "label-mono-hud": ["10px", { "lineHeight": "12px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+            "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }]
+          },
+          "boxShadow": {
+            "soft-ambient": "0 4px 20px -2px rgba(31, 36, 33, 0.04), 0 2px 6px -1px rgba(31, 36, 33, 0.02)"
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    body {
+      background-color: #FBF9F4;
+      color: #1F2421;
+      -webkit-font-smoothing: antialiased;
+    }
+    /* Hide scrollbar for tabs */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-canvas-bg min-h-screen font-body-md text-text-primary antialiased flex flex-col justify-between selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- Mobile Viewport Shell (Android max-w-md target: 412dp) -->
+<div class="w-full max-w-md mx-auto min-h-screen flex flex-col bg-canvas-bg relative pb-28">
+<!-- Top Clinical App Bar -->
+<header class="w-full px-inset-lg py-inset-sm bg-canvas-bg flex items-center justify-between sticky top-0 z-30">
+<div class="flex items-center gap-3">
+<button aria-label="Back to patients roster" class="w-10 h-10 rounded-full flex items-center justify-center text-text-primary hover:bg-canvas-subtle active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[22px]">arrow_back</span>
+</button>
+<div class="flex flex-col">
+<h1 class="font-headline-sm text-headline-sm text-text-primary tracking-tight font-semibold">Elena Rostova</h1>
+<span class="font-label-mono-sm text-label-mono-sm text-text-secondary tracking-wide">Rehab ID #PT-4821 · Knee Extension</span>
+</div>
+</div>
+<div class="flex items-center gap-1">
+<button aria-label="More options" class="w-10 h-10 rounded-full flex items-center justify-center text-text-primary hover:bg-canvas-subtle active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[22px]">more_vert</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 px-inset-lg space-y-4">
+<!-- Patient Header Banner -->
+<section class="bg-surface-card rounded-3xl p-5 shadow-soft-ambient border border-canvas-subtle flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full bg-primary-container text-on-primary font-headline-sm text-headline-sm flex items-center justify-center shadow-inner">
+              ER
+            </div>
+<div>
+<div class="flex items-center gap-2">
+<h2 class="font-headline-sm text-headline-sm text-text-primary font-semibold">Elena Rostova</h2>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-tag-exercise-wash text-tag-exercise-ink font-label-mono-sm text-label-mono-sm font-medium">Post-Op ACL</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary">Prescription: Phase 2 · Week 4 of 8</p>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-2 pt-1 border-t border-canvas-subtle">
+<div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-status-success-wash text-status-success-ink font-label-mono-sm text-label-mono-sm font-semibold">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span>92% Adherence</span>
+</div>
+<div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-card-warm text-text-secondary font-label-mono-sm text-label-mono-sm">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+<span>Active 2h ago</span>
+</div>
+</div>
+</section>
+<!-- Segmented Navigation Tabs (Patient Detail Context) -->
+<nav class="w-full bg-surface-card-warm p-1 rounded-full flex items-center shadow-inner">
+<button class="flex-1 py-2 px-3 rounded-full text-text-secondary font-title-sm text-title-sm font-medium hover:text-text-primary text-center transition-all" type="button">
+          Overview
+        </button>
+<button class="flex-1 py-2 px-3 rounded-full text-text-secondary font-title-sm text-title-sm font-medium hover:text-text-primary text-center transition-all" type="button">
+          Progress
+        </button>
+<button class="flex-1 py-2 px-3 rounded-full bg-primary-container text-on-primary font-title-sm text-title-sm font-semibold text-center transition-all shadow-sm" type="button">
+          Programme
+        </button>
+<button class="flex-1 py-2 px-3 rounded-full text-text-secondary font-title-sm text-title-sm font-medium hover:text-text-primary text-center transition-all" type="button">
+          Sessions
+        </button>
+</nav>
+<!-- TAB CONTENT: PROGRAMME -->
+<!-- Assigned exercise 1: goal set -->
+<section class="bg-surface-card rounded-3xl p-5 shadow-soft-ambient border border-canvas-subtle flex flex-col gap-3">
+<div class="flex items-start justify-between">
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center gap-2">
+<span class="px-2.5 py-1 rounded-full bg-tag-exercise-wash text-tag-exercise-ink font-label-mono-sm text-label-mono-sm">Exercise</span>
+<span class="px-2.5 py-1 rounded-full bg-status-success-wash text-status-success-ink font-label-mono-sm text-label-mono-sm">Active</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-text-primary">Seated knee extension</h2>
+<p class="font-body-md text-body-md text-text-secondary">3 sets &times; 12 reps &middot; 60s rest &middot; resistance band (moderate)</p>
+</div>
+<button aria-label="Edit prescription" class="w-9 h-9 rounded-full bg-canvas-subtle flex items-center justify-center text-text-primary active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+</div>
+<div class="flex items-center justify-between bg-canvas-bg rounded-2xl p-3.5 border border-canvas-subtle">
+<div>
+<span class="font-label-mono-sm text-label-mono-sm text-text-secondary uppercase">Range goal</span>
+<div class="font-headline-sm text-headline-sm text-text-primary">105&deg; <span class="font-body-sm text-body-sm text-status-success-ink font-normal">&middot; reached (108&deg;)</span></div>
+</div>
+<button class="px-4 py-2 rounded-full border border-outline-variant text-text-primary font-title-sm text-title-sm active:scale-95 transition-transform" type="button">Edit goal</button>
+</div>
+<span class="font-label-mono-sm text-label-mono-sm text-text-muted">Reference v2 &middot; recorded 14 May &middot; computer-vision baseline calibrated</span>
+</section>
+<!-- Assigned exercise 2: NO goal set - the state that disables every progression verdict -->
+<section class="bg-surface-card rounded-3xl p-5 shadow-soft-ambient border border-canvas-subtle flex flex-col gap-3">
+<div class="flex items-start justify-between">
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center gap-2">
+<span class="px-2.5 py-1 rounded-full bg-tag-exercise-wash text-tag-exercise-ink font-label-mono-sm text-label-mono-sm">Exercise</span>
+<span class="px-2.5 py-1 rounded-full bg-status-success-wash text-status-success-ink font-label-mono-sm text-label-mono-sm">Active</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-text-primary">Standing hip abduction</h2>
+<p class="font-body-md text-body-md text-text-secondary">2 sets &times; 12 reps &middot; 45s rest &middot; bodyweight</p>
+</div>
+<button aria-label="Edit prescription" class="w-9 h-9 rounded-full bg-canvas-subtle flex items-center justify-center text-text-primary active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+</div>
+<div class="flex items-center justify-between bg-status-warning-wash rounded-2xl p-3.5 border border-status-warning-ink/25">
+<div class="pr-3">
+<span class="font-label-mono-sm text-label-mono-sm text-status-warning-ink uppercase">No range goal</span>
+<p class="font-body-sm text-body-sm text-text-secondary mt-0.5">Progression readiness cannot be assessed for this exercise until a goal exists.</p>
+</div>
+<button class="shrink-0 px-4 py-2 rounded-full bg-primary-container text-on-primary font-title-sm text-title-sm active:scale-95 transition-transform shadow-sm" type="button">Set a goal</button>
+</div>
+<span class="font-label-mono-sm text-label-mono-sm text-text-muted">Reference v1 &middot; recorded 2 May</span>
+</section>
+<!-- Hold, paused -->
+<section class="bg-surface-card rounded-3xl p-5 shadow-soft-ambient border border-canvas-subtle flex flex-col gap-3 opacity-80">
+<div class="flex items-start justify-between">
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center gap-2">
+<span class="px-2.5 py-1 rounded-full bg-tag-hold-wash text-tag-hold-ink font-label-mono-sm text-label-mono-sm">Hold</span>
+<span class="px-2.5 py-1 rounded-full bg-status-absent-wash text-status-absent-ink font-label-mono-sm text-label-mono-sm">Paused</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-text-primary">Wall sit isometric</h2>
+<p class="font-body-md text-body-md text-text-secondary">3 &times; 30s hold &middot; paused since 19 May</p>
+</div>
+<button aria-label="Edit prescription" class="w-9 h-9 rounded-full bg-canvas-subtle flex items-center justify-center text-text-primary active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+</div>
+</section>
+<!-- Add -->
+<section class="pb-2">
+<button class="w-full h-14 bg-primary-container text-on-primary rounded-full font-title-md text-title-md flex items-center justify-between px-3 pl-6 active:scale-[0.98] transition-all shadow-[0_8px_20px_-4px_rgba(27,67,50,0.3)]" type="button">
+<span class="tracking-tight">Add an exercise</span>
+<div class="w-9 h-9 rounded-full bg-surface-card text-primary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px]">add</span>
+</div>
+</button>
+<p class="font-body-sm text-body-sm text-text-secondary text-center pt-2.5">
+Only exercises you have recorded a reference for can be prescribed &mdash; the recording is what every
+rep is scored against.
+</p>
+</section>
+</main>
+<!-- Bottom Persistent Navigation Bar (Physio Role: 4 tabs) -->
+<!-- Mapped directly from JSON: ["Activity", "Patients", "Library", "Me"] with "Patients" active -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-inset-xs h-nav-bottom-height max-w-md mx-auto bg-surface-card dark:bg-surface-container shadow-sm border-0">
+<!-- Tab 1: Activity -->
+<button class="flex flex-col items-center justify-center text-text-secondary dark:text-on-surface-variant px-inset-md py-inset-xs hover:bg-canvas-subtle dark:hover:bg-surface-container-high transition-colors duration-150 active:scale-95" type="button">
+<span class="material-symbols-outlined text-[24px]">trending_up</span>
+<span class="text-body-sm font-body-sm mt-0.5">Activity</span>
+</button>
+<!-- Tab 2: Patients (ACTIVE) -->
+<button class="flex flex-col items-center justify-center bg-primary-container dark:bg-primary-fixed text-on-primary dark:text-on-primary-fixed rounded-full px-inset-md py-inset-xs active:scale-95 transition-transform duration-150 shadow-sm" type="button">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">group</span>
+<span class="text-body-sm font-body-sm font-semibold mt-0.5">Patients</span>
+</button>
+<!-- Tab 3: Library -->
+<button class="flex flex-col items-center justify-center text-text-secondary dark:text-on-surface-variant px-inset-md py-inset-xs hover:bg-canvas-subtle dark:hover:bg-surface-container-high transition-colors duration-150 active:scale-95" type="button">
+<span class="material-symbols-outlined text-[24px]">local_library</span>
+<span class="text-body-sm font-body-sm mt-0.5">Library</span>
+</button>
+<!-- Tab 4: Me -->
+<button class="flex flex-col items-center justify-center text-text-secondary dark:text-on-surface-variant px-inset-md py-inset-xs hover:bg-canvas-subtle dark:hover:bg-surface-container-high transition-colors duration-150 active:scale-95" type="button">
+<span class="material-symbols-outlined text-[24px]">person</span>
+<span class="text-body-sm font-body-sm mt-0.5">Me</span>
+</button>
+</nav>
+</div>
+<script>
+    // Lightweight interactive feedback for tab switching preview
+    document.querySelectorAll('nav[class*="rounded-full"] button').forEach((btn) => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('nav[class*="rounded-full"] button').forEach(b => {
+          b.className = "flex-1 py-2 px-3 rounded-full text-text-secondary font-title-sm text-title-sm font-medium hover:text-text-primary text-center transition-all";
+        });
+        this.className = "flex-1 py-2 px-3 rounded-full bg-primary-container text-on-primary font-title-sm text-title-sm font-semibold text-center transition-all shadow-sm";
+      });
+    });
+  </script>
+</body></html>

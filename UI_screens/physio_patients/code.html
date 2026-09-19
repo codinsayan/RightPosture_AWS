@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RightPosture — Patients</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-error": "#ffffff",
+            "secondary-fixed-dim": "#ffb691",
+            "tag-hold-wash": "#E3EEF6",
+            "tertiary-fixed-dim": "#95d69a",
+            "status-warning-ink": "#D97706",
+            "on-tertiary-fixed": "#002108",
+            "secondary": "#8e4d2a",
+            "primary-fixed-dim": "#a5d0b9",
+            "tertiary": "#002d0e",
+            "tag-exercise-wash": "#E7F0E8",
+            "surface": "#f6fbf5",
+            "tag-exercise-ink": "#2E6B3A",
+            "on-surface": "#181d1a",
+            "on-tertiary": "#ffffff",
+            "on-surface-variant": "#414844",
+            "primary-fixed": "#c1ecd4",
+            "surface-variant": "#dfe4df",
+            "surface-container-lowest": "#ffffff",
+            "surface-dim": "#d7dbd6",
+            "on-primary-container": "#86af99",
+            "surface-card-warm": "#EFEAE2",
+            "on-tertiary-fixed-variant": "#115224",
+            "on-background": "#181d1a",
+            "background": "#f6fbf5",
+            "text-secondary": "#6E726E",
+            "secondary-fixed": "#ffdbcb",
+            "on-error-container": "#93000a",
+            "text-muted": "#8C8F8C",
+            "status-success-wash": "#E8F5E9",
+            "on-primary-fixed": "#002114",
+            "canvas-bg": "#FBF9F4",
+            "error-container": "#ffdad6",
+            "on-secondary-fixed-variant": "#713714",
+            "inverse-primary": "#a5d0b9",
+            "status-absent-ink": "#9E9E9E",
+            "surface-container-low": "#f0f5f0",
+            "text-primary": "#1F2421",
+            "canvas-subtle": "#F4EFEB",
+            "surface-container-highest": "#dfe4df",
+            "surface-card": "#FFFFFF",
+            "error": "#ba1a1a",
+            "tag-hold-ink": "#1B4F72",
+            "on-primary": "#ffffff",
+            "on-primary-fixed-variant": "#274e3d",
+            "status-success-ink": "#2E7D32",
+            "inverse-surface": "#2c322e",
+            "status-danger-ink": "#C62828",
+            "outline": "#717973",
+            "on-secondary-container": "#783d1a",
+            "data-chart-trace": "#1565C0",
+            "inverse-on-surface": "#edf2ed",
+            "on-tertiary-container": "#75b47c",
+            "on-secondary-fixed": "#341100",
+            "outline-variant": "#c1c8c2",
+            "tertiary-container": "#00461a",
+            "surface-tint": "#3f6653",
+            "secondary-container": "#feaa7f",
+            "on-secondary": "#ffffff",
+            "status-absent-wash": "#F3F4F6",
+            "surface-container-high": "#e5e9e4",
+            "data-chart-ground": "rgba(31, 36, 33, 0.05)",
+            "primary": "#012d1d",
+            "surface-container": "#ebefea",
+            "status-danger-wash": "#FEE2E2",
+            "surface-tint-sand": "#F8F5EE",
+            "primary-container": "#1b4332",
+            "surface-bright": "#f6fbf5",
+            "tertiary-fixed": "#b0f2b4",
+            "status-warning-wash": "#FEF3C7"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "2xl": "1rem",
+            "3xl": "1.5rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "inset-lg": "1.25rem",
+            "gap-card-internal": "0.75rem",
+            "gap-screen-stack": "1rem",
+            "gutter-mobile": "1.25rem",
+            "inset-2xl": "2rem",
+            "inset-md": "1rem",
+            "inset-xs": "0.5rem",
+            "nav-bottom-height": "4.5rem",
+            "keepout-active-hud": "2rem",
+            "inset-xl": "1.5rem",
+            "height-chart-canvas": "10rem",
+            "inset-2xs": "0.25rem",
+            "inset-sm": "0.75rem",
+            "height-quality-bar": "1.5rem"
+          },
+          "fontFamily": {
+            "display-hero-farfield": ["Plus Jakarta Sans"],
+            "title-md": ["Plus Jakarta Sans"],
+            "body-lg": ["Plus Jakarta Sans"],
+            "display-code-spaced": ["JetBrains Mono"],
+            "display-timer-farfield": ["JetBrains Mono"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "title-sm": ["Plus Jakarta Sans"],
+            "body-md": ["Plus Jakarta Sans"],
+            "label-mono-sm": ["JetBrains Mono"],
+            "label-mono-hud": ["JetBrains Mono"],
+            "headline-sm": ["Plus Jakarta Sans"],
+            "body-sm": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "display-hero-farfield": ["64px", { "lineHeight": "68px", "letterSpacing": "-0.03em", "fontWeight": "800" }],
+            "title-md": ["16px", { "lineHeight": "22px", "fontWeight": "600" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "display-code-spaced": ["32px", { "lineHeight": "40px", "letterSpacing": "0.35em", "fontWeight": "700" }],
+            "display-timer-farfield": ["56px", { "lineHeight": "60px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "headline-md": ["22px", { "lineHeight": "30px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "title-sm": ["14px", { "lineHeight": "20px", "fontWeight": "600" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "label-mono-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+            "label-mono-hud": ["10px", { "lineHeight": "12px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+            "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }]
+          },
+          "boxShadow": {
+            "soft-card": "0 4px 20px -2px rgba(31, 36, 33, 0.04), 0 2px 6px -1px rgba(31, 36, 33, 0.02)"
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-canvas-bg text-text-primary min-h-screen flex justify-center selection:bg-primary-fixed selection:text-primary antialiased">
+<!-- Mobile Android Container (Standard 390-412dp viewport) -->
+<div class="w-full max-w-md bg-canvas-bg min-h-screen flex flex-col relative pb-28 shadow-xl">
+<!-- TopAppBar (from Shared Components JSON) -->
+<header class="bg-canvas-bg dark:bg-surface docked full-width top w-full">
+<div class="flex justify-between items-center w-full px-inset-lg py-inset-sm max-w-md mx-auto">
+<!-- Leading Profile Avatar & Title -->
+<div class="flex items-center gap-3">
+<div class="relative w-10 h-10 rounded-full overflow-hidden bg-surface-card-warm border border-outline-variant/30 flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Close up clinical portrait of Dr. Sarah Chen, an empathetic Asian female physical therapist in a warm natural-light studio setting with soft neutral tones and professional posture." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwhV85t9875URM14veq4xrtnB1MFBPcAyZMhAFov5se9iLoUAI78-iMkG_Std0QhXmNKTY1y19hoJ4IeF-N7p6FlyLoULNn5TQRrXJxHI8yBdHI1XvOhgiwew2WARU77ynZ00qYYohCZ6brOPBrstvLWQSovn0lzMWChRkx-0Kn-JwvZfdFiozfnXDEEcyMRGV0VJPBDOxmUVAH1xlFFAyvU2YTjXKEDOO32hIqIgw6heVYXBujjTdPA"/>
+</div>
+<div class="flex flex-col">
+<span class="text-headline-sm font-headline-sm text-primary dark:text-inverse-primary tracking-tight font-bold">RightPosture</span>
+<span class="text-label-mono-sm font-label-mono-sm text-text-secondary">Dr. Sarah Chen · St. Jude Clinic</span>
+</div>
+</div>
+<!-- Trailing Action -->
+<button aria-label="Notifications" class="w-10 h-10 rounded-full flex items-center justify-center text-primary hover:bg-canvas-subtle transition-colors duration-150 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-primary" data-icon="notifications">notifications</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 px-inset-lg pt-2 space-y-4">
+<!-- Screen Title & Roster Summary -->
+<div class="flex items-baseline justify-between pt-1">
+<div>
+<h1 class="text-headline-lg font-headline-lg text-text-primary">Patients</h1>
+<p class="text-body-sm font-body-sm text-text-secondary">12 Assigned active rehabilitation programmes</p>
+</div>
+<span class="text-label-mono-sm font-label-mono-sm bg-surface-card-warm text-text-primary px-2.5 py-1 rounded-full border border-surface-card-warm">ROSTER</span>
+</div>
+<!-- Search Field (Input component) -->
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3.5 text-text-muted text-[20px]" data-icon="search">search</span>
+<input class="w-full bg-surface-card border border-canvas-subtle rounded-xl pl-10 pr-4 py-2.5 text-body-sm font-body-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary shadow-soft-card" placeholder="Search patient name, condition or ID..." type="text"/>
+</div>
+<!-- Primary Action Card: Invite a Patient (Density Budget: 1 Primary CTA) -->
+<section class="bg-primary-container text-on-primary rounded-3xl p-inset-md shadow-soft-card">
+<div class="flex items-start justify-between gap-3">
+<div class="space-y-1">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-primary-fixed text-base" data-icon="key">key</span>
+<span class="text-label-mono-sm font-label-mono-sm uppercase text-primary-fixed tracking-wider">New Onboarding</span>
+</div>
+<h2 class="text-title-md font-title-md text-white font-semibold">Invite a Patient</h2>
+<p class="text-body-sm font-body-sm text-on-primary-container leading-relaxed">
+              Generate 6-character link code for new patient onboarding.
+            </p>
+</div>
+<button aria-label="Generate code" class="h-11 w-11 rounded-full bg-surface-card text-primary flex items-center justify-center flex-shrink-0 shadow-sm active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</section>
+<!-- Filter Segmented Chips (Horizontal scrollable, touch-friendly) -->
+<div class="flex items-center gap-2 overflow-x-auto pb-1 -mx-inset-lg px-inset-lg no-scrollbar">
+<button class="bg-primary text-white rounded-full px-3.5 py-1.5 text-body-sm font-title-sm flex items-center gap-1 flex-shrink-0">
+<span>All</span>
+<span class="text-label-mono-sm opacity-80">(12)</span>
+</button>
+<button class="bg-status-danger-wash text-status-danger-ink border border-error-container rounded-full px-3.5 py-1.5 text-body-sm font-title-sm flex items-center gap-1.5 flex-shrink-0">
+<span class="w-1.5 h-1.5 rounded-full bg-status-danger-ink"></span>
+<span>Needs Review</span>
+<span class="text-label-mono-sm font-medium">(2)</span>
+</button>
+<button class="bg-status-success-wash text-status-success-ink border border-status-success-wash rounded-full px-3.5 py-1.5 text-body-sm font-title-sm flex items-center gap-1 flex-shrink-0">
+<span>Ready to Progress</span>
+<span class="text-label-mono-sm font-medium">(1)</span>
+</button>
+<button class="bg-surface-card border border-canvas-subtle text-text-secondary rounded-full px-3.5 py-1.5 text-body-sm font-body-sm flex items-center gap-1 flex-shrink-0">
+<span>Adherent</span>
+<span class="text-label-mono-sm">(9)</span>
+</button>
+</div>
+<!-- Patient Roster Section (Bento Cards: Calm, clear clinical cards) -->
+<div class="space-y-3 pt-1">
+<!-- Patient 1: Elena Rostova (Ready to Progress) -->
+<article class="bg-surface-card rounded-3xl p-5 border border-canvas-subtle shadow-soft-card active:scale-[0.99] transition-all cursor-pointer">
+<div class="flex items-start justify-between">
+<div>
+<div class="flex items-center gap-2">
+<h3 class="text-title-md font-title-md text-text-primary">Elena Rostova</h3>
+<span class="text-label-mono-sm font-label-mono-sm text-text-muted">#PT-4821</span>
+</div>
+<p class="text-body-sm font-body-sm text-text-secondary mt-0.5">Cervical Spine &amp; Lumbar Restoration</p>
+</div>
+<!-- Progression Verdict Tag -->
+<div class="flex items-center gap-1 bg-status-success-wash text-status-success-ink px-2.5 py-1 rounded-full text-label-mono-sm font-label-mono-sm">
+<span class="material-symbols-outlined text-[14px]" data-icon="check_circle">check_circle</span>
+<span>Ready to progress</span>
+</div>
+</div>
+<div class="mt-3.5 pt-3 border-t border-canvas-subtle space-y-2.5">
+<div class="flex items-center justify-between text-body-sm font-body-sm text-text-secondary">
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-text-muted" data-icon="schedule">schedule</span>
+                Today, 09:15 AM (Seated knee extension)
+              </span>
+<span class="text-label-mono-sm font-label-mono-sm text-tag-exercise-ink font-semibold">Phase 2 · W4</span>
+</div>
+<!-- Adherence Bar Component -->
+<div class="space-y-1">
+<div class="flex justify-between text-body-sm font-body-sm">
+<span class="text-text-secondary">Adherence: 92% (11/12 prescribed sessions)</span>
+<span class="text-label-mono-sm font-label-mono-sm text-status-success-ink font-medium">On Track</span>
+</div>
+<div class="w-full h-1.5 bg-canvas-subtle rounded-full overflow-hidden">
+<div class="h-full bg-status-success-ink rounded-full" style="width: 92%;"></div>
+</div>
+</div>
+<!-- Metric Summary Pill Row -->
+<div class="flex items-center justify-between pt-1">
+<div class="inline-flex items-center gap-2 bg-canvas-bg px-2.5 py-1 rounded-lg border border-canvas-subtle">
+<span class="text-label-mono-sm font-label-mono-sm text-text-secondary">Quality avg: <strong class="text-text-primary">84/100</strong></span>
+<span class="text-canvas-subtle">|</span>
+<span class="text-label-mono-sm font-label-mono-sm text-text-secondary">ROM: <strong class="text-text-primary">108°</strong></span>
+</div>
+<div class="flex items-center text-text-muted hover:text-text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+</div>
+</article>
+<!-- Patient 2: Marcus Vance (Needs Review) -->
+<article class="bg-surface-card rounded-3xl p-5 border-2 border-status-danger-ink/20 shadow-soft-card active:scale-[0.99] transition-all cursor-pointer">
+<div class="flex items-start justify-between">
+<div>
+<div class="flex items-center gap-2">
+<h3 class="text-title-md font-title-md text-text-primary">Marcus Vance</h3>
+<span class="text-label-mono-sm font-label-mono-sm text-text-muted">#PT-3902</span>
+</div>
+<p class="text-body-sm font-body-sm text-text-secondary mt-0.5">Post-ACL Reconstruction</p>
+</div>
+<!-- Alert Badge -->
+<div class="flex items-center gap-1 bg-status-danger-wash text-status-danger-ink px-2.5 py-1 rounded-full text-label-mono-sm font-label-mono-sm">
+<span class="material-symbols-outlined text-[14px]" data-icon="warning">warning</span>
+<span>Needs Review</span>
+</div>
+</div>
+<div class="mt-3.5 pt-3 border-t border-canvas-subtle space-y-2.5">
+<!-- Clinical Flag Reason -->
+<div class="bg-status-danger-wash/60 rounded-xl px-3 py-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-status-danger-ink text-[18px]" data-icon="error_outline">error_outline</span>
+<p class="text-body-sm font-body-sm text-status-danger-ink font-medium">Form dropped &lt;50 in 2 sets · Rep 4 stop</p>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm text-text-secondary">
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-text-muted" data-icon="schedule">schedule</span>
+                Yesterday, 17:20 (Sit to stand - interrupted)
+              </span>
+</div>
+<!-- Adherence Bar -->
+<div class="space-y-1">
+<div class="flex justify-between text-body-sm font-body-sm">
+<span class="text-text-secondary">Adherence: 58%</span>
+<span class="text-label-mono-sm font-label-mono-sm text-status-danger-ink font-medium">Low Adherence</span>
+</div>
+<div class="w-full h-1.5 bg-canvas-subtle rounded-full overflow-hidden">
+<div class="h-full bg-status-danger-ink rounded-full" style="width: 58%;"></div>
+</div>
+</div>
+<!-- Metric Row -->
+<div class="flex items-center justify-between pt-1">
+<div class="inline-flex items-center gap-2 bg-canvas-bg px-2.5 py-1 rounded-lg border border-canvas-subtle">
+<span class="text-label-mono-sm font-label-mono-sm text-text-secondary">Latest Score: <strong class="text-status-danger-ink">48</strong></span>
+<span class="text-canvas-subtle">|</span>
+<span class="text-label-mono-sm font-label-mono-sm text-text-secondary">Protocol: <strong class="text-text-primary">Phase 1</strong></span>
+</div>
+<div class="flex items-center text-text-muted hover:text-text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+</div>
+</article>
+<!-- Patient 3: David Kalu (Steady Protocol) -->
+<article class="bg-surface-card rounded-3xl p-5 border border-canvas-subtle shadow-soft-card active:scale-[0.99] transition-all cursor-pointer">
+<div class="flex items-start justify-between">
+<div>
+<div class="flex items-center gap-2">
+<h3 class="text-title-md font-title-md text-text-primary">David Kalu</h3>
+<span class="text-label-mono-sm font-label-mono-sm text-text-muted">#PT-5120</span>
+</div>
+<p class="text-body-sm font-body-sm text-text-secondary mt-0.5">Patellofemoral Pain Syndrome</p>
+</div>
+<div class="flex items-center gap-1 bg-surface-card-warm text-text-primary px-2.5 py-1 rounded-full text-label-mono-sm font-label-mono-sm">
+<span class="material-symbols-outlined text-[14px]" data-icon="sync">sync</span>
+<span>Steady Protocol</span>
+</div>
+</div>
+<div class="mt-3.5 pt-3 border-t border-canvas-subtle space-y-2.5">
+<div class="flex items-center justify-between text-body-sm font-body-sm text-text-secondary">
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-text-muted" data-icon="schedule">schedule</span>
+                Today, 08:30 AM (Wall sit)
+              </span>
+<span class="text-label-mono-sm font-label-mono-sm text-tag-hold-ink font-semibold">Phase 1</span>
+</div>
+<!-- Adherence Bar -->
+<div class="space-y-1">
+<div class="flex justify-between text-body-sm font-body-sm">
+<span class="text-text-secondary">Adherence: 100% (On track)</span>
+<span class="text-label-mono-sm font-label-mono-sm text-status-success-ink font-medium">Consistent</span>
+</div>
+<div class="w-full h-1.5 bg-canvas-subtle rounded-full overflow-hidden">
+<div class="h-full bg-status-success-ink rounded-full" style="width: 100%;"></div>
+</div>
+</div>
+<!-- Metrics -->
+<div class="flex items-center justify-between pt-1">
+<div class="inline-flex items-center gap-2 bg-canvas-bg px-2.5 py-1 rounded-lg border border-canvas-subtle">
+<span class="text-label-mono-sm font-label-mono-sm text-text-secondary">Quality avg: <strong class="text-text-primary">91/100</strong></span>
+<span class="text-canvas-subtle">|</span>
+<span class="text-label-mono-sm font-label-mono-sm text-text-secondary">Sets: <strong class="text-text-primary">3/3 Done</strong></span>
+</div>
+<div class="flex items-center text-text-muted hover:text-text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+</div>
+</article>
+<!-- Patient 4: Priya Sharma (Good Form) -->
+<article class="bg-surface-card rounded-3xl p-5 border border-canvas-subtle shadow-soft-card active:scale-[0.99] transition-all cursor-pointer">
+<div class="flex items-start justify-between">
+<div>
+<div class="flex items-center gap-2">
+<h3 class="text-title-md font-title-md text-text-primary">Priya Sharma</h3>
+<span class="text-label-mono-sm font-label-mono-sm text-text-muted">#PT-4419</span>
+</div>
+<p class="text-body-sm font-body-sm text-text-secondary mt-0.5">Hip Impingement &amp; Gluteal Strengthening</p>
+</div>
+<div class="flex items-center gap-1 bg-surface-card-warm text-tag-exercise-ink px-2.5 py-1 rounded-full text-label-mono-sm font-label-mono-sm">
+<span class="material-symbols-outlined text-[14px]" data-icon="verified">verified</span>
+<span>Good Form</span>
+</div>
+</div>
+<div class="mt-3.5 pt-3 border-t border-canvas-subtle space-y-2.5">
+<div class="flex items-center justify-between text-body-sm font-body-sm text-text-secondary">
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-text-muted" data-icon="schedule">schedule</span>
+                Yesterday, 14:10
+              </span>
+<span class="text-label-mono-sm font-label-mono-sm text-text-secondary">Score: 88/100</span>
+</div>
+<!-- Adherence Bar -->
+<div class="space-y-1">
+<div class="flex justify-between text-body-sm font-body-sm">
+<span class="text-text-secondary">Adherence: 85%</span>
+<span class="text-label-mono-sm font-label-mono-sm text-status-success-ink font-medium">Adherent</span>
+</div>
+<div class="w-full h-1.5 bg-canvas-subtle rounded-full overflow-hidden">
+<div class="h-full bg-status-success-ink rounded-full" style="width: 85%;"></div>
+</div>
+</div>
+<!-- Metrics -->
+<div class="flex items-center justify-between pt-1">
+<div class="inline-flex items-center gap-2 bg-canvas-bg px-2.5 py-1 rounded-lg border border-canvas-subtle">
+<span class="text-label-mono-sm font-label-mono-sm text-text-secondary">Prescription: <strong class="text-text-primary">3 × 10 Reps</strong></span>
+</div>
+<div class="flex items-center text-text-muted hover:text-text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+</div>
+</article>
+</div>
+<!-- Quick Triage Stat Footer Card (Subtle high-order context) -->
+<div class="bg-surface-tint-sand rounded-2xl p-4 border border-canvas-subtle flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]" data-icon="vital_signs">vital_signs</span>
+</div>
+<div>
+<div class="text-title-sm font-title-sm text-text-primary">Clinical Triage Summary</div>
+<div class="text-body-sm font-body-sm text-text-secondary">1 patient ready for tier increase · 1 flagged for form drop</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (from Shared Components JSON: Active Tab = 'Patients') -->
+<!-- Executed exactly using style_* parameters from JSON -->
+<nav aria-label="Physio Navigation" class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-inset-xs h-nav-bottom-height max-w-md mx-auto bg-surface-card dark:bg-surface-container shadow-sm docked full-width bottom-0">
+<!-- Tab 1: Activity -->
+<button class="flex flex-col items-center justify-center text-text-secondary dark:text-on-surface-variant px-inset-md py-inset-xs hover:bg-canvas-subtle dark:hover:bg-surface-container-high transition-colors duration-150 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[22px]" data-icon="trending_up">trending_up</span>
+<span class="text-body-sm font-body-sm mt-0.5">Activity</span>
+</button>
+<!-- Tab 2: Patients (ACTIVE) -->
+<button aria-current="page" class="flex flex-col items-center justify-center bg-primary-container dark:bg-primary-fixed text-on-primary dark:text-on-primary-fixed rounded-full px-inset-md py-inset-xs hover:bg-canvas-subtle dark:hover:bg-surface-container-high transition-colors duration-150 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[22px]" data-icon="group">group</span>
+<span class="text-body-sm font-body-sm font-semibold mt-0.5">Patients</span>
+</button>
+<!-- Tab 3: Library -->
+<button class="flex flex-col items-center justify-center text-text-secondary dark:text-on-surface-variant px-inset-md py-inset-xs hover:bg-canvas-subtle dark:hover:bg-surface-container-high transition-colors duration-150 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[22px]" data-icon="local_library">local_library</span>
+<span class="text-body-sm font-body-sm mt-0.5">Library</span>
+</button>
+<!-- Tab 4: Me -->
+<button class="flex flex-col items-center justify-center text-text-secondary dark:text-on-surface-variant px-inset-md py-inset-xs hover:bg-canvas-subtle dark:hover:bg-surface-container-high transition-colors duration-150 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[22px]" data-icon="person">person</span>
+<span class="text-body-sm font-body-sm mt-0.5">Me</span>
+</button>
+</nav>
+</div>
+</body></html>
