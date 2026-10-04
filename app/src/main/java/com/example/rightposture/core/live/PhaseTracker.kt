@@ -87,6 +87,16 @@ data class CompletedRep(
     val checkpointsRequired: Int,
     /** Null when valid. Otherwise why it was refused, per §6.12.4. */
     val rejection: RepRejection?,
+    /**
+     * 11.2. Share of the rep's judged frames in which the whole pose was right.
+     *
+     * Judged means valid and not past phi = 1 - the same frames the checkpoints are decided on. A
+     * rep in which nothing could be judged reports 1.0: no frame contradicted the reference, and an
+     * abstention must not read as a fault (§6.6).
+     *
+     * Defaulted, and last, so a [CompletedRep] built anywhere before this existed still compiles.
+     */
+    val conformantFraction: Double = 1.0,
 )
 
 data class PhaseUpdate(
@@ -128,7 +138,8 @@ class PhaseTracker(private val config: PhaseConfig) {
     private var repValidFrames = 0
 
     /**
-     * Checkpoints this rep has been seen in, as bitmasks over phi, one per leg.
+     * Frames seen in each checkpoint and how many of them had the whole pose right, one pair of
+     * rows per leg.
      *
      * Deliberately over phi and not over the phase index `p`. `p` runs 0 to 50 outward and 50 to 100
      * back, so a rep peaking below phi = 1 never produces values near 50 at all - the index has a
@@ -137,10 +148,16 @@ class PhaseTracker(private val config: PhaseConfig) {
      * reference range, which is not what a skipped rep is.
      *
      * The two legs are tracked separately so that moving out properly and then dropping straight
-     * back is still caught; a single combined mask would be filled by the good leg.
+     * back is still caught; a single combined tally would be filled by the good leg.
+     *
+     * Counts rather than the bitmasks this kept before 11.1. A single bit could only record that
+     * *some* frame in the bucket was conformant, which credits a bucket the patient was out of
+     * position in for three quarters of - the exact case a multi-joint exercise fails on.
      */
-    private var repOutwardCheckpoints = 0
-    private var repReturnCheckpoints = 0
+    private val repOutwardFrames = IntArray(Params.TRAJECTORY_CHECKPOINTS)
+    private val repOutwardConformant = IntArray(Params.TRAJECTORY_CHECKPOINTS)
+    private val repReturnFrames = IntArray(Params.TRAJECTORY_CHECKPOINTS)
+    private val repReturnConformant = IntArray(Params.TRAJECTORY_CHECKPOINTS)
 
     /** Fastest `|dphi/dt|` inside the current rep, and the last one seen at all. */
     private var repMaxPhiRate = 0.0
@@ -148,6 +165,15 @@ class PhaseTracker(private val config: PhaseConfig) {
 
     /** Frames in this rep where the rest of the body was not where the reference had it. */
     private var repNonConformantFrames = 0
+
+    /**
+     * Frames in this rep whose conformance was actually judged: valid, and not past phi = 1.
+     *
+     * The denominator for 11.2's whole-rep fraction. Not [repValidFrames], because overshoot frames
+     * are valid but deliberately unjudged, and counting them would dilute a wrong end-range hold
+     * with frames nobody scored.
+     */
+    private var repJudgedFrames = 0
 
     /**
      * False whenever the previous frame did not yield a usable phi, so the next difference is not a
@@ -339,9 +365,9 @@ class PhaseTracker(private val config: PhaseConfig) {
         repPhiMax = phi
         repFrames = 0
         repValidFrames = 0
-        repOutwardCheckpoints = 0
-        repReturnCheckpoints = 0
+        clearCheckpoints()
         repNonConformantFrames = 0
+        repJudgedFrames = 0
         // Seeded with the rate on the frame that opened the rep. That frame is the jump, when there
         // is one: a patient who snaps from rest to the end pose enters DESCEND on the very step that
         // skipped the movement, and measuring only from the next frame would miss it.
@@ -353,36 +379,85 @@ class PhaseTracker(private val config: PhaseConfig) {
         repPhiMax = 0.0
         repFrames = 0
         repValidFrames = 0
-        repOutwardCheckpoints = 0
-        repReturnCheckpoints = 0
+        clearCheckpoints()
         repNonConformantFrames = 0
+        repJudgedFrames = 0
         repMaxPhiRate = 0.0
+    }
+
+    private fun clearCheckpoints() {
+        repOutwardFrames.fill(0)
+        repOutwardConformant.fill(0)
+        repReturnFrames.fill(0)
+        repReturnConformant.fill(0)
     }
 
     private fun countFrame(valid: Boolean, conformant: Boolean) {
         if (repStartNs == null) return
         repFrames++
-        if (valid) {
-            repValidFrames++
-            if (phi > repPhiMax) repPhiMax = phi
-            // Only a frame where the whole pose was right earns its checkpoint. A bucket stays
-            // credited once any frame in it was conformant, so one jittering landmark cannot lose a
-            // rep, while a joint left out for the whole movement never credits a bucket at all.
-            if (conformant) markCheckpoint() else repNonConformantFrames++
+        if (!valid) return
+        repValidFrames++
+        if (phi > repPhiMax) repPhiMax = phi
+
+        // Past the reference's own extremum there is no reference pose left to disagree with.
+        // phaseIndex() saturates at 50 once phi passes 1, so a patient swinging beyond what the
+        // physio recorded is scored against the turnaround while being well past it, and every
+        // joint that moves with the dominant one reads as a deviation it never made.
+        //
+        // That is an artefact of the overshoot rather than a second fault, and the overshoot
+        // already has something more specific and more useful to say about itself
+        // (RepNote.Overshot). Judging these frames would report one problem twice and pick the less
+        // actionable description - the same reasoning that puts RANGE ahead of everything in
+        // completeRep. The line is phi = 1 exactly, because that is where the saturation starts;
+        // REP_OVERSHOOT_TOLERANCE answers a different question, which is how far past the reference
+        // is worth mentioning to the patient.
+        if (phi > 1.0) return
+
+        markCheckpoint(conformant)
+        repJudgedFrames++
+        if (!conformant) repNonConformantFrames++
+    }
+
+    /**
+     * Records this frame against the checkpoint it falls in, on whichever leg the rep is on.
+     *
+     * Every judged frame is counted, conformant or not: the credit decision is a ratio taken at
+     * completion, and a denominator built only from the frames that agreed would make every bucket
+     * unanimous by construction.
+     */
+    private fun markCheckpoint(conformant: Boolean) {
+        val bucket = checkpointIndex(phi)
+        fun record(frames: IntArray, agreed: IntArray) {
+            frames[bucket]++
+            if (conformant) agreed[bucket]++
+        }
+        when (state) {
+            PhaseState.IDLE, PhaseState.DESCEND -> record(repOutwardFrames, repOutwardConformant)
+            PhaseState.ASCEND -> record(repReturnFrames, repReturnConformant)
+            // The turnaround belongs to both legs; the patient is at the top of each of them.
+            PhaseState.BOTTOM_HOLD -> {
+                record(repOutwardFrames, repOutwardConformant)
+                record(repReturnFrames, repReturnConformant)
+            }
         }
     }
 
-    private fun markCheckpoint() {
-        val bit = 1 shl checkpointIndex(phi)
-        when (state) {
-            PhaseState.IDLE, PhaseState.DESCEND -> repOutwardCheckpoints = repOutwardCheckpoints or bit
-            PhaseState.ASCEND -> repReturnCheckpoints = repReturnCheckpoints or bit
-            // The turnaround belongs to both legs; the patient is at the top of each of them.
-            PhaseState.BOTTOM_HOLD -> {
-                repOutwardCheckpoints = repOutwardCheckpoints or bit
-                repReturnCheckpoints = repReturnCheckpoints or bit
-            }
+    /**
+     * Buckets this leg was not merely seen in but *performed* in, as a bitmask.
+     *
+     * A bucket is credited when a majority of its frames had the whole pose right. One jittering
+     * landmark therefore cannot lose a rep - it is one frame against the bucket's several - while a
+     * joint left out through most of the bucket no longer earns it on the stray frame the patient
+     * happened to pass through the right position on.
+     */
+    private fun creditedMask(frames: IntArray, agreed: IntArray): Int {
+        var mask = 0
+        for (bucket in frames.indices) {
+            if (frames[bucket] == 0) continue
+            val share = agreed[bucket].toDouble() / frames[bucket]
+            if (share >= Params.TRAJECTORY_MIN_BUCKET_CONFORMANT_FRACTION) mask = mask or (1 shl bucket)
         }
+        return mask
     }
 
     /** Which quarter of the movement's range this value of phi falls in. */
@@ -417,8 +492,21 @@ class PhaseTracker(private val config: PhaseConfig) {
         } else {
             Params.TRAJECTORY_MAX_RATE_MULTIPLE * 2.0 / config.referencePeriodSeconds
         }
-        val bothLegs = repOutwardCheckpoints and repReturnCheckpoints and required
+        val bothLegs = creditedMask(repOutwardFrames, repOutwardConformant) and
+            creditedMask(repReturnFrames, repReturnConformant) and
+            required
         val visited = Integer.bitCount(bothLegs)
+
+        // 11.2. The checkpoints only ask about the buckets this rep fully crossed, so a rep peaking
+        // at phi = 0.95 never has its top bucket examined - and a patient who travels correctly and
+        // then holds the end range out of position clears every checkpoint asked of them. §6.17.2
+        // puts the therapeutic work at end range, so that is close to the worst rep the per-bucket
+        // rule alone would count. This is the backstop that sees the whole rep.
+        val conformantFraction = if (repJudgedFrames == 0) {
+            1.0
+        } else {
+            1.0 - repNonConformantFrames.toDouble() / repJudgedFrames
+        }
 
         // Range first: a rep that never reached the end has a simpler thing wrong with it than one
         // that reached it the wrong way, and telling a patient they skipped the middle of a movement
@@ -432,6 +520,7 @@ class PhaseTracker(private val config: PhaseConfig) {
             duration < minDuration -> RepRejection.TOO_FAST
             duration > maxDuration -> RepRejection.TOO_SLOW
             visited < requiredCount -> RepRejection.SKIPPED
+            conformantFraction < Params.TRAJECTORY_MIN_REP_CONFORMANT_FRACTION -> RepRejection.SKIPPED
             repMaxPhiRate > maxPhiRate -> RepRejection.SKIPPED
             validFraction < minValidFraction -> RepRejection.UNSEEN
             else -> null
@@ -460,6 +549,7 @@ class PhaseTracker(private val config: PhaseConfig) {
             checkpointsRequired = requiredCount,
             nonConformantFrames = nonConformant,
             rejection = reason,
+            conformantFraction = conformantFraction,
         )
     }
 

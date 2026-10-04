@@ -11,6 +11,153 @@ Timestamps are local (IST, UTC+05:30).
 
 ---
 
+## A 3-second count-in before a reference recording - 2026-10-04
+
+Tapping "Record 8 reps" now counts 3, 2, 1 - shown large over the camera preview and spoken -
+before the recording starts, so the physio can walk from the phone into position without the walk
+ending up in the reference. Tapping the button again during the count ("Cancel (2)") cancels it;
+"Switch camera" is disabled while counting. Recording, auto-stop and the 1:00 timeout are unchanged
+and start when the count ends. The hold flow keeps its own, longer countdown.
+`RECORD_COUNTDOWN_SECONDS` in `CameraPreviewScreen.kt` (Track B's own constant, not `Params`).
+
+## "RytPosture": a debug build that installs beside RightPosture - 2026-10-04
+
+New build type `ryt` (`gradlew installRyt`): the debug build with application id
+`com.example.rightposture.ryt` and launcher name "RytPosture" (`app/src/ryt/res`). The test phone
+carries a RightPosture build signed on another machine, which Android will only replace by
+uninstalling it - wiping its exercises and sets. The two now live side by side with separate data.
+`tools/devicelog.py` follows both packages. `debug`, the unit tests and teammates' builds are
+unchanged.
+
+---
+
+## The guide keeps going when the patient stops - 2026-10-03
+
+Device feedback on 10.9: when the patient paused, the guide parked at the start pose, and a patient
+who has stopped is exactly the one who needs to see what to do next. The guide now never stops for a
+still patient. After one whole demonstrated rep without them moving, the line above the panel reads
+"Move with the guide — copy what it does" (Hindi: "गाइड के साथ चलिए — जैसा वह करे, वैसा कीजिए"),
+and it clears the moment they move. A still patient is prompted, never told they are "behind".
+Counting is unchanged: reps still count only when the patient performs them.
+
+---
+
+## The guide in the live set - 2026-10-03
+
+Iteration 10.9. During a set started from a saved exercise, a white guide skeleton now leads the
+movement at the physio's own pace: a 3-second count-in, then the physio's rep, a short beat, and
+the next one. It restarts with the patient after every rep they finish, waits at the start pose
+when they stop, and stops at the prescribed count.
+
+- Drawn under the green live skeleton, translucent and thicker, so it reads as somewhere to move
+  into. Bones the physio's recording is unsure of (seen poorly, or placed differently each rep) are
+  left out individually; the rest of the guide is still drawn.
+- One line above the panel: the count-in, "get into the guide's position", or "you're behind the
+  guide - no rush". English and Hindi. Shown, not spoken.
+- "Guide: on/off" beside it, only on exercises that have a guide (saved after 10.4).
+- Never scored. The guide reads the engine's result; nothing flows back. A patient behind the guide
+  is scored exactly as before.
+- Only when the set was opened with a bundle (`startBundle`), not during recording or calibration.
+
+New: `camera/LiveGhost.kt`, `LiveGhostTest` (10). Suite: 891 tests, 0 failures.
+
+---
+
+## Exercises can be deleted from the physio Library - 2026-10-03
+
+Every saved exercise was permanent: test recordings piled up in the Library (19 on the test phone)
+with no way to clear them. Each Library card now has a **Delete** below "Test this reference",
+which asks first and then removes **every version** of that exercise from this phone - Room rows
+(`ExerciseDao.deleteAllVersions`) and then the `.rpose` and demo files (`data/ExerciseDeletion.kt`).
+
+- Rows before files: an interrupted delete leaves an invisible orphan file, never a card that
+  cannot be opened.
+- Prescriptions of it on this phone go with it (the assignments table's existing
+  `ON DELETE CASCADE`), so Today never lists something that cannot start. Performed sets stay:
+  sessions carry no foreign key, and a patient's history should outlive the reference.
+- Local only. A copy already pushed to the server, and a patient's downloaded copy, are untouched.
+- Whole exercise, not one version. The card is the exercise; deleting one version of a family is
+  not something the screen offers yet.
+
+`ExerciseDeletionTest` (Robolectric, in-memory Room), 3 cases. Suite: 869 tests, 0 failures.
+
+## The ghost check measures which side the ghost is on - 2026-10-03
+
+The first cross-camera run of 10.6's gate came back `WRONG` three times (rear-camera exercise over a
+front-camera recording), and the verdict line could not say whether that meant mirrored or merely a
+poor fit. It now ends `same=… cross=…`: the mean distance, in the live torso's length, from the
+ghost's wrists and elbows to the live joints with the same label and with the opposite one. Right
+way round, `same` is the small one; mirrored, `cross` is.
+
+## The ghost check draws the ghost in the current body's proportions - 2026-09-30
+
+Core iteration 10.7's front-of-seam line. `GhostCheckScreen` retargets every placed ghost to the
+median limb lengths of the recording on screen. With "This recording" that changes almost nothing;
+with "Ghost from" another person's saved exercise, the ghost's joints sit on the current person's
+joints rather than only its torso. That comparison is 10.7's device gate.
+
+## "Ghost from" on the ghost check - 2026-09-30
+
+The front-of-seam half of core iteration 10.6. The ghost check can now place a **saved** exercise's
+ghost over the recording just made, chosen from a "Ghost from" row above the replay. It is how a
+reference recorded on the rear camera is checked against a body on the front camera, and the
+reverse. Saved bundles are read on the IO dispatcher when the screen opens; ones without a skeleton
+(older exercises, holds) are not offered. The status line says when a ghost came from the other
+camera and was relabelled.
+
+## "Check the ghost" on the reference review screen - 2026-09-30
+
+The front-of-seam half of core iteration 10.5 (see [CHANGELOG-core.md](CHANGELOG-core.md)).
+
+After recording, the review screen offers **"Check the ghost against this recording"** whenever the
+recording produced a skeleton reference. It replays the frames still in memory: the physio's own
+skeleton in green, the ghost built from the same recording in white. The physio taps **Matches** or
+**Doesn't match**, and the verdict is logged under `RPGhost` with the camera, view and how many
+frames the ghost could be placed on. That log line is 10.5's device gate.
+
+- New `camera/GhostCheckScreen.kt`.
+- New `camera/Letterbox.kt`. `SkeletonOverlay`'s letterbox arithmetic moved here unchanged and is
+  now shared with the ghost, so the two overlays cannot disagree about where the image sits.
+- `authoring/ReferenceReview.kt` gains an optional `onCheckGhost`; callers that omit it see no change.
+- `CameraPreviewScreen` remembers the analysed image's width/height while recording, because a
+  `CapturedFrame` does not keep it and the ghost's fit needs it.
+
+No camera image is stored, so the check is drawn on a plain dark backdrop.
+
+## A physio's "Needs review" no longer lands in the patient app - 2026-09-29
+
+Reported from a device: tapping a "Needs review" flag on the physio's Activity screen opened the
+patient site.
+
+The flag opened `Screen.Progress`, which only ever existed as the patient's Progress tab.
+`ProgressScreen` hard-coded `PatientTabs` and the heading "Your progress", and `AppHost` wired its
+tabs to `popTo(Screen.PatientToday)`. `PatientToday` is never in a physio's back stack, and `popTo`
+resets the stack when its target is missing - so one tap put the physio inside the patient app with
+no back route to Activity.
+
+`ProgressScreen` now takes a `ProgressViewer` (`PATIENT` / `PHYSIO`), chosen in `AppHost` from the
+signed-in role. For a physio it draws the physio tab bar with Activity lit (it is a drill-down from
+there, not a fifth tab), routes every tab through `popTo(PhysioActivity)` the way the other physio
+screens do, titles itself "Progress", and says the sets are **the ones recorded on this phone** -
+which is what the verdict is actually computed from (`progressionFor` reads the local database, not
+a patient's synced sessions). The verdict card's closing line now names the physio as the one who
+decides, instead of telling them "your physiotherapist decides". The patient's screen is unchanged.
+
+Not fixed here, and worth its own iteration: the flag itself is per exercise over this handset's
+sets, so on a physio's phone it describes their own test runs rather than any patient. The
+remaining chart captions are still in the patient's voice ("your best three reps").
+
+## One log line for the skeleton reference - 2026-09-29
+
+The only front-of-seam change in core iteration 10.2 (see [CHANGELOG-core.md](CHANGELOG-core.md)).
+`CameraPreviewScreen` now writes one `RPGhost` line when an authoring run finishes: per landmark,
+the median and max spread of the physio's body across reps, and its lowest visibility. It is what
+10.2's device gate reads, through `tools/devicelog.py`.
+
+Logged once per finished run at the two `review = result` sites, not in the once-a-second partial
+analysis loop, which would bury it. Nothing is drawn or stored yet — the bundle does not carry the
+skeleton until 10.4.
+
 ## One summary, not three - 2026-09-06
 
 Streaming made §10.4's retry visible, and what it looked like was the app changing its mind: a

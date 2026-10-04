@@ -50,7 +50,7 @@ fun segmentReps(signal: List<Float>, periodSamples: Int): SegmentationResult {
     val valleys = acceptExtrema(values, ExtremumKind.VALLEY, minSpacing, minProminence)
     val extrema = enforceAlternation(peaks + valleys, values)
 
-    val boundaryKind = chooseBoundaryKind(extrema, values)
+    val boundaryKind = chooseBoundaryKind(extrema, values, periodSamples)
     val boundaries = extrema.filter { it.kind == boundaryKind }
     val detected = boundaries.zipWithNext { start, end -> RepSegment(start.index, end.index) }
 
@@ -182,19 +182,28 @@ internal fun enforceAlternation(extrema: List<Extremum>, values: List<Double>): 
 }
 
 /**
- * Section 6.7.5. Whichever extremum yields more complete segments wins. On a tie, the convention is
- * that a rep boundary sits at the start position, so the kind whose first extremum is closest to the
- * pose at t = 0 is chosen.
+ * Section 6.7.5, amended 2026-10-03. Rep boundaries sit on the **rest pose**: the extremum kind
+ * whose typical value is closest to where the recording starts and ends.
+ *
+ * The plan's rule was "whichever kind yields more complete segments wins, the start pose breaks
+ * ties". That made phase 0 an accident of where the recording was cut: a physio who starts and ends
+ * at rest has one more end-range extremum than rest ones, so their reps were bounded at end range,
+ * and phase 0 - `thetaStart`, and the ghost's first pose - became the arm *up*. Two recordings of the
+ * same movement then disagreed by half a rep (found on the ghost check, 10.6's device gate). The
+ * cost of the amendment is at most one fewer segment, which the rejection message already reports.
  */
-internal fun chooseBoundaryKind(extrema: List<Extremum>, values: List<Double>): ExtremumKind {
+internal fun chooseBoundaryKind(extrema: List<Extremum>, values: List<Double>, periodSamples: Int = 0): ExtremumKind {
     val peaks = extrema.filter { it.kind == ExtremumKind.PEAK }
     val valleys = extrema.filter { it.kind == ExtremumKind.VALLEY }
-    if (peaks.size != valleys.size) return if (peaks.size > valleys.size) ExtremumKind.PEAK else ExtremumKind.VALLEY
+    if (peaks.isEmpty() || valleys.isEmpty()) return if (peaks.size >= valleys.size) ExtremumKind.PEAK else ExtremumKind.VALLEY
 
-    val start = values.first()
-    val peakDistance = peaks.firstOrNull()?.let { abs(values[it.index] - start) } ?: Double.MAX_VALUE
-    val valleyDistance = valleys.firstOrNull()?.let { abs(values[it.index] - start) } ?: Double.MAX_VALUE
-    return if (peakDistance <= valleyDistance) ExtremumKind.PEAK else ExtremumKind.VALLEY
+    // Rest, as the median of the recording's opening and closing quarter-rep: robust to one stray
+    // sample at t = 0, and a recording that ends somewhere else still has its start to vote.
+    val edge = (periodSamples / 4).coerceIn(1, values.size)
+    val rest = medianOf(values.take(edge) + values.takeLast(edge))
+    val peakDistance = abs(medianOf(peaks.map { values[it.index] }) - rest)
+    val valleyDistance = abs(medianOf(valleys.map { values[it.index] }) - rest)
+    return if (peakDistance < valleyDistance) ExtremumKind.PEAK else ExtremumKind.VALLEY
 }
 
 internal fun medianOf(values: List<Double>): Double {

@@ -55,6 +55,48 @@ Work is split across two tracks — see [PARALLEL-TRACKS.md](PARALLEL-TRACKS.md)
 | 9.1 | [Office Kit flows](v9.1-office-kit.md) | planned |
 | 9.2 | [Failure-path rehearsal](v9.2-failure-rehearsal.md) | planned |
 | 9.3 | [Demo freeze](v9.3-demo-freeze.md) | planned |
+| 10.9 | [Ghost overlay in the live set](v10.9-ghost-overlay.md) | in-progress |
+
+## 10.x and 11.x
+
+Two series added after a first attempt built the whole thing as one change and could not be gated on
+a device. **Almost all of both is Track A**, so their statuses live in
+[README-core.md](README-core.md) — only 10.9 is in this table, because it is the only one whose
+files (`camera/`, `exercise/`) are Track B's. 10.5 also needs a small Track B screen; see its doc.
+
+**10.x — the leading ghost.** The physio's body, animated at the physio's own tempo, drawn over the
+patient's so they can follow it. Strictly ordered, and **10.5 is a hard gate**: nothing after it
+should be built until a human has confirmed on a device that the placement is not mirrored. §6.16's
+correction arrow is dead code today for exactly the failure 10.5 exists to catch.
+
+**11.x — trajectory-aware rep acceptance.** Closes the compound-exercise hole in §6.12.4, where a
+rep is accepted on a dominant angle plus four loosely-credited checkpoints. Needs no part of 10.x
+and can ship on its own.
+
+## Running a device gate
+
+Do not read logcat live — it is minutes of output for a handful of useful lines. Capture it:
+
+```
+python tools/devicelog.py start                    # mark where this run begins
+  ... perform the gate on the phone ...
+python tools/devicelog.py stop --note "10.5 front camera, sagittal"
+```
+
+`stop` appends one dated block to `docs/device-run-log.md` headed by a **VERDICT** line, and prints
+only that line. Add `--show` to also print the problem lines. The detail stays on disk, searchable
+when something actually needs diagnosing.
+
+It reads the app's own `RP*` tags plus any error from the app's process, denoises the vendor chatter
+this phone emits constantly, and takes the crash verdict from the dedicated crash buffer rather than
+guessing from tag names. New subsystems should log under a tag registered in `TAGS` — `RPGhost` and
+`RPRep` are already reserved for 10.x and 11.x, and a gate is much easier to judge when the numbers
+it turns on are in the log rather than only on screen.
+
+Two quirks of the current test phone (CPH2613, ColorOS), both handled: `logcat -c` sometimes hangs
+and takes the adb connection down with it, so every call is short-timeout and the tool falls back to
+timestamp filtering; and a killed read can leave the device `offline`, which needs a physical
+replug.
 
 ## Completion rule
 

@@ -115,6 +115,9 @@ fun bundleFromAuthoring(
         reference = reference,
         watchList = watchList,
         meanVisibility = result.meanVisibility,
+        // 10.4. Carried into the bundle as-is; null when the recording could not support one, and
+        // the exercise is then scored but not demonstrated.
+        skeleton = result.skeleton,
         faults = FaultSet(emptyList()),
         goals = Goals(
             baseline = GoalMetrics.EMPTY,

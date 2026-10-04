@@ -16,6 +16,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.background
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.Canvas
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -53,6 +55,7 @@ import com.example.rightposture.core.Params
 import com.example.rightposture.core.pose.OneEuroLandmarkFilter
 import com.example.rightposture.core.reference.AuthoringResult
 import com.example.rightposture.core.reference.CapturedFrame
+import com.example.rightposture.core.reference.diagnostic
 import com.example.rightposture.core.reference.runAuthoringPipeline
 import com.example.rightposture.core.reference.readyForAutoStop
 import com.example.rightposture.core.reference.remainingAuthoringSeconds
@@ -294,6 +297,9 @@ private fun CameraPreviewScreen(
     // the flag is atomic; the UI only ever reads a snapshot of it after recording stops.
     val recording = remember { AtomicBoolean(false) }
     val captured = remember { java.util.Collections.synchronizedList(mutableListOf<CapturedFrame>()) }
+    // 10.5. CapturedFrame keeps landmarks but not the image they were measured on, and the ghost's
+    // fit needs that image's width / height. Written from the analysis thread while recording.
+    val capturedAspect = remember { java.util.concurrent.atomic.AtomicReference(3f / 4f) }
     var isRecording by remember { mutableStateOf(false) }
     /** §5.5's guard on leaving the wizard once a recording exists to lose. */
     var confirmCancel by remember { mutableStateOf(false) }
@@ -303,6 +309,7 @@ private fun CameraPreviewScreen(
     }
     var analysing by remember { mutableStateOf(false) }
     var review by remember { mutableStateOf<AuthoringResult?>(null) }
+    var checkingGhost by remember { mutableStateOf(false) }
 
     // 6.4. Which of §3.3's four is being recorded. Chosen before the recording rather than inferred
     // after it, because the choice is what routes to the cyclic or the hold path.
@@ -337,6 +344,14 @@ private fun CameraPreviewScreen(
     var inExercise by remember { mutableStateOf(false) }
     var exerciseState by remember { mutableStateOf(FrameResult.EMPTY) }
     var prescribedReps by remember { mutableIntStateOf(0) }
+
+    // 10.9. The guide: null for a bundle with no skeleton (anything saved before 10.4), which is
+    // what keeps its toggle off screen rather than dead. Driven from the 33 ms sampler beside the
+    // engine, never inside it - it reads the engine's result and writes nothing back.
+    var liveGhost by remember { mutableStateOf<LiveGhost?>(null) }
+    var ghostFrame by remember { mutableStateOf<LiveGhostFrame?>(null) }
+    var ghostOn by remember { mutableStateOf(true) }
+    var lastGhostLogMs by remember { mutableStateOf(0L) }
 
     // 5.4. §6.20 is a gate: the bundle is built when the reference is accepted, and the set does
     // not start until all seven checks pass. The gate runs on the analysis thread beside the
@@ -405,6 +420,11 @@ private fun CameraPreviewScreen(
     // is what makes a hold recordable alone.
     var countdownSeconds by remember { mutableIntStateOf(0) }
     var countdownRemaining by remember { mutableIntStateOf(0) }
+    // The cyclic recording's own count-in: tapping "Record" from the phone and then walking back
+    // into frame used to put the walk into the recording. Kept apart from the hold's countdown,
+    // which is longer and ends in a different stage.
+    var recordCountingIn by remember { mutableStateOf(false) }
+    var recordCountdown by remember { mutableIntStateOf(0) }
     // The physio is *in* the hold, several feet away, and cannot reach the phone to stop it. So the
     // recording ends on its own clock. This is the length of the hold itself, which is a different
     // number from the countdown above it: that one is time to walk to the wall, this one is time
@@ -457,6 +477,7 @@ private fun CameraPreviewScreen(
                         if (recording.get()) {
                             // Authoring uses the offline Butterworth path, not the live One Euro path.
                             captured.add(CapturedFrame(result.frame, result.timestampNs))
+                            capturedAspect.set(result.inputWidth.toFloat() / result.inputHeight)
                         }
                         val redetected = !personVisible.getAndSet(true)
                         val filteredFrame = landmarkFilter.filter(
@@ -615,6 +636,16 @@ private fun CameraPreviewScreen(
                 if (calibrationState?.ready == true || startAnyway) {
                     pendingBundle?.let { bundle ->
                         engine.set(ExerciseEngine(bundle))
+                        liveGhost = LiveGhost.from(bundle)
+                        ghostFrame = null
+                        android.util.Log.i(
+                            "RPGhost",
+                            "live set %s v%d guide=%s".format(
+                                bundle.manifest.id,
+                                bundle.manifest.version,
+                                if (liveGhost != null) "on" else "none (no skeleton in bundle)",
+                            ),
+                        )
                         dispatcher.resetSet()
                         prescribedReps = bundle.manifest.prescription.reps
                         exerciseState = FrameResult.EMPTY
@@ -646,6 +677,25 @@ private fun CameraPreviewScreen(
             if (inExercise) {
                 exerciseState = engine.get()?.state ?: FrameResult.EMPTY
                 fatigue = engine.get()?.fatigue
+                ghostFrame = liveGhost?.let { guide ->
+                    pose?.let {
+                        guide.update(
+                            state = exerciseState,
+                            frame = it.frame,
+                            timestampNs = it.timestampNs,
+                            imageAspect = it.inputWidth.toFloat() / it.inputHeight,
+                            liveMirrored = facing == CameraFacing.FRONT,
+                            prescribedReps = prescribedReps,
+                        )
+                    }
+                }
+                // 10.9's device gate reads this: whether the guide is drawn, how far the patient
+                // trails it, and the frame rate it is costing.
+                val nowMs = SystemClock.elapsedRealtime()
+                if (liveGhost != null && nowMs - lastGhostLogMs >= 2000) {
+                    lastGhostLogMs = nowMs
+                    android.util.Log.i("RPGhost", liveGhostDiagnostic(ghostFrame, exerciseState, ghostOn, fps))
+                }
                 recalibrating = paused.get()
                 // §13.1: a Rep row as each rep completes, not at set end.
                 //
@@ -779,6 +829,28 @@ private fun CameraPreviewScreen(
                 lastMs = now
             }
         }
+    }
+
+    // Keyed on the flag, so cancelling (setting it false) cancels the countdown mid-count.
+    LaunchedEffect(recordCountingIn) {
+        if (!recordCountingIn) {
+            recordCountdown = 0
+            return@LaunchedEffect
+        }
+        recordCountdown = RECORD_COUNTDOWN_SECONDS
+        while (recordCountdown > 0) {
+            // Spoken too: the physio is walking away from the phone, not reading it.
+            speaker.speak("record-count-$recordCountdown", recordCountdown.toString())
+            kotlinx.coroutines.delay(1_000)
+            recordCountdown--
+        }
+        speaker.speak("record-go", "Go.")
+        synchronized(captured) { captured.clear() }
+        recordedCount = 0
+        remainingSeconds = Params.AUTHORING_ACCEPTANCE_TIMEOUT_SECONDS.toInt()
+        recording.set(true)
+        isRecording = true
+        recordCountingIn = false
     }
 
     LaunchedEffect(countdownSeconds) {
@@ -942,6 +1014,7 @@ private fun CameraPreviewScreen(
                 recording.set(false)
                 isRecording = false
                 catalogWarnings = exercise?.let { checkAgainstCatalog(it, result) }.orEmpty()
+                logSkeleton(result)
                 review = result
             }
         }
@@ -1127,8 +1200,20 @@ private fun CameraPreviewScreen(
         }
         Scaffold { padding ->
             Box(Modifier.padding(padding)) {
+                if (checkingGhost) {
+                    GhostCheckScreen(
+                        result = result,
+                        frames = synchronized(captured) { captured.toList() },
+                        imageAspect = capturedAspect.get(),
+                        cameraFacing = if (facing == CameraFacing.FRONT) "front" else "rear",
+                        saved = savedExercises,
+                        onDone = { checkingGhost = false },
+                    )
+                    return@Box
+                }
                 ReferenceReviewScreen(
                     result = result,
+                    onCheckGhost = { checkingGhost = true },
                     warnings = catalogWarnings.map { it.message },
                     onReRecord = {
                         review = null
@@ -1254,6 +1339,7 @@ private fun CameraPreviewScreen(
             val snapshot = synchronized(captured) { captured.toList() }
             val result = withContext(Dispatchers.Default) { runAuthoringPipeline(snapshot) }
             catalogWarnings = exercise?.let { checkAgainstCatalog(it, result) }.orEmpty()
+            logSkeleton(result)
             review = result
             analysing = false
         }
@@ -1350,7 +1436,29 @@ private fun CameraPreviewScreen(
                     },
                     update = { controller.bind(lifecycleOwner, it, facing, displayRotation) },
                 )
+                // 10.9. Under the live skeleton, so it reads as a place to move into rather than as a
+                // second reading of the patient's own body. Gated on startBundle too: `pose` is also
+                // set while recording and calibrating, where the guide would lead nobody.
+                if (inExercise && startBundle != null && ghostOn) {
+                    val guide = ghostFrame
+                    val current = pose
+                    if (guide != null && current != null) {
+                        GhostOverlay(guide, current.inputWidth.toFloat() / current.inputHeight)
+                    }
+                }
                 pose?.let { SkeletonOverlay(it) }
+                if (recordCountingIn && recordCountdown > 0) {
+                    Text(
+                        "$recordCountdown",
+                        style = MaterialTheme.typography.displayLarge,
+                        color = Color.White,
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .background(Color.Black.copy(alpha = 0.45f), RoundedCornerShape(24.dp))
+                            .padding(horizontal = 32.dp, vertical = 8.dp)
+                            .semantics { contentDescription = "Recording starts in $recordCountdown seconds" },
+                    )
+                }
             }
             if (holdStage == HoldStage.NEUTRAL) {
                 Text(phrases.neutralCapture(), style = MaterialTheme.typography.titleMedium)
@@ -1503,6 +1611,32 @@ private fun CameraPreviewScreen(
                     color = Color(0xFFE08A00),
                 )
             }
+            if (inExercise && startBundle != null && liveGhost != null) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    val hint = if (ghostOn) ghostFrame?.hint else null
+                    Text(
+                        when (hint) {
+                            is GhostHint.CountIn -> phrases.ghostCountIn(hint.seconds)
+                            GhostHint.Prompt -> phrases.ghostPrompt()
+                            GhostHint.Behind -> phrases.ghostBehind()
+                            null -> ""
+                        },
+                        style = if (hint is GhostHint.CountIn) {
+                            MaterialTheme.typography.titleMedium
+                        } else {
+                            MaterialTheme.typography.bodyMedium
+                        },
+                        modifier = Modifier.weight(1f),
+                    )
+                    // The only mid-set control convention this screen has is the Voice button, so
+                    // the guide's sits beside the panel rather than inventing a second one.
+                    TextButton(onClick = { ghostOn = !ghostOn }) { Text(phrases.ghostToggle(ghostOn)) }
+                }
+            }
             if (inExercise) {
                 ExercisePanel(
                     state = exerciseState,
@@ -1530,6 +1664,8 @@ private fun CameraPreviewScreen(
                         // put, because their next action is usually to record another exercise.
                         if (startBundle != null) onFinished()
                         engine.set(null)
+                        liveGhost = null
+                        ghostFrame = null
                         viewRecheck.set(null)
                         paused.set(false)
                         recalibrating = false
@@ -1586,11 +1722,9 @@ private fun CameraPreviewScreen(
                         recordedCount = 0
                         remainingSeconds = Params.AUTHORING_ACCEPTANCE_TIMEOUT_SECONDS.toInt()
                     } else {
-                        synchronized(captured) { captured.clear() }
-                        recordedCount = 0
-                        remainingSeconds = Params.AUTHORING_ACCEPTANCE_TIMEOUT_SECONDS.toInt()
-                        recording.set(true)
-                        isRecording = true
+                        // Starts the count-in; the recording itself starts when it ends. A second
+                        // tap during the count-in cancels it.
+                        recordCountingIn = !recordCountingIn
                     }
                 },
                 enabled = !analysing,
@@ -1600,6 +1734,7 @@ private fun CameraPreviewScreen(
                     when {
                         analysing -> "Analysing…"
                         isRecording -> "Cancel recording"
+                        recordCountingIn -> "Cancel ($recordCountdown)"
                         else -> "Record 8 reps"
                     },
                 )
@@ -1610,7 +1745,7 @@ private fun CameraPreviewScreen(
                     facing = if (facing == CameraFacing.FRONT) CameraFacing.REAR else CameraFacing.FRONT
                     error = null
                 },
-                enabled = !isRecording && !analysing,
+                enabled = !isRecording && !analysing && !recordCountingIn,
                 modifier = Modifier.fillMaxWidth(),
             ) { Text("Switch camera") }
             // §6.19. An explicit choice rather than §3.8's "offer hold mode when ROM < 15 degrees":
@@ -1655,6 +1790,61 @@ private fun CameraPreviewScreen(
     }
 }
 
+/**
+ * 10.9. The guide, translucent and thicker than the live skeleton, drawn only along the bones
+ * [drawableBones] trusts at this phase.
+ */
+@Composable
+private fun GhostOverlay(frame: LiveGhostFrame, inputAspect: Float) {
+    val ghost = frame.ghost ?: return
+    Canvas(
+        modifier = Modifier.fillMaxSize().semantics {
+            contentDescription = "Guide skeleton to follow"
+        },
+    ) {
+        val box = letterboxOf(size, inputAspect)
+        frame.bones.forEach { (start, end) ->
+            val a = ghost[start] ?: return@forEach
+            val b = ghost[end] ?: return@forEach
+            drawLine(
+                GUIDE,
+                box.toCanvas(a.x, a.y),
+                box.toCanvas(b.x, b.y),
+                strokeWidth = 18f,
+                cap = androidx.compose.ui.graphics.StrokeCap.Round,
+            )
+        }
+    }
+}
+
+private val GUIDE = Color.White.copy(alpha = 0.55f)
+
+/** Seconds between tapping "Record" and the recording starting, to walk into position. */
+private const val RECORD_COUNTDOWN_SECONDS = 3
+
+private fun liveGhostDiagnostic(frame: LiveGhostFrame?, state: FrameResult, on: Boolean, fps: Int): String {
+    if (frame == null) return "live guide=no-frame on=$on fps=$fps"
+    val phase = frame.tick.phase
+    val hint = when (frame.hint) {
+        is GhostHint.CountIn -> "count-in"
+        GhostHint.Prompt -> "prompt"
+        GhostHint.Behind -> "behind"
+        null -> "-"
+    }
+    return "live guide=%s phase=%s patient=%.0f lag=%s drawn=%s bones=%d hint=%s on=%s reps=%d fps=%d".format(
+        frame.tick.state.name,
+        phase?.let { "%.0f".format(it) } ?: "-",
+        state.phase,
+        phase?.let { "%+.0f".format(com.example.rightposture.core.live.phaseLag(it, state.phase)) } ?: "-",
+        frame.ghost != null,
+        frame.bones.size,
+        hint,
+        on,
+        state.validReps,
+        fps,
+    )
+}
+
 @Composable
 private fun SkeletonOverlay(result: PoseFrameResult) {
     Canvas(
@@ -1662,15 +1852,9 @@ private fun SkeletonOverlay(result: PoseFrameResult) {
             contentDescription = "Live pose skeleton"
         },
     ) {
-        val inputAspect = result.inputWidth.toFloat() / result.inputHeight
-        val viewAspect = size.width / size.height
-        val drawnWidth = if (viewAspect > inputAspect) size.height * inputAspect else size.width
-        val drawnHeight = if (viewAspect > inputAspect) size.height else size.width / inputAspect
-        val left = (size.width - drawnWidth) / 2f
-        val top = (size.height - drawnHeight) / 2f
-        fun point(index: Int) = result.frame.imageLandmarks[index].let {
-            Offset(left + it.x * drawnWidth, top + it.y * drawnHeight)
-        }
+        // Shared with 10.5's ghost, so the two overlays cannot disagree about where the image is.
+        val box = letterboxOf(size, result.inputWidth.toFloat() / result.inputHeight)
+        fun point(index: Int) = result.frame.imageLandmarks[index].let { box.toCanvas(it.x, it.y) }
         POSE_SKELETON_CONNECTIONS.forEach { (start, end) ->
             if (result.frame.visibility[start] >= 0.5f && result.frame.visibility[end] >= 0.5f) {
                 drawLine(Color.Green, point(start), point(end), strokeWidth = 6f)
@@ -1719,3 +1903,20 @@ private fun authoringStepLabel(
 
 /** The hold stages that are a recording in progress, by name so the enum stays private. */
 private val RECORDING_STAGES = setOf("NEUTRAL", "POSITIONING", "RECORDING")
+
+/**
+ * 10.2's device gate. Once per finished authoring run, not on the once-a-second partial analyses:
+ * the per-landmark spread line is what says whether the skeleton builder measured the physio or
+ * measured noise.
+ */
+private fun logSkeleton(result: com.example.rightposture.core.reference.AuthoringResult) {
+    val skeleton = result.skeleton
+    android.util.Log.i(
+        "RPGhost",
+        when {
+            skeleton != null -> skeleton.diagnostic()
+            result.failure != null -> "no skeleton - authoring failed: ${result.failure}"
+            else -> "no skeleton - fewer than ${Params.MIN_SURVIVING_REPS} reps had a body frame throughout"
+        },
+    )
+}

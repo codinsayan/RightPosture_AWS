@@ -55,6 +55,16 @@ android {
     }
 
     buildTypes {
+        // A debug build that installs beside the regular one instead of over it, as "RytPosture".
+        // The test phone also carries a build signed on another machine, and Android will not
+        // replace an app with one signed by a different key without uninstalling it - which wipes
+        // its exercises and sets. A second application id sidesteps that. Its launcher name comes
+        // from src/ryt/res. Install with `gradlew installRyt`.
+        create("ryt") {
+            initWith(getByName("debug"))
+            applicationIdSuffix = ".ryt"
+            matchingFallbacks += listOf("debug")
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(

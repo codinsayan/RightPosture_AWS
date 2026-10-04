@@ -113,6 +113,22 @@ class SegmentationTest {
     }
 
     @Test
+    fun boundariesSitAtRestEvenWhenEndRangeHasMoreExtrema() {
+        // Found on device, 2026-10-03: arm at rest, eight raises, back to rest. Every raise is a
+        // peak but the resting stretches either side are not valleys, so peaks outnumber valleys -
+        // and the plan's "more segments wins" rule bounded the reps at the arm *up*. Two recordings
+        // of one movement then disagreed by half a rep, and the ghost ran in antiphase.
+        val rest = List(2 * samplesPerRep) { 0f }
+        val raises = List(8 * samplesPerRep) { index ->
+            (40.0 * (1.0 - cos(2.0 * PI * index / samplesPerRep)) / 2.0).toFloat()
+        }
+        val result = segmentReps(rest + raises + rest, samplesPerRep)
+
+        assertTrue(result.extrema.count { it.kind == ExtremumKind.PEAK } > result.extrema.count { it.kind == ExtremumKind.VALLEY })
+        assertEquals(ExtremumKind.VALLEY, result.boundaryKind)
+    }
+
+    @Test
     fun extremaAlternateAfterRepair() {
         val result = segmentReps(cleanReps(8), samplesPerRep)
 

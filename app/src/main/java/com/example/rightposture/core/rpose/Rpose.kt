@@ -6,7 +6,10 @@ import com.example.rightposture.core.reference.BodyPosition
 import com.example.rightposture.core.reference.CheckOutcome
 import com.example.rightposture.core.live.HoldFeatureReference
 import com.example.rightposture.core.live.HoldReference
+import com.example.rightposture.core.pose.GHOST_LANDMARKS
 import com.example.rightposture.core.reference.FeatureReference
+import com.example.rightposture.core.reference.PhaseTiming
+import com.example.rightposture.core.reference.SkeletonReference
 import com.example.rightposture.core.reference.Reference
 import com.example.rightposture.core.reference.ValidationResult
 import com.example.rightposture.core.reference.ValidatorCheck
@@ -23,8 +26,9 @@ import java.util.zip.ZipOutputStream
 /**
  * §9. The `.rpose` bundle: a zip, not a flat file. It is a portable clinical prescription.
  *
- * Five JSON entries are required. `demo.mp4` and `hold.json` are optional; the first is opaque
- * bytes, the second is present exactly when the manifest says the bundle is a §6.19 hold.
+ * Five JSON entries are required. `demo.mp4`, `hold.json` and `skeleton.json` are optional; the first
+ * is opaque bytes, the second is present exactly when the manifest says the bundle is a §6.19 hold,
+ * and the third carries the ghost's reference when the recording could support one (10.4).
  */
 
 /**
@@ -53,6 +57,19 @@ const val RPOSE_DEMO = "demo.mp4"
 
 /** §6.19's reference. Present only when `manifest.mode` is `hold`, and required when it is. */
 const val RPOSE_HOLD = "hold.json"
+
+/**
+ * 10.4. The physio's body and timing over one rep, for a ghost to draw. Optional in both
+ * directions: absent from every bundle written before it existed, and from one whose recording
+ * could not support it. Absence means the exercise is scored but not demonstrated.
+ *
+ * Added **without** a format bump, unlike [RPOSE_HOLD]. That bump was needed because a 1.0 reader
+ * would have read a hold bundle as an empty cyclic one and failed in front of a patient. A reader
+ * that predates this entry ignores it - [parseRpose] reads named entries only - and scores the
+ * exercise exactly as before. Bumping would instead make every build without this code refuse
+ * every newly authored exercise, including the other track's builds pulling from Supabase.
+ */
+const val RPOSE_SKELETON = "skeleton.json"
 
 private val REQUIRED_ENTRIES =
     listOf(RPOSE_MANIFEST, RPOSE_REFERENCE, RPOSE_FAULTS, RPOSE_GOALS, RPOSE_VALIDATION)
@@ -196,6 +213,14 @@ data class RposeBundle(
      * per-joint numbers live here.
      */
     val hold: HoldReference? = null,
+    /**
+     * 10.4. The ghost's reference, or null when this exercise is scored but not demonstrated.
+     *
+     * Last, because [parseRpose] constructs this positionally. Deliberately unchecked in `init`:
+     * shape validation lives in the parse helper, where it can name the file, and a `require` here
+     * would fire for every in-memory fixture.
+     */
+    val skeleton: SkeletonReference? = null,
 ) {
     init {
         // §9's bundle is a prescription, and a prescription that disagrees with itself about what
@@ -228,7 +253,46 @@ fun RposeBundle.entries(): Map<String, String> = linkedMapOf<String, String>(
     RPOSE_FAULTS to jsonWrite(faultsJson()),
     RPOSE_GOALS to jsonWrite(goalsJson()),
     RPOSE_VALIDATION to jsonWrite(validationJson()),
-).apply { hold?.let { put(RPOSE_HOLD, jsonWrite(holdJson(it))) } }
+).apply {
+    hold?.let { put(RPOSE_HOLD, jsonWrite(holdJson(it))) }
+    skeleton?.let { put(RPOSE_SKELETON, jsonWrite(skeletonJson(it))) }
+}
+
+/**
+ * 10.4's `skeleton.json`.
+ *
+ * Flat arrays with a documented stride, every number rounded to four decimals. `Json.kt` has no
+ * nested-array reader and writes each number through `Double.toString()`, so a widened Float costs
+ * about seventeen characters; nested and unrounded this entry would run to a few hundred kilobytes
+ * parsed on every exercise open. In torso lengths the fourth decimal is about a twentieth of a
+ * millimetre on an adult, far below anything MediaPipe resolves.
+ *
+ * Layout, with `L = landmarks.size` and `B = bins`:
+ * - `positions_torso`: `B * L * 3`, index `(bin * L + slot) * 3 + axis`, axes x y z of §6.4's body
+ *   frame, in torso lengths.
+ * - `spread_torso`, `min_visibility`: `B * L`, index `bin * L + slot`.
+ * - `fresh`: `B`.
+ * - `phase_by_time`: phase at evenly spaced instants over `rep_duration_s`.
+ */
+private fun skeletonJson(skeleton: SkeletonReference): Map<String, Any?> = linkedMapOf(
+    "landmarks" to skeleton.landmarks,
+    "bins" to skeleton.binCount,
+    "rep_count" to skeleton.repCount,
+    "positions_torso" to skeleton.positions.map(::quantised),
+    "spread_torso" to skeleton.spread.map(::quantised),
+    "min_visibility" to skeleton.visibility.map(::quantised),
+    "fresh" to skeleton.fresh,
+    "phase_by_time" to skeleton.timing.phaseByTime.map(::quantised),
+    "rep_duration_s" to quantised(skeleton.timing.repDurationSeconds),
+)
+
+/**
+ * Four decimals. Rounding is monotonic, so a non-decreasing phase profile stays non-decreasing
+ * through it - the load check below depends on that.
+ */
+private fun quantised(value: Float): Double = quantised(value.toDouble())
+
+private fun quantised(value: Double): Double = Math.round(value * 10_000.0) / 10_000.0
 
 /**
  * §6.19's reference, as JSON.
@@ -645,8 +709,68 @@ internal fun parseRpose(texts: Map<String, String>): RposeBundle {
         "manifest.mode is \"" + HOLD_MODE + "\" but the bundle has no " + RPOSE_HOLD
     }
     val hold = holdText?.let { parseHold(jsonParse(it).asObject(RPOSE_HOLD)) }
+    val skeleton = texts[RPOSE_SKELETON]?.let { parseSkeleton(jsonParse(it).asObject(RPOSE_SKELETON)) }
 
-    return RposeBundle(manifest, reference, watchList, meanVisibility, faults, goals, validation, hold)
+    return RposeBundle(manifest, reference, watchList, meanVisibility, faults, goals, validation, hold, skeleton)
+}
+
+/**
+ * Reads 10.4's entry, refusing anything that would index wrong or run the movement backwards.
+ *
+ * Every failure names the file. A truncated array would otherwise read as a skeleton that is fine
+ * until the ghost reaches the missing bin, and a phase profile that goes backwards would play the
+ * movement in reverse mid-rep - the file is the last place either can be caught.
+ */
+private fun parseSkeleton(json: Map<String, Any?>): SkeletonReference {
+    fun check(condition: Boolean, message: () -> String) =
+        require(condition) { RPOSE_SKELETON + ": " + message() }
+
+    val landmarks = json.list("landmarks").map { (it as? Double)?.toInt() ?: -1 }
+    // Poses are read as NormalisedPose, which is fixed to this build's landmark set. A different
+    // set is a different build's skeleton, and silently misreading its slots would draw the wrong
+    // joints.
+    check(landmarks == GHOST_LANDMARKS) {
+        "landmarks " + landmarks + " are not this build's set " + GHOST_LANDMARKS
+    }
+    val bins = json.int("bins")
+    check(bins == Params.PHASE_BINS) { "has " + bins + " bins; " + Params.PHASE_BINS + " required" }
+
+    val slots = landmarks.size
+    val positions = json.floats("positions_torso")
+    val spread = json.floats("spread_torso")
+    val visibility = json.floats("min_visibility")
+    val freshRaw = json.list("fresh").map { it as? Boolean }
+    check(freshRaw.none { it == null }) { "fresh must hold only true or false" }
+    val fresh = freshRaw.map { it!! }
+    val phaseByTime = json.floats("phase_by_time")
+
+    check(positions.size == bins * slots * 3) {
+        "positions_torso has " + positions.size + " values; " + (bins * slots * 3) + " required"
+    }
+    check(spread.size == bins * slots) { "spread_torso has " + spread.size + " values; " + (bins * slots) + " required" }
+    check(visibility.size == bins * slots) {
+        "min_visibility has " + visibility.size + " values; " + (bins * slots) + " required"
+    }
+    check(fresh.size == bins) { "fresh has " + fresh.size + " values; " + bins + " required" }
+    check((positions + spread + visibility + phaseByTime).all(Float::isFinite)) { "contains a non-finite number" }
+
+    // PhaseTiming refuses a backwards profile or a non-positive duration itself; this only puts the
+    // file's name on the refusal.
+    val timing = try {
+        PhaseTiming(phaseByTime, json.num("rep_duration_s"))
+    } catch (e: IllegalArgumentException) {
+        throw IllegalArgumentException(RPOSE_SKELETON + ": " + e.message, e)
+    }
+
+    return SkeletonReference(
+        landmarks = landmarks,
+        positions = positions,
+        spread = spread,
+        visibility = visibility,
+        fresh = fresh,
+        repCount = json.int("rep_count"),
+        timing = timing,
+    )
 }
 
 private fun parseHold(json: Map<String, Any?>): HoldReference {

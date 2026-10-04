@@ -28,6 +28,16 @@ interface ExerciseDao {
 
     @Query("SELECT * FROM exercises ORDER BY createdAt DESC")
     suspend fun all(): List<ExerciseEntity>
+
+    @Query("SELECT * FROM exercises WHERE id = :id ORDER BY version ASC")
+    suspend fun versionsOf(id: String): List<ExerciseEntity>
+
+    /**
+     * Every version of one exercise. Its assignments go with it (`ON DELETE CASCADE`); its sessions
+     * do not, because they carry no foreign key - a patient's history outlives the reference.
+     */
+    @Query("DELETE FROM exercises WHERE id = :id")
+    suspend fun deleteAllVersions(id: String): Int
 }
 
 @Dao

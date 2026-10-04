@@ -29,13 +29,13 @@ class AuthoringPipelineTest {
         assertEquals(FeatureId.KNEE_FLEX_ACTIVE, result.dominant)
         assertEquals(2.0, result.periodSeconds!!, 0.2)
 
-        // Seven, not eight. The 3.1 generator emits exactly N complete cycles with no lead-in, so
-        // the first boundary extremum sits on sample 0 where it has no outside neighbour and cannot
-        // be detected - the finding recorded in v3.4. A real recording has the physio settling in
-        // before they start moving, which is why the on-device instruction is to start recording
-        // first and then begin.
-        assertEquals(7, result.segmentation!!.detected.size)
-        assertEquals(5, result.reference!!.repCount)
+        // Six, not eight. The 3.1 generator emits exactly N complete cycles with no lead-in, so
+        // the first and last rest poses sit on the recording's edges, where they have no outside
+        // neighbour and cannot be detected - the finding recorded in v3.4. Boundaries sit at rest
+        // (SegmentationTest, 2026-10-03), so only the seven interior rests bound reps. This was
+        // seven while boundaries went to whichever extremum was more numerous, i.e. end range.
+        assertEquals(6, result.segmentation!!.detected.size)
+        assertEquals(4, result.reference!!.repCount)
         assertTrue(result.validation!!.checks.toString(), result.validation!!.accepted)
     }
 
@@ -109,7 +109,7 @@ class AuthoringPipelineTest {
         )
 
         assertNull(result.failure, result.failure)
-        assertEquals(7, result.segmentation!!.detected.size)
+        assertEquals(6, result.segmentation!!.detected.size)
         assertTrue(result.validation!!.checks.toString(), result.validation!!.accepted)
     }
 

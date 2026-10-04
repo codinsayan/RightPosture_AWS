@@ -63,6 +63,11 @@ data class AuthoringResult(
     val dominantTrace: List<Float>,
     /** Mean landmark visibility per feature, for the 3.9 bundle's `mean_visibility`. */
     val meanVisibility: Map<FeatureId, Float> = emptyMap(),
+    /**
+     * 10.2. The physio's body over one rep, for a ghost to draw. Null when too few reps had a
+     * usable body frame throughout - which does not fail authoring: scoring needs none of it.
+     */
+    val skeleton: SkeletonReference? = null,
     /** Why the pipeline stopped early, when it did. Null when it ran to completion. */
     val failure: String?,
 )
@@ -199,6 +204,7 @@ fun runAuthoringPipeline(
         validation = validation,
         dominantTrace = trace,
         meanVisibility = meanVisibility,
+        skeleton = buildSkeletonReference(captured, bodyFrames, segmentation, trace, sampleRateHz, cutoffHz),
         failure = null,
     )
 }

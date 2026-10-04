@@ -42,6 +42,7 @@ import kotlin.math.roundToInt
 import com.example.rightposture.report.AnalyticsData
 import com.example.rightposture.ui.components.EmptyState
 import com.example.rightposture.ui.components.PatientTabs
+import com.example.rightposture.ui.components.PhysioTabs
 import com.example.rightposture.ui.components.Pill
 import com.example.rightposture.ui.components.RoleTabBar
 import com.example.rightposture.ui.components.RpCard
@@ -62,6 +63,15 @@ import java.util.Locale
 data class AnalyticsEntry(val exerciseId: String, val name: String, val sessions: Int)
 
 /**
+ * Who is reading [ProgressScreen].
+ *
+ * The screen was built as the patient's Progress tab, and the physio's "Needs review" flag opens
+ * the same charts. Without this it drew the patient's tab bar under a physio - and a tap on it
+ * reset the stack into the patient's app, with no way back to Activity.
+ */
+enum class ProgressViewer { PATIENT, PHYSIO }
+
+/**
  * §4.4's "Progress" - the screen that answers "am I getting better?".
  *
  * Four tabs rather than one scroll, because the question has four different answers and a patient
@@ -76,6 +86,7 @@ data class AnalyticsEntry(val exerciseId: String, val name: String, val sessions
  */
 @Composable
 fun ProgressScreen(
+    viewer: ProgressViewer,
     entries: List<AnalyticsEntry>,
     selected: AnalyticsData?,
     loading: Boolean,
@@ -83,23 +94,24 @@ fun ProgressScreen(
     backend: LlmBackend?,
     onPick: (String) -> Unit,
     onOpenSession: (String) -> Unit,
-    onOpenToday: () -> Unit,
-    onOpenMe: () -> Unit,
+    /**
+     * A tap on [viewer]'s own tab bar, by index into [PatientTabs] or [PhysioTabs]. Index 0 is each
+     * role's home, which is also where the empty state sends the reader.
+     */
+    onSelectTab: (Int) -> Unit,
 ) {
     var tab by remember { mutableIntStateOf(0) }
+    val physio = viewer == ProgressViewer.PHYSIO
 
     Scaffold(
         containerColor = Tokens.CanvasBg,
         bottomBar = {
             RoleTabBar(
-                destinations = PatientTabs,
-                selectedIndex = 1,
-                onSelect = { index ->
-                    when (index) {
-                        0 -> onOpenToday()
-                        2 -> onOpenMe()
-                    }
-                },
+                destinations = if (physio) PhysioTabs else PatientTabs,
+                // A physio reaches this from a flag on Activity, so Activity stays lit: it is a
+                // drill-down, not a fifth tab. For a patient it is the Progress tab itself.
+                selectedIndex = if (physio) 0 else 1,
+                onSelect = onSelectTab,
             )
         },
     ) { padding ->
@@ -110,16 +122,26 @@ fun ProgressScreen(
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(Space.md),
         ) {
-            RpTopBar(subtitle = "Clinical Form Track")
+            RpTopBar(subtitle = if (physio) "Physio" else "Clinical Form Track")
 
             Column(
                 modifier = Modifier.padding(horizontal = Space.Gutter),
                 verticalArrangement = Arrangement.spacedBy(Space.md),
             ) {
                 Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                    Text("Your progress", style = Type.HeadlineLg, color = Tokens.TextPrimary)
                     Text(
-                        "Per exercise, because they are not the same movement",
+                        if (physio) "Progress" else "Your progress",
+                        style = Type.HeadlineLg,
+                        color = Tokens.TextPrimary,
+                    )
+                    Text(
+                        // The flag is computed from this handset's sessions, not a patient's synced
+                        // ones, so a physio is told which sets these are rather than left to assume.
+                        if (physio) {
+                            "Per exercise, from the sets recorded on this phone"
+                        } else {
+                            "Per exercise, because they are not the same movement"
+                        },
                         style = Type.BodyMd,
                         color = Tokens.TextSecondary,
                     )
@@ -130,10 +152,14 @@ fun ProgressScreen(
                     // rather than new. One card replaces the lot, and it names the next action.
                     entries.isEmpty() && !loading -> EmptyState(
                         icon = Icons.Filled.Info,
-                        message = "No sets recorded yet. Finish an exercise and your progress " +
-                            "appears here - one chart per exercise, from your own sets.",
-                        actionLabel = "Go to today's plan",
-                        onAction = onOpenToday,
+                        message = if (physio) {
+                            "No sets recorded on this phone yet."
+                        } else {
+                            "No sets recorded yet. Finish an exercise and your progress " +
+                                "appears here - one chart per exercise, from your own sets."
+                        },
+                        actionLabel = if (physio) "Back to activity" else "Go to today's plan",
+                        onAction = { onSelectTab(0) },
                     )
 
                     else -> {
@@ -149,13 +175,13 @@ fun ProgressScreen(
 
                         when {
                             selected != null -> when (tab) {
-                                0 -> OverviewTab(selected, llm, backend)
+                                0 -> OverviewTab(selected, llm, backend, physio)
                                 1 -> QualityTab(selected, onOpenSession)
                                 2 -> RangeTab(selected)
                                 else -> HistoryTab(selected, onOpenSession)
                             }
                             loading -> Text(
-                                "Reading your sets…",
+                                if (physio) "Reading the sets…" else "Reading your sets…",
                                 style = Type.BodyMd,
                                 color = Tokens.TextSecondary,
                             )
@@ -212,7 +238,7 @@ private fun ExerciseChips(
 // --------------------------------------------------------------------------- Overview
 
 @Composable
-private fun OverviewTab(data: AnalyticsData, llm: OnDeviceLlm?, backend: LlmBackend?) {
+private fun OverviewTab(data: AnalyticsData, llm: OnDeviceLlm?, backend: LlmBackend?, physio: Boolean) {
     val stats = remember(data) { progressStatsOf(data) }
     val facts = remember(data, stats) { progressFactsOf(data, stats) }
     val summary by rememberProgressSummary(facts, llm)
@@ -288,7 +314,7 @@ private fun OverviewTab(data: AnalyticsData, llm: OnDeviceLlm?, backend: LlmBack
             "sets could be scored, on a scale of 0 to 100.",
     )
 
-    VerdictCard(data)
+    VerdictCard(data, physio)
 }
 
 /**
@@ -299,7 +325,7 @@ private fun OverviewTab(data: AnalyticsData, llm: OnDeviceLlm?, backend: LlmBack
  * rather than as permission. The line naming who decides is not optional decoration.
  */
 @Composable
-private fun VerdictCard(data: AnalyticsData) {
+private fun VerdictCard(data: AnalyticsData, physio: Boolean) {
     val verdict = data.verdict
     val (label, ink, wash) = when {
         verdict.needsReview -> Triple("Needs review", Tokens.DangerInk, Tokens.DangerWash)
@@ -341,8 +367,14 @@ private fun VerdictCard(data: AnalyticsData) {
             }
         }
         Text(
-            "Your physiotherapist decides when to move you on. The app never advances anyone on " +
-                "its own.",
+            // Same rule, said to whoever holds it. Telling the physio "your physiotherapist
+            // decides" names the wrong person as the decision-maker.
+            if (physio) {
+                "You decide when to move the patient on. The app never advances anyone on its own."
+            } else {
+                "Your physiotherapist decides when to move you on. The app never advances anyone " +
+                    "on its own."
+            },
             style = Type.BodySm,
             color = Tokens.TextMuted,
         )

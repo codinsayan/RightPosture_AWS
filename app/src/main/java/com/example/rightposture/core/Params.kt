@@ -46,7 +46,18 @@ object Params {
     const val LUMBAR_SIGMA_FLOOR_DEGREES = 6.0
     const val MAD_TO_SIGMA = 1.4826
     const val SHAPE_OUTLIER_MAD_MULTIPLIER = 2.5
-    const val WATCH_LIST_SIZE = 5
+
+    // 11.3. Was 5. frameScore and pose conformance only see watch-listed features, and the dominant
+    // one's z is ~0 by construction because phase is derived from it, so five left a compound
+    // exercise scored on four joints at most. Seven is the dominant joint plus one per remaining
+    // major segment a whole-body movement recruits - hip, knee, ankle, trunk, shoulder, elbow.
+    //
+    // This only caps how many survivors of §6.10's four PASS filters are kept; it admits nothing
+    // the filters reject. A single-joint exercise has nowhere near this many survivors and is
+    // unaffected. The features it admits are by construction the least salient, so they carry the
+    // least weight - which is the argument for the frame-score scale holding. 11.3's device gate
+    // checks that rather than trusting it.
+    const val WATCH_LIST_SIZE = 7
     const val WATCH_LIST_MIN_ROM_DEGREES = 8.0
     const val WATCH_LIST_MIN_VISIBILITY = 0.7
 
@@ -104,6 +115,67 @@ object Params {
     // The dominant feature is excluded, and not as an optimisation: phase is derived from it, so it
     // is compared against itself and its z is ~0 whatever the patient does.
     const val TRAJECTORY_CONFORMANCE_Z = 3.0
+
+    // 11.1. How much of a checkpoint the pose has to be right in for it to count.
+    //
+    // A checkpoint used to be credited by a *single* conformant frame anywhere inside it, which
+    // answers "was the patient ever in the right position in this quarter of the range". A patient
+    // who is out of position for three quarters of a bucket and passes through the right pose once
+    // on the way answers yes - and that is the compound-exercise hole: the dominant joint travels
+    // legally, the omitted joint happens to sweep through the right angle somewhere in each bucket,
+    // and the rep counts.
+    //
+    // A majority makes the checkpoint a statement about the movement rather than about its luckiest
+    // instant. Sized against the jitter TRAJECTORY_CONFORMANCE_Z already tolerates rather than
+    // picked: PoseConformanceTest's one-bad-frame-in-seventeen case sits at 0.94, so 0.6 leaves
+    // ample room for landmark noise while refusing a joint left out through most of a bucket.
+    //
+    // Uncalibrated against real bodies, like most of this file - see C3.
+    const val TRAJECTORY_MIN_BUCKET_CONFORMANT_FRACTION = 0.6
+
+    // 11.2. How much of the whole rep the pose has to be right in, as a backstop beneath the
+    // per-bucket rule above.
+    //
+    // Checkpoints are only required as far as the rep fully crossed, so the top bucket of a rep that
+    // peaks short of phi = 1 is never examined - and that is where an end-range hold sits. This sees
+    // every judged frame instead.
+    //
+    // Deliberately looser than the bucket bar, never tighter: a rep whose every bucket cleared 0.6
+    // has at least 0.6 overall, so anything at or under that cannot reject a rep that was right
+    // everywhere the checkpoints looked. 0.5 is the plain-language line - the patient spent more of
+    // the rep out of position than in it. Pinned by TrajectoryConformanceTest.
+    //
+    // Uncalibrated against real bodies - see C3.
+    const val TRAJECTORY_MIN_REP_CONFORMANT_FRACTION = 0.5
+
+    // 10.5. How clearly a body must show which way it faces, in torso lengths, before a ghost is
+    // placed over it. Frontal: the shoulder line across the torso axis. Sagittal: the nose ahead of
+    // the hips. Below this the horizontal axis could go either way, and a leading ghost drawn the
+    // wrong way round is copied - so nothing is drawn. Deliberately small: it only has to refuse the
+    // undecidable, not judge the view, which classifyView and requiredView already do.
+    // Uncalibrated; 10.6 owns tuning it against real recordings.
+    const val GHOST_FACING_MARGIN = 0.05f
+
+    // 10.7. The furthest a patient's limb may differ from the physio's, as a ratio of lengths in
+    // each body's own torso lengths, before the measurement is distrusted and the ghost keeps the
+    // physio's length. Adult limb-to-torso proportions vary by well under this; a ratio past it is
+    // a landmark that slid (a wrist found on the hip), not a differently built person. Uncalibrated.
+    const val GHOST_RETARGET_MAX_RATIO = 1.6f
+
+    // 10.8. The ghost clock. All uncalibrated.
+    // Count-in before the first demonstrated rep: long enough to read "get ready", short enough
+    // that a patient already in position is not kept waiting.
+    const val GHOST_COUNT_IN_SECONDS = 3.0
+    // The beat at the start pose between demonstrated reps. The physio's own dwell at rest is
+    // already inside 10.3's profile; this is only the seam between two cycles.
+    const val GHOST_REST_SECONDS = 0.5
+    // Whole demonstrated cycles with the patient never leaving IDLE before they are prompted to
+    // move with the ghost. The ghost itself never stops for them (device feedback, 2026-10-03: a
+    // patient who has paused needs the demonstration most, to know how to carry on).
+    const val GHOST_IDLE_CYCLES = 1
+    // A gap between frames longer than this (a stall, the app backgrounded) does not advance the
+    // clock. Otherwise the ghost jumps whole reps ahead of a patient who never saw it move.
+    const val GHOST_MAX_FRAME_GAP_SECONDS = 0.5
     const val PHASE_OVERSHOOT_MAX = 1.15
     const val PHASE_ENTRY = 0.10
     const val PHASE_ASCEND_MIN = 0.60

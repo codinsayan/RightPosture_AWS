@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The side-by-side "ryt" build type's launcher name, so it is told apart from RightPosture. -->
+    <string name="app_name">RytPosture</string>
+</resources>

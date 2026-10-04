@@ -87,6 +87,18 @@ interface PhraseBook {
 
     /** Shown while the physio's one-second neutral pose is being captured. */
     fun neutralCapture(): String
+
+    /** 10.9. Before the guide's first rep, with whole seconds left. */
+    fun ghostCountIn(seconds: Int): String
+
+    /** 10.9. The patient has not moved for a whole demonstrated rep; the guide carries on. */
+    fun ghostPrompt(): String
+
+    /** 10.9. The patient is well behind the guide. Shown, never spoken, and never scored. */
+    fun ghostBehind(): String
+
+    /** 10.9. The guide's on/off control. */
+    fun ghostToggle(on: Boolean): String
 }
 
 fun phraseBookFor(language: SpeechLanguage): PhraseBook = when (language) {
@@ -167,6 +179,14 @@ object EnglishPhrases : PhraseBook {
     override fun holdDrift(id: FeatureId) = "You're slipping — bring your ${featureName(id)} back."
 
     override fun neutralCapture() = "Stand naturally and still."
+
+    override fun ghostCountIn(seconds: Int) = "Follow the white guide — starting in $seconds"
+
+    override fun ghostPrompt() = "Move with the guide — copy what it does"
+
+    override fun ghostBehind() = "You're behind the guide — no rush, just keep going"
+
+    override fun ghostToggle(on: Boolean) = if (on) "Guide: on" else "Guide: off"
 }
 
 /**
@@ -248,6 +268,14 @@ object HindiPhrases : PhraseBook {
     override fun holdDrift(id: FeatureId) = "आप फिसल रहे हैं — अपनी ${featureName(id)} वापस लाइए।"
 
     override fun neutralCapture() = "सामान्य रूप से सीधे और स्थिर खड़े रहिए।"
+
+    override fun ghostCountIn(seconds: Int) = "सफ़ेद गाइड के साथ चलिए — $seconds में शुरू"
+
+    override fun ghostPrompt() = "गाइड के साथ चलिए — जैसा वह करे, वैसा कीजिए"
+
+    override fun ghostBehind() = "आप गाइड से पीछे हैं — कोई जल्दी नहीं, बस करते रहिए"
+
+    override fun ghostToggle(on: Boolean) = if (on) "गाइड: चालू" else "गाइड: बंद"
 
     /**
      * Spoken forms up to a plausible set length. Beyond this the numeral is handed over and the

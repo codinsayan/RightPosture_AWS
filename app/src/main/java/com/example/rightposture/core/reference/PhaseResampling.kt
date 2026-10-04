@@ -106,7 +106,11 @@ internal fun extremumInside(segmentation: SegmentationResult, segment: RepSegmen
         .firstOrNull { it.index > segment.startIndex && it.index < segment.endIndex }
         ?.index
 
-private fun interpolateOntoBins(profile: List<Double>, values: List<Float>): List<Float> {
+/**
+ * Internal, not private, so 10.2's skeleton reference resamples landmark channels by exactly this
+ * rule. Any other rule would put the drawn pose at bin `p` out of step with the z-scores at bin `p`.
+ */
+internal fun interpolateOntoBins(profile: List<Double>, values: List<Float>): List<Float> {
     val bins = ArrayList<Float>(Params.PHASE_BINS)
     var frame = 0
 

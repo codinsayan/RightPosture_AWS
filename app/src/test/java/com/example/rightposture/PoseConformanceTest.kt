@@ -106,8 +106,9 @@ class PoseConformanceTest {
 
     @Test
     fun `one bad frame in a bucket does not lose the rep`() {
-        // Landmark jitter puts a single frame outside tolerance. A bucket stays credited once any
-        // frame in it was conformant, precisely so that noise cannot cost a patient a good rep.
+        // Landmark jitter puts a single frame outside tolerance. Since 11.1 a bucket is credited on
+        // a majority of its frames, so one frame in seventeen cannot cost a patient a good rep —
+        // see [TrajectoryConformanceTest] for why the rule is a majority and not a single frame.
         var frame = 0
         val rep = drive(rest() + smoothRep() + rest(), conformant = { frame++ % 17 != 0 }).single()
 

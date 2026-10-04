@@ -13,6 +13,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -60,6 +61,11 @@ fun ReferenceReviewScreen(
      * with an action that starts a set, so the wording is not fixed here.
      */
     saveLabel: String = "Use this - start exercise",
+    /**
+     * 10.5's sign check: replay this recording with the ghost drawn over it. Null hides the button,
+     * as it is whenever the recording could not support a skeleton reference.
+     */
+    onCheckGhost: (() -> Unit)? = null,
 ) {
     Column(
         modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp),
@@ -112,6 +118,12 @@ fun ReferenceReviewScreen(
         if (onStartExercise != null && result.validation?.accepted == true) {
             Button(onClick = onStartExercise, modifier = Modifier.fillMaxWidth()) {
                 Text(saveLabel)
+            }
+        }
+
+        if (onCheckGhost != null && result.skeleton != null) {
+            OutlinedButton(onClick = onCheckGhost, modifier = Modifier.fillMaxWidth()) {
+                Text("Check the ghost against this recording")
             }
         }
 

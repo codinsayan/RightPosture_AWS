@@ -17,13 +17,16 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -78,6 +81,8 @@ fun PhysioLibraryScreen(
     exercises: List<ExerciseEntity>,
     onRecordNew: () -> Unit,
     onTestExercise: (ExerciseEntity) -> Unit,
+    /** Removes every version of the exercise from this phone. */
+    onDeleteExercise: (ExerciseEntity) -> Unit,
     onOpenActivity: () -> Unit,
     onOpenPatients: () -> Unit,
     onOpenMe: () -> Unit,
@@ -92,6 +97,7 @@ fun PhysioLibraryScreen(
     }
     val holds = families.count { it.first.mode == HOLD_MODE }
     var filter by remember { mutableStateOf(LibraryFilter.ALL) }
+    var deleting by remember { mutableStateOf<Pair<ExerciseEntity, Int>?>(null) }
 
     val details = rememberReferenceDetails(families.map { it.first })
 
@@ -101,6 +107,18 @@ fun PhysioLibraryScreen(
             LibraryFilter.EXERCISES -> exercise.mode != HOLD_MODE
             LibraryFilter.HOLDS -> exercise.mode == HOLD_MODE
         }
+    }
+
+    deleting?.let { (exercise, versions) ->
+        ConfirmDelete(
+            exercise = exercise,
+            versions = versions,
+            onConfirm = {
+                deleting = null
+                onDeleteExercise(exercise)
+            },
+            onDismiss = { deleting = null },
+        )
     }
 
     Scaffold(
@@ -172,6 +190,7 @@ fun PhysioLibraryScreen(
                         versions = versions,
                         detail = details[exercise.key()],
                         onTest = { onTestExercise(exercise) },
+                        onDelete = { deleting = exercise to versions },
                     )
                 }
 
@@ -278,6 +297,7 @@ private fun ReferenceCard(
     versions: Int,
     detail: ReferenceDetail?,
     onTest: () -> Unit,
+    onDelete: () -> Unit,
 ) {
     val hold = exercise.mode == HOLD_MODE
     RpCard(padding = Space.md) {
@@ -401,7 +421,61 @@ private fun ReferenceCard(
                 Text("Test this reference", style = Type.TitleSm, color = Tokens.TextPrimary)
             }
         }
+
+        // Quieter than Test on purpose: a destructive action sits below the one a physio uses every
+        // day, and asks before it does anything.
+        TextButton(
+            onClick = onDelete,
+            modifier = Modifier.fillMaxWidth().semantics { contentDescription = "Delete ${exercise.name}" },
+        ) {
+            Icon(
+                Icons.Filled.Delete,
+                contentDescription = null,
+                tint = Tokens.DangerInk,
+                modifier = Modifier.size(18.dp),
+            )
+            Box(modifier = Modifier.size(6.dp))
+            Text("Delete", style = Type.TitleSm, color = Tokens.DangerInk)
+        }
     }
+}
+
+/**
+ * Says what deleting actually removes before it happens. It cannot be undone, and "versions" and
+ * "patients on other phones" are the two things a physio would otherwise have to guess about.
+ */
+@Composable
+private fun ConfirmDelete(
+    exercise: ExerciseEntity,
+    versions: Int,
+    onConfirm: () -> Unit,
+    onDismiss: () -> Unit,
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Delete ${exercise.name}?") },
+        text = {
+            Text(
+                buildString {
+                    append(
+                        if (versions == 1) "The recording is removed from this phone"
+                        else "All $versions versions are removed from this phone",
+                    )
+                    append(", along with any prescriptions of it here. This cannot be undone. ")
+                    append(
+                        "Sets already performed stay in the history. A patient it was sent to " +
+                            "keeps their copy.",
+                    )
+                },
+            )
+        },
+        confirmButton = {
+            TextButton(onClick = onConfirm) { Text("Delete", color = Tokens.DangerInk) }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) { Text("Keep it") }
+        },
+    )
 }
 
 @Composable

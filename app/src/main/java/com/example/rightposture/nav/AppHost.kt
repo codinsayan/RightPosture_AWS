@@ -29,6 +29,7 @@ import com.example.rightposture.ui.prescriptionLine
 import com.example.rightposture.data.ExerciseEntity
 import com.example.rightposture.data.RightPostureDatabase
 import com.example.rightposture.data.SessionEntity
+import com.example.rightposture.data.deleteExercise
 import com.example.rightposture.llm.LlmBackend
 import com.example.rightposture.llm.OnDeviceLlm
 import com.example.rightposture.core.progression.evaluateProgression
@@ -372,6 +373,14 @@ fun AppHost() {
                     )
                 }
             },
+            onDeleteExercise = { exercise ->
+                scope.launch {
+                    exercises = withContext(Dispatchers.IO) {
+                        deleteExercise(database.exercises(), exercise.id)
+                        database.exercises().all()
+                    }
+                }
+            },
             onOpenActivity = { nav = nav.popTo(Screen.PhysioActivity) },
             onOpenPatients = { nav = nav.popTo(Screen.PhysioActivity).navigateTo(Screen.PhysioPatients) },
             onOpenMe = { nav = nav.popTo(Screen.PhysioActivity).navigateTo(Screen.PhysioMe) },
@@ -392,6 +401,10 @@ fun AppHost() {
         )
 
         is Screen.Progress -> ProgressScreen(
+            // The physio's "Needs review" flag opens this same screen. It used to draw the
+            // patient's tabs whoever was reading, and their Today tab reset a physio's stack into
+            // the patient app.
+            viewer = if (role == Role.PHYSIO) ProgressViewer.PHYSIO else ProgressViewer.PATIENT,
             entries = analyticsEntries,
             selected = analytics,
             loading = analyticsLoading,
@@ -403,8 +416,24 @@ fun AppHost() {
                     ?: nav.resetTo(Screen.Progress(picked))
             },
             onOpenSession = { nav = nav.navigateTo(Screen.SessionDetail(it)) },
-            onOpenToday = { nav = nav.popTo(Screen.PatientToday) },
-            onOpenMe = { nav = nav.popTo(Screen.PatientToday).navigateTo(Screen.PatientMe) },
+            onSelectTab = { index ->
+                nav = if (role == Role.PHYSIO) {
+                    // Same mapping as the physio tabs everywhere else: back to Activity, then on.
+                    val home = nav.popTo(Screen.PhysioActivity)
+                    when (index) {
+                        1 -> home.navigateTo(Screen.PhysioPatients)
+                        2 -> home.navigateTo(Screen.PhysioLibrary)
+                        3 -> home.navigateTo(Screen.PhysioMe)
+                        else -> home
+                    }
+                } else {
+                    when (index) {
+                        0 -> nav.popTo(Screen.PatientToday)
+                        2 -> nav.popTo(Screen.PatientToday).navigateTo(Screen.PatientMe)
+                        else -> nav
+                    }
+                }
+            },
         )
 
         Screen.RecordChoose -> RecordChooseScreen(

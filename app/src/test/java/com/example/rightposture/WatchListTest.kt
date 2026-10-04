@@ -131,27 +131,18 @@ class WatchListTest {
 
     // --- Ranking, size, dominant inclusion, weights ---
 
+    // The two size tests are written against the constant, not the number. A test that spells out
+    // "five" asserts the constant's current value rather than the behaviour it controls, and 11.3
+    // changed the value.
+
     @Test
-    fun onlyTheTopFiveSurviveAndTheyAreRankedBySalience() {
-        val watchList = watch(
-            FeatureId.KNEE_FLEX_ACTIVE to feature(rom = 60.0, medianSigma = 2.0),
-            FeatureId.HIP_FLEX_ACTIVE to feature(rom = 60.0, medianSigma = 3.0),
-            FeatureId.TRUNK_FLEXION to feature(rom = 60.0, medianSigma = 4.0),
-            FeatureId.ELBOW_FLEX_ACTIVE to feature(rom = 60.0, medianSigma = 5.0),
-            FeatureId.TRUNK_ROTATION to feature(rom = 60.0, medianSigma = 6.0),
-            FeatureId.PELVIC_OBLIQUITY to feature(rom = 60.0, medianSigma = 7.0),
-            FeatureId.SHOULDER_FLEX_ACTIVE to feature(rom = 60.0, medianSigma = 8.0),
-        )
+    fun onlyTheTopWatchListSizeSurviveAndTheyAreRankedBySalience() {
+        val candidates = rankedCandidates(Params.WATCH_LIST_SIZE + 2)
+        val watchList = watch(*candidates.toTypedArray())
 
         assertEquals(Params.WATCH_LIST_SIZE, watchList.features.size)
         assertEquals(
-            listOf(
-                FeatureId.KNEE_FLEX_ACTIVE,
-                FeatureId.HIP_FLEX_ACTIVE,
-                FeatureId.TRUNK_FLEXION,
-                FeatureId.ELBOW_FLEX_ACTIVE,
-                FeatureId.TRUNK_ROTATION,
-            ),
+            candidates.take(Params.WATCH_LIST_SIZE).map { it.first },
             watchList.features.map { it.id },
         )
         watchList.features.zipWithNext().forEach { (a, b) ->
@@ -160,22 +151,24 @@ class WatchListTest {
     }
 
     @Test
-    fun theDominantFeatureIsIncludedEvenWhenItRanksOutsideTheTopFive() {
+    fun theDominantFeatureIsIncludedEvenWhenItRanksOutsideTheTopWatchListSize() {
+        val candidates = rankedCandidates(Params.WATCH_LIST_SIZE + 1)
+        val lastRanked = candidates.last().first
         val watchList = selectWatchList(
-            referenceOf(
-                FeatureId.KNEE_FLEX_ACTIVE to feature(rom = 60.0, medianSigma = 2.0),
-                FeatureId.HIP_FLEX_ACTIVE to feature(rom = 60.0, medianSigma = 3.0),
-                FeatureId.TRUNK_FLEXION to feature(rom = 60.0, medianSigma = 4.0),
-                FeatureId.ELBOW_FLEX_ACTIVE to feature(rom = 60.0, medianSigma = 5.0),
-                FeatureId.TRUNK_ROTATION to feature(rom = 60.0, medianSigma = 6.0),
-                FeatureId.PELVIC_OBLIQUITY to feature(rom = 60.0, medianSigma = 7.0),
-            ),
+            referenceOf(*candidates.toTypedArray()),
             visibilityForAll(),
-            FeatureId.PELVIC_OBLIQUITY,
+            lastRanked,
         )
 
         assertEquals(Params.WATCH_LIST_SIZE + 1, watchList.features.size)
-        assertTrue(watchList.features.any { it.id == FeatureId.PELVIC_OBLIQUITY })
+        assertTrue(watchList.features.any { it.id == lastRanked })
+    }
+
+    @Test
+    fun theSizeCapStillLeavesTheValidatorsFloorReachable() {
+        // 3.8 refuses a reference whose watch list is shorter than its floor. A cap under the floor
+        // would make every reference fail validation.
+        assertTrue(Params.WATCH_LIST_SIZE >= Params.VALIDATOR_MIN_WATCH_LIST_SIZE)
     }
 
     @Test
@@ -247,6 +240,17 @@ class WatchListTest {
     }
 
     // --- fixtures ---
+
+    /**
+     * [count] features that all pass every filter, in strictly descending salience: same ROM, sigma
+     * rising by one degree per rank.
+     */
+    private fun rankedCandidates(count: Int): List<Pair<FeatureId, FeatureReference>> {
+        require(count <= FeatureId.entries.size) { "only ${FeatureId.entries.size} features exist" }
+        return FeatureId.entries.take(count).mapIndexed { rank, id ->
+            id to feature(rom = 60.0, medianSigma = 2.0 + rank)
+        }
+    }
 
     private fun watch(vararg entries: Pair<FeatureId, FeatureReference>) =
         selectWatchList(referenceOf(*entries), visibilityForAll(), dominant)

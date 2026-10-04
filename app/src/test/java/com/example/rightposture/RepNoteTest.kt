@@ -59,8 +59,8 @@ class RepNoteTest {
         return withBeat(frames(config), config.samplesPerRep)
     }
 
-    private fun bundle(): RposeBundle {
-        val captured = frames(SyntheticPoseConfig(repCount = 8))
+    private fun bundle(maximumKneeAngleDegrees: Float = 170f): RposeBundle {
+        val captured = frames(SyntheticPoseConfig(repCount = 8, maximumKneeAngleDegrees = maximumKneeAngleDegrees))
             .map { CapturedFrame(it.frame, it.timestampNs) }
         val result = runAuthoringPipeline(captured)
         assertNull(result.failure, result.failure)
@@ -95,9 +95,12 @@ class RepNoteTest {
     @Test
     fun `going past the reference counts the rep and says so`() {
         // The exact case reported on device: the patient swings well beyond what was recorded, the
-        // rep satisfies §6.12.4, and it was previously counted in silence.
-        val engine = ExerciseEngine(bundle())
-        val states = run(engine, patient(6, minimumKneeAngleDegrees = 50f))
+        // rep satisfies §6.12.4, and it was previously counted in silence. Past the *end* of the
+        // movement: the physio extended to 150 degrees, the patient goes all the way to 180. (This
+        // test once bent the knee past the start instead, which read as overshoot only while
+        // segmentation bounded reps at end range - see SegmentationTest, 2026-10-03.)
+        val engine = ExerciseEngine(bundle(maximumKneeAngleDegrees = 150f))
+        val states = run(engine, patient(6, maximumKneeAngleDegrees = 180f))
 
         val counted = states.mapNotNull { it.completedRep }.filter { it.valid }
         assertTrue("the overshooting rep must still count", counted.isNotEmpty())
@@ -109,8 +112,8 @@ class RepNoteTest {
     @Test
     fun `the note survives long enough for a 30 Hz UI to read it`() {
         // Same trap as the partial-rep reason in v5.1.1: `completedRep` lives one frame.
-        val engine = ExerciseEngine(bundle())
-        val states = run(engine, patient(6, minimumKneeAngleDegrees = 50f))
+        val engine = ExerciseEngine(bundle(maximumKneeAngleDegrees = 150f))
+        val states = run(engine, patient(6, maximumKneeAngleDegrees = 180f))
 
         val firstNoteIndex = states.indexOfFirst { it.lastRepNote != null }
         assertTrue("expected a note at all", firstNoteIndex >= 0)
